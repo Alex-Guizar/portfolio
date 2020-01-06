@@ -1,0 +1,97 @@
+// Mixins and Variables
+$break-xsmall: 400px;
+$break-small: 576px;
+$break-medium: 768px;
+$break-large: 992px;
+$break-xlarge: 1200px;
+@mixin flexbox {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+// Base Element Styling
+body { font-size: 1rem; }
+body, h1, h2, h3 { padding: 0; margin: 0; }
+h1 { font-size: 3rem; }
+h2 { font-size: 2rem; margin-top: 1.5rem; }
+h3 { font-size: 1.5rem; margin-top: 1rem; }
+p, ul { line-height: 1.5; padding: 0; margin: 1rem 0 0; }
+
+// Modifiers
+.list-reset { list-style: none; }
+.content-dark { background-color: #444444; color: #ffffff; }
+.text-center { text-align: center; }
+
+/**
+  Framework
+**/
+// Header
+#header { padding: 1.5rem 12px; }
+
+#top_nav { background-color: #222222; color: #ffffff; }
+
+.nav_list {
+  @include flexbox; justify-content: center; margin-top: 0;
+
+  a {
+    display: block; padding: 0.5rem 16px; color: #ffffff; text-decoration: none;
+  }
+}
+
+// Footer
+#footer { padding: 1.5rem 12px; }
+/**
+  End Framework
+**/
+
+/**
+  Content
+**/
+.section { padding: 0 0 40px; }
+// About
+.about-content {
+  @include flexbox; max-width: 1000px; margin: auto;
+
+  &-cell { flex: 0 0 50%; padding: 0 12px; box-sizing: border-box; }
+
+  &-summary { margin-top: 1rem; }
+
+  &-skills {
+    margin-top: 1rem;
+
+    li:nth-child(2n) { background-color: #efefef; }
+  }
+}
+
+// Portfolio
+.portfolio-list {
+  @include flexbox; max-width: 1100px; margin: 1rem auto 0;
+
+  li {
+    flex: 0 0 100%; box-sizing: border-box; padding: 12px;
+    span { display: block; max-width: 200px; height: 150px; background-color: #333333; color: #ffffff; margin: 0 auto; text-align: center; }
+
+    @media screen and (min-width: $break-xsmall) {
+      flex: 0 0 50%;
+    }
+    @media screen and (min-width: $break-small) {
+      flex: 0 0 33.333%;
+    }
+    @media screen and (min-width: $break-medium) {
+      flex: 0 0 25%;
+    }
+    @media screen and (min-width: $break-large) {
+      flex: 0 0 20%;
+    }
+  }
+}
+
+// Contact
+
+/**
+  End Content
+**/
