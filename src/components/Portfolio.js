@@ -100,8 +100,13 @@ const Portfolio = () => {
         {websites.map( (website) =>
           <li key={website.id}>
             <span tabIndex="0" className="portfolio-list-image_wrap">
-              {website.image === null ? <span className="portfolio-list-image_wrap-temp">{website.name}</span> : <img className="portfolio-list-image" src={website.image} srcSet={website.image2x} sizes="275" alt={website.name} />}
-              {website.note === null ? '' : <span className="portfolio-list-image_wrap-note">{website.note}</span>}
+              {website.image === null ?
+                <span className="portfolio-list-image_wrap-temp">{website.name}</span> :
+                <img className="portfolio-list-image" src={website.image} srcSet={website.image+' 275w, '+website.image2x+' 550w'} sizes="275" alt={website.name} />
+              }
+              {website.note === null ? '' :
+                <span className="portfolio-list-image_wrap-note">{website.note}</span>
+              }
               <span className="portfolio-list-image_wrap-overlay">
                 <span>{website.link === null ? 'Coming Soon!' : website.name}</span>
               </span>
