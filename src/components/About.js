@@ -33,6 +33,11 @@ const About = () => {
       id: 5
     },
     {
+      name: 'NPM',
+      rating: 3,
+      id: 10
+    },
+    {
       name: 'Node.js',
       rating: 1,
       id: 6

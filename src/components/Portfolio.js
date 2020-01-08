@@ -4,6 +4,7 @@ const Portfolio = () => {
   const websites = [
     {
       name: 'Gobbie Collectors',
+      skills: 'React, SASS, JavaScript, NPM, Git',
       note: 'A FFXIV Fan Project',
       image: null,
       image2x: null,
@@ -12,6 +13,7 @@ const Portfolio = () => {
     },
     {
       name: 'Tennis Warehouse',
+      skills: 'HTML, CSS, JavaScript, jQuery',
       note: null,
       image: '/images/tennis-warehouse-1x.png',
       image2x: '/images/tennis-warehouse.png',
@@ -20,6 +22,7 @@ const Portfolio = () => {
     },
     {
       name: 'Tennis Warehouse Europe',
+      skills: 'HTML, CSS, JavaScript, jQuery',
       note: null,
       image: '/images/tenniswarehouse-europe-1x.png',
       image2x: '/images/tenniswarehouse-europe.png',
@@ -28,6 +31,7 @@ const Portfolio = () => {
     },
     {
       name: 'Tennis Only',
+      skills: 'HTML, CSS, JavaScript, jQuery',
       note: null,
       image: '/images/tennisonly-1x.png',
       image2x: '/images/tennisonly.png',
@@ -36,6 +40,7 @@ const Portfolio = () => {
     },
     {
       name: 'Tackle Warehouse',
+      skills: 'HTML, CSS, JavaScript, jQuery',
       note: null,
       image: '/images/tacklewarehouse-1x.png',
       image2x: '/images/tacklewarehouse.png',
@@ -44,6 +49,7 @@ const Portfolio = () => {
     },
     {
       name: 'Running Warehouse',
+      skills: 'HTML, CSS, JavaScript, jQuery',
       note: null,
       image: '/images/runningwarehouse-1x.png',
       image2x: '/images/runningwarehouse.png',
@@ -52,6 +58,7 @@ const Portfolio = () => {
     },
     {
       name: 'Running Warehouse Europe',
+      skills: 'HTML, CSS, JavaScript, jQuery',
       note: null,
       image: '/images/runningwarehouse-eu-1x.png',
       image2x: '/images/runningwarehouse-eu.png',
@@ -60,6 +67,7 @@ const Portfolio = () => {
     },
     {
       name: 'Running Warehouse Australia',
+      skills: 'HTML, CSS, JavaScript, Bootstrap',
       note: null,
       image: '/images/runningwarehouse-au-1x.png',
       image2x: '/images/runningwarehouse-au.png',
@@ -68,6 +76,7 @@ const Portfolio = () => {
     },
     {
       name: 'Inline Warehouse',
+      skills: 'HTML, CSS, JavaScript, Bootstrap',
       note: null,
       image: '/images/inlinewarehouse-1x.png',
       image2x: '/images/inlinewarehouse.png',
@@ -76,6 +85,7 @@ const Portfolio = () => {
     },
     {
       name: 'Skate Warehouse',
+      skills: 'HTML, CSS, JavaScript, jQuery',
       note: null,
       image: '/images/skatewarehouse-1x.png',
       image2x: '/images/skatewarehouse.png',
@@ -84,6 +94,7 @@ const Portfolio = () => {
     },
     {
       name: 'Racquetball Warehouse',
+      skills: 'HTML, CSS, JavaScript, jQuery',
       note: null,
       image: '/images/racquetballwarehouse-1x.png',
       image2x: '/images/racquetballwarehouse.png',
@@ -108,7 +119,8 @@ const Portfolio = () => {
                 <span className="portfolio-list-image_wrap-note">{website.note}</span>
               }
               <span className="portfolio-list-image_wrap-overlay">
-                <span>{website.link === null ? 'Coming Soon!' : website.name}</span>
+                <span className="portfolio-list-image_wrap-overlay-title">{website.link === null ? 'Coming Soon!' : website.name}</span>
+                <span className="portfolio-list-image_wrap-overlay-skills">{website.skills}</span>
               </span>
               {website.link === null ? '' : <a className="portfolio-list-image_wrap-link" href={website.link} target="_blank" rel="noopener noreferrer">Visit Site</a>}
             </span>
