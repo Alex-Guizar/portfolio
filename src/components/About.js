@@ -1,6 +1,85 @@
 import React from 'react';
 
 const About = () => {
+  const skills = [
+    {
+      name: 'HTML',
+      rating: 4.5,
+      id: 0
+    },
+    {
+      name: 'CSS',
+      rating: 4.5,
+      id: 1
+    },
+    {
+      name: 'JavaScript',
+      rating: 4,
+      id: 2
+    },
+    {
+      name: 'jQuery',
+      rating: 4.5,
+      id: 3
+    },
+    {
+      name: 'Bootstrap',
+      rating: 4.5,
+      id: 4
+    },
+    {
+      name: 'React',
+      rating: 2,
+      id: 5
+    },
+    {
+      name: 'Node.js',
+      rating: 1,
+      id: 6
+    },
+    {
+      name: 'Git',
+      rating: 2,
+      id: 7
+    },
+    {
+      name: 'PHP',
+      rating: 2.5,
+      id: 8
+    },
+    {
+      name: 'SASS',
+      rating: 2,
+      id: 9
+    }
+  ];
+
+  const starRating = (rating) => {
+    const roundedRating = Math.ceil(rating);
+    const totalStars = 5 - roundedRating;
+    let ratingNumber = [];
+    let starKey = 0;
+
+    for (let i = 0; i < roundedRating; i++) {
+      if (rating % 1 !== 0 && i === roundedRating - 1) {
+        ratingNumber.push(<img key={starKey} className="about-content-skills-star" src="/images/star-half.svg" alt="" />);
+        starKey++;
+      } else {
+        ratingNumber.push(<img key={starKey} className="about-content-skills-star" src="/images/star-fill.svg" alt="" />);
+        starKey++;
+      }
+    }
+
+    if (totalStars) {
+      for (let i = 0; i < totalStars; i++) {
+        ratingNumber.push(<img key={starKey} className="about-content-skills-star" src="/images/star.svg" alt="" />);
+        starKey++;
+      }
+    }
+
+    return ratingNumber;
+  }
+
   return (
     <section id="about" className="section">
       <h2 className="text-center">About</h2>
@@ -16,16 +95,13 @@ const About = () => {
           <h3>Skills</h3>
 
           <ul className="about-content-skills list-reset">
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>JavaScript</li>
-            <li>jQuery</li>
-            <li>Bootstrap</li>
-            <li>React</li>
-            <li>Node.js</li>
-            <li>Git</li>
-            <li>PHP</li>
-            <li>SASS</li>
+            {skills.map((skill) =>
+              <li key={skill.id}>{skill.name}
+                <span className="fr">
+                  {starRating(skill.rating)}
+                </span>
+              </li>
+            )}
           </ul>
         </div>
       </div>
