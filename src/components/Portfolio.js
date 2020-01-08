@@ -13,7 +13,7 @@ const Portfolio = () => {
     },
     {
       name: 'Tennis Warehouse',
-      skills: 'HTML, CSS, JavaScript, jQuery',
+      skills: 'HTML, CSS, JavaScript, jQuery, PHP',
       note: null,
       image: '/images/tennis-warehouse-1x.png',
       image2x: '/images/tennis-warehouse.png',
@@ -22,7 +22,7 @@ const Portfolio = () => {
     },
     {
       name: 'Tennis Warehouse Europe',
-      skills: 'HTML, CSS, JavaScript, jQuery',
+      skills: 'HTML, CSS, JavaScript, jQuery, PHP',
       note: null,
       image: '/images/tenniswarehouse-europe-1x.png',
       image2x: '/images/tenniswarehouse-europe.png',
@@ -49,7 +49,7 @@ const Portfolio = () => {
     },
     {
       name: 'Running Warehouse',
-      skills: 'HTML, CSS, JavaScript, jQuery',
+      skills: 'HTML, CSS, JavaScript, jQuery, PHP',
       note: null,
       image: '/images/runningwarehouse-1x.png',
       image2x: '/images/runningwarehouse.png',
@@ -58,7 +58,7 @@ const Portfolio = () => {
     },
     {
       name: 'Running Warehouse Europe',
-      skills: 'HTML, CSS, JavaScript, jQuery',
+      skills: 'HTML, CSS, JavaScript, jQuery, PHP',
       note: null,
       image: '/images/runningwarehouse-eu-1x.png',
       image2x: '/images/runningwarehouse-eu.png',
