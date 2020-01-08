@@ -11,6 +11,11 @@ $break-large: 992px;
   display: flex;
   flex-wrap: wrap;
 }
+@mixin portTransition {
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
 
 // Base Element Styling
 body { font-size: 1rem; font-family: 'Roboto', sans-serif; }
@@ -98,16 +103,16 @@ p, ul { line-height: 1.5; padding: 0; margin: 1rem 0 0; }
     &-note { display: block; margin-top: 12px;  }
 
     &-overlay {
-      display: block; position: absolute; width: 100%; height: 100%; top: 0; background-color: #ffffff; opacity: 0; transition: opacity 0.3s ease-out;
+      @include portTransition; display: block; position: absolute; width: 100%; height: 100%; top: 0; background-color: #ffffff; opacity: 0;
 
-      span { position: absolute; top: 0; display: block; width: 100%; padding: 0 12px; box-sizing: border-box; transition: all 0.3s ease-out; font-size: 1.5rem; font-weight: 500; }
+      span { @include portTransition; position: absolute; top: 0; display: block; width: 100%; padding: 0 12px; box-sizing: border-box; font-size: 1.5rem; font-weight: 500; }
     }
     &:hover &-overlay, &:focus &-overlay,  {
       opacity: 0.9;
       span { top: 25%; transform: translateY(-50%); }
     }
 
-    &-link { position: absolute; bottom: 0; left: 50%; display: block; width: 150px; padding: 8px 12px; border: 1px solid #000000; border-radius: 3px; background-color: #ffffff; margin-left: -75px; box-sizing: border-box; color: #000000; text-decoration: none; opacity: 0; transition: all 0.3s ease-out; }
+    &-link { @include portTransition; position: absolute; bottom: 0; left: 50%; display: block; width: 150px; padding: 8px 12px; border: 1px solid #000000; border-radius: 3px; background-color: #ffffff; margin-left: -75px; box-sizing: border-box; color: #000000; text-decoration: none; opacity: 0; }
     &:hover &-link, &:focus &-link, &-link:focus {
       opacity: 1; bottom: 25%; transform: translateY(50%);
     }

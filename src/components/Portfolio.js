@@ -94,7 +94,7 @@ const Portfolio = () => {
               <span className="portfolio-list-image_wrap-overlay">
                 <span>{website.link === null ? 'Coming Soon!' : website.name}</span>
               </span>
-              {website.link === null ? '' : <a className="portfolio-list-image_wrap-link" href={website.link} target="_blank">Visit Site</a>}
+              {website.link === null ? '' : <a className="portfolio-list-image_wrap-link" href={website.link} target="_blank" rel="noopener noreferrer">Visit Site</a>}
             </span>
           </li>
         )}
