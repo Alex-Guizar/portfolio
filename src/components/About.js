@@ -87,7 +87,7 @@ const About = () => {
 
   return (
     <section id="about" className="section">
-      <h2 className="text-center">About</h2>
+      <h2>About</h2>
 
       <div className="about-content">
         <div className="about-content-cell">

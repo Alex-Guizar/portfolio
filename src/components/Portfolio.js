@@ -105,7 +105,7 @@ const Portfolio = () => {
 
   return (
     <section id="portfolio" className="section">
-      <h2 className="text-center">Portfolio</h2>
+      <h2>Portfolio</h2>
 
       <ul className="portfolio-list list-reset">
         {websites.map( (website) =>
