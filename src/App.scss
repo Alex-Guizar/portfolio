@@ -26,6 +26,13 @@ $max-width: 1196px;
   transition: all 0.3s ease-out;
 }
 
+@mixin transform($type) {
+  -webkit-transform: $type;
+  -ms-transform: $type;
+  -moz-transform: $type;
+  transform: $type;
+}
+
 @mixin maxWidthFrame {
   max-width: $max-width;
   margin-left: auto; margin-right: auto;
@@ -206,13 +213,13 @@ p, ul { line-height: 1.5; padding: 0; margin: 1rem 0 0; }
     flex: 0 0 100%; box-sizing: border-box; padding: 12px;
 
     @media screen and (min-width: $break-small) {
-      flex: 0 0 50%;
+      flex-basis: 50%;
     }
     @media screen and (min-width: $break-medium) {
-      flex: 0 0 33.333%;
+      flex-basis: 33.333%;
     }
     @media screen and (min-width: $break-large) {
-      flex: 0 0 25%;
+      flex-basis: 25%;
     }
   }
 
@@ -265,24 +272,18 @@ p, ul { line-height: 1.5; padding: 0; margin: 1rem 0 0; }
         display: block;
         width: 100%;
         font-size: 1rem;
-        transform: translateY(-50%);
+        @include transform(translateY(-50%));
       }
     }
     &:hover &-overlay, &:focus &-overlay,  {
       opacity: 0.9;
       &-title {
         top: 20%;
-        -webkit-transform: translateY(-50%);
-        -ms-transform: translateY(-50%);
-        -moz-transform: translateY(-50%);
-        transform: translateY(-50%);
+        @include transform(translateY(-50%));
       }
       &-skills {
         left: 50%;
-        -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        -moz-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
+        @include transform(translate(-50%, -50%));
       }
     }
 
@@ -306,10 +307,7 @@ p, ul { line-height: 1.5; padding: 0; margin: 1rem 0 0; }
     &:hover &-link, &:focus &-link, &-link:focus {
       opacity: 1;
       bottom: 20%;
-      -webkit-transform: translateY(50%);
-      -ms-transform: translateY(50%);
-      -moz-transform: translateY(50%);
-      transform: translateY(50%);
+      @include transform(translateY(50%));
     }
     &-link:focus, &-link:hover { background-color: #000000; color: #ffffff; }
   }

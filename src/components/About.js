@@ -5,58 +5,58 @@ const About = () => {
     {
       name: 'HTML',
       rating: 4.5,
-      id: 0
+      id: 0,
     },
     {
       name: 'CSS',
       rating: 4.5,
-      id: 1
+      id: 1,
     },
     {
       name: 'JavaScript',
       rating: 4,
-      id: 2
+      id: 2,
     },
     {
       name: 'jQuery',
       rating: 4.5,
-      id: 3
+      id: 3,
     },
     {
       name: 'Bootstrap',
       rating: 4.5,
-      id: 4
+      id: 4,
     },
     {
       name: 'React',
       rating: 2,
-      id: 5
+      id: 5,
     },
     {
       name: 'NPM',
       rating: 3,
-      id: 10
+      id: 10,
     },
     {
       name: 'Node.js',
       rating: 1,
-      id: 6
+      id: 6,
     },
     {
       name: 'Git',
       rating: 2,
-      id: 7
+      id: 7,
     },
     {
       name: 'PHP',
       rating: 2.5,
-      id: 8
+      id: 8,
     },
     {
       name: 'SASS',
-      rating: 2,
-      id: 9
-    }
+      rating: 3.5,
+      id: 9,
+    },
   ];
 
   const starRating = (rating) => {
