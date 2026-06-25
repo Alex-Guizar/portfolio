@@ -10,7 +10,9 @@ export const stFt = {
   path:  { top: "#a08868", topHi: "#c0a888", topDk: "#705840", topAccent: "#d8b890", sideL: "#604830", sideR: "#382818" },
   water: { top: "#3a78a8", topHi: "#5a98c8", topDk: "#1a4878", topAccent: "#8ab8e0", sideL: "#1a3858", sideR: "#0a2040" },
 
-  // Ivalice parchment/cream panel chrome over dark backdrop
+  // FFT · Ivalice Chronicles palette — parchment / cream menu chrome over a
+  // dark game-world backdrop. Panel interiors are warm cream; titles + body
+  // text are dark brown; gold ornament accents.
   panelOuter:     "#3a2010",            // dark brown outer drop shadow
   panelBorderDk:  "#5a3018",            // dark brown outer border
   panelBorderMd:  "#8a5c2a",            // gold-brown mid-band border
