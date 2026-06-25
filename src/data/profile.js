@@ -1,5 +1,9 @@
-// Portfolio content — single source of truth for all site copy
-export const PROFILE = {
+// All site content lives here. Edit copy here and every section updates.
+// Each project has a minimal entry (always shown in the INVENTORY list) and an
+// optional richer detail block (shown on the project's own page). Fill in as
+// little or as much as you like — every detail field is optional.
+
+const PROFILE = {
   name: "Alex Guizar",
   handle: "alexguizar",
   role: "Senior Frontend Engineer",
@@ -16,6 +20,8 @@ export const PROFILE = {
     "Reading + writing about UI infrastructure at scale.",
   ],
 
+  // PROJECTS — featured first (FFXIV tracker is genuinely impressive personal
+  // work + matches the FF-inspired site vibe).
   work: [
     {
       id: "ffxiv-tracker",
@@ -23,12 +29,14 @@ export const PROFILE = {
       year: "2024",
       stack: "Vue · Node.js · Axios",
       blurb: "A data-viz dashboard that pulls FFXIV's game APIs to track rare raid drops for a 12-person static — killing the shared spreadsheet for good.",
+
       status: "LIVE",
       tagline: "Replaced a 12-person shared spreadsheet with an automated dashboard that pulls live game data and tracks rare drops, attendance, and loot priority.",
       role: "Solo developer · designer · raid leader",
       duration: "Ongoing personal project",
       team: "Solo · serving a 12-person static",
       href: null,
+
       problem: [
         "Our 12-person raid static was tracking attendance, loot history, and rare-drop priority in a shared Google Sheet that nobody trusted by week three. Manual entry meant missing pulls, duplicated rows, and arguments about who was next in line for the chase drops.",
         "The official FFXIV APIs and community-maintained data sources had everything we needed — character profiles, gear, achievements — but nobody on the team wanted to wire them together by hand each week.",
@@ -43,10 +51,10 @@ export const PROFILE = {
         "Side benefit: pretty graphs of our clear progression that we screenshot for the raid Discord every reset.",
       ],
       metrics: [
-        { label: "RAIDERS", value: "12" },
+        { label: "RAIDERS",     value: "12" },
         { label: "DROPS LOGGED", value: "400+" },
-        { label: "DISPUTES", value: "0" },
-        { label: "WEEKS LIVE", value: "52+" },
+        { label: "DISPUTES",    value: "0" },
+        { label: "WEEKS LIVE",  value: "52+" },
       ],
       features: [
         "Pulls live character + gear data from the FFXIV/XIVAPI endpoints",
@@ -56,9 +64,9 @@ export const PROFILE = {
         "Discord-friendly screenshot mode for sharing clears",
       ],
       stackDetail: [
-        { tech: "Vue", reason: "Reactivity model is perfect for a dashboard where everything depends on everything else." },
+        { tech: "Vue",     reason: "Reactivity model is perfect for a dashboard where everything depends on everything else." },
         { tech: "Node.js", reason: "Lightweight server to aggregate from multiple game-data endpoints and cache responses." },
-        { tech: "Axios", reason: "Simple HTTP client with interceptors for rate-limit handling against XIVAPI." },
+        { tech: "Axios",   reason: "Simple HTTP client with interceptors for rate-limit handling against XIVAPI." },
       ],
       gallery: [
         { caption: "The week-summary view — attendance, drops, and priority at a glance" },
@@ -73,11 +81,13 @@ export const PROFILE = {
       year: "2022–present",
       stack: "Vue · Lit · TypeScript · Monorepo",
       blurb: "Re-engineered Cisco's framework-agnostic component library and the workflows around it, cutting team time-to-delivery by 50%.",
+
       status: "LIVE",
       tagline: "Took ownership of an internal component library used across multiple product teams, rebuilt the workflows around it, and cut their time-to-delivery in half.",
       role: "Owner · platform engineer",
       duration: "2+ years (ongoing)",
       team: "Cross-functional · multiple product teams as consumers",
+
       problem: [
         "Cisco product teams were duplicating frontend work — each shipping its own buttons, modals, forms, and accessibility patterns, each at a different level of quality. The existing component library was framework-agnostic in theory but painful to consume in practice.",
         "Teams routed around it instead of through it. That meant inconsistent UI, redundant a11y work, and weeks lost on integration friction every quarter.",
@@ -94,9 +104,9 @@ export const PROFILE = {
       ],
       metrics: [
         { label: "TIME-TO-SHIP", value: "−50%" },
-        { label: "TEAMS", value: "Multiple" },
-        { label: "WCAG", value: "2.2" },
-        { label: "FRAMEWORKS", value: "Vue · React · Lit" },
+        { label: "TEAMS",        value: "Multiple" },
+        { label: "WCAG",         value: "2.2" },
+        { label: "FRAMEWORKS",   value: "Vue · React · Lit" },
       ],
       features: [
         "Framework-agnostic components consumable from Vue, React, and vanilla Lit",
@@ -106,11 +116,11 @@ export const PROFILE = {
         "Cross-team API design partnership to keep data shapes aligned",
       ],
       stackDetail: [
-        { tech: "Vue", reason: "Primary framework for product surfaces; expert-level reach." },
-        { tech: "Lit", reason: "Where components need to be consumable from any framework or none." },
+        { tech: "Vue",        reason: "Primary framework for product surfaces; expert-level reach." },
+        { tech: "Lit",        reason: "Where components need to be consumable from any framework or none." },
         { tech: "TypeScript", reason: "Public component APIs need to be self-documenting and refactor-safe." },
-        { tech: "Monorepo", reason: "Multiple consumers, multiple frameworks, one source of truth for tokens and primitives." },
-        { tech: "CircleCI", reason: "Versioning + publishing automation across the workspace." },
+        { tech: "Monorepo",   reason: "Multiple consumers, multiple frameworks, one source of truth for tokens and primitives." },
+        { tech: "CircleCI",   reason: "Versioning + publishing automation across the workspace." },
       ],
     },
 
@@ -120,8 +130,10 @@ export const PROFILE = {
       year: "2024",
       stack: "Claude · Cursor · Prompt Engineering",
       blurb: "Custom AI personas + context files that compress technical research and code review into minutes instead of hours.",
+
       status: "IN-PROGRESS",
       tagline: "A library of AI personas and project context files that I drop into Claude/Cursor for specific task shapes — research, review, refactor, debug.",
+
       problem: [
         "Generic LLM prompts give generic LLM output. For real engineering work — design system trade-offs, accessibility audits, performance investigations — I needed the model to come pre-loaded with the right context, the right reference patterns, and the right standards.",
       ],
@@ -139,18 +151,80 @@ export const PROFILE = {
         "Versioned and shareable across the team",
       ],
     },
+
+    {
+      id: "cisco-hackathon",
+      title: "Code Quality AI (Hackathon)",
+      year: "2024",
+      stack: "Node.js · LLM APIs",
+      blurb: "Internal Cisco hackathon project: a tool that scans code repos and surfaces performance + style suggestions inline.",
+
+      status: "ARCHIVED",
+      tagline: "An internal hackathon prototype that scans a repository and suggests performance + style improvements at the file and function level.",
+
+      problem: [
+        "Code review fatigue is real — the same stylistic and perf comments come up again and again across reviews. The interesting parts of a review (architecture, intent) get crowded out.",
+      ],
+      approach: [
+        "Built a CLI + light web UI that walks a repo, classifies files, and runs targeted prompts per file type. Output is structured so a reviewer can act on it without re-reading the diff.",
+      ],
+      outcome: [
+        "Prototype won a slot in the next phase of the hackathon. The interesting finding: most of the value was in *consistency* — same standards applied across the whole repo at once — not in any single suggestion.",
+      ],
+    },
+
+    {
+      id: "sports-warehouse",
+      title: "Tennis Warehouse & Sibling Sites",
+      year: "2013–2022",
+      stack: "Custom tooling · 12 global sites",
+      blurb: "Built internal tools that let Product Managers ship features themselves; led the company's first WCAG audit across the Warehouse network.",
+
+      status: "ARCHIVED",
+      tagline: "Nine years building, shipping, and maintaining high-traffic global e-commerce frontends across Tennis Warehouse and its sibling sites — plus the tooling that let non-engineers ship safely.",
+
+      problem: [
+        "The Warehouse network — Tennis Warehouse, Running Warehouse, Tackle Warehouse, Skate Warehouse, and their sibling sites — shared a frontend platform with twelve customer-facing storefronts, growing feature demand, and a single team to support it.",
+        "Every feature flag, every PDP variant, every campaign required engineering bandwidth. Product Managers were blocked on us; we were blocked on the backlog.",
+      ],
+      approach: [
+        "Built internal tools that let Product Managers update features on their own, with guardrails. Trade-off: more up-front infra work, much less ongoing engineering toil.",
+        "Led the company's first accessibility audit — partly because it was the right thing to do, partly because WCAG compliance happened to also help SEO and Core Web Vitals.",
+      ],
+      outcome: [
+        "Product releases sped up by 20% across 12 sites.",
+        "Site performance + SEO improved by 25% as a side effect of the a11y work.",
+        "Spent the rest of the time on the interesting problems instead of pushing pixels.",
+      ],
+      metrics: [
+        { label: "SITES",       value: "12" },
+        { label: "VELOCITY",    value: "+20%" },
+        { label: "PERF / SEO",  value: "+25%" },
+        { label: "TENURE",      value: "9y" },
+      ],
+      gallery: [
+        { caption: "Tennis Warehouse — flagship of the network" },
+        { caption: "Cross-site PM tooling that let non-engineers ship feature updates" },
+        { caption: "Accessibility audit dashboard — first WCAG pass across all 12 sites" },
+      ],
+      projectLinks: [
+        { label: "Tennis Warehouse", href: "https://www.tennis-warehouse.com/", kind: "primary" },
+      ],
+    },
   ],
 
   experience: [
-    { id: "e1", co: "Experis at Cisco", role: "Senior Frontend Engineer · UI Platform", range: "2022 — present" },
-    { id: "e2", co: "Sports Warehouse", role: "Frontend Web Developer", range: "2013 — 2022" },
-    { id: "e3", co: "Independent", role: "Lead Barista · soft-skill foundation", range: "2006 — 2013" },
+    { id: "e1", co: "Experis at Cisco",   role: "Senior Frontend Engineer · UI Platform",    range: "2022 — present" },
+    { id: "e2", co: "Sports Warehouse",   role: "Frontend Web Developer",                    range: "2013 — 2022"    },
+    { id: "e3", co: "Independent",        role: "Lead Barista · soft-skill foundation",      range: "2006 — 2013"    },
   ],
 
   links: [
-    { label: "github", href: "https://github.com/alexguizar" },
-    { label: "linkedin", href: "https://www.linkedin.com/in/alexguizar/" },
-    { label: "email", href: "mailto:alexguizar90@gmail.com" },
-    { label: "resume", href: "Alex-Guizar-Resume.pdf" },
+    { label: "github",   href: "https://github.com/" },                       // ← drop your username
+    { label: "linkedin", href: "https://www.linkedin.com/in/alexguizar/" },   // ← confirm slug
+    { label: "email",    href: "mailto:alexguizar90@gmail.com" },
+    { label: "resume",   href: "Alex-Guizar-Resume.pdf" },
   ],
 };
+
+window.PROFILE = PROFILE;
