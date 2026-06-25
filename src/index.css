@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+/* Small helpers for layout consistency */
+:root {
+  --container-max: 1080px;
+}
+
+.container-max {
+  max-width: var(--container-max);
+}
