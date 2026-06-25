@@ -3,7 +3,7 @@
 // optional richer detail block (shown on the project's own page). Fill in as
 // little or as much as you like — every detail field is optional.
 
-const PROFILE = {
+export const PROFILE = {
   name: "Alex Guizar",
   handle: "alexguizar",
   role: "Senior Frontend Engineer",
@@ -226,5 +226,3 @@ const PROFILE = {
     { label: "resume",   href: "Alex-Guizar-Resume.pdf" },
   ],
 };
-
-window.PROFILE = PROFILE;

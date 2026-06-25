@@ -5,7 +5,7 @@ import { PROFILE } from '../../data/profile';
 
 export { stFt };
 
-export function FFTCharacter({ scale = 2, style }) {
+export function FFTCharacter({ scale = 1, style }) {
   return (
     <img
       src="assets/character.png"
@@ -22,38 +22,65 @@ export function FFTCharacter({ scale = 2, style }) {
   );
 }
 
-export function FFTPanel({ children, style, title, cornerStat, inset = 14 }) {
+export function FFTPanel({ children, style, title, cornerStat, inset = 18 }) {
   return (
     <div style={{
-      background: stFt.panelOuter,
-      padding: 2,
-      boxShadow: "0 4px 0 rgba(0,0,0,0.5), 0 0 0 1px " + stFt.panelBorderDk,
+      background: stFt.panelBorderDk,
+      padding: 1,
+      borderRadius: 4,
+      boxShadow: `
+        0 8px 0 rgba(0,0,0,0.55),
+        0 0 0 1px ${stFt.panelOuter},
+        0 0 28px rgba(0,0,0,0.4)
+      `,
       ...style,
     }}>
       <div style={{
-        background: `linear-gradient(180deg, ${stFt.panelTop} 0%, ${stFt.panelMid} 50%, ${stFt.panelBot} 100%)`,
-        border: `1px solid ${stFt.panelInnerHi2}`,
-        boxShadow: `inset 0 1px 0 ${stFt.panelInnerHi}80, inset 0 -2px 0 rgba(0,0,0,0.3)`,
+        background: `
+          linear-gradient(180deg, ${stFt.panelTop} 0%, ${stFt.panelMid} 30%, ${stFt.panelMid} 75%, ${stFt.panelBot} 100%)
+        `,
+        border: `1px solid ${stFt.panelBorderMd}`,
+        borderRadius: 3,
+        boxShadow: `
+          inset 0 1px 0 ${stFt.panelInnerHi},
+          inset 0 -1px 0 rgba(90,48,24,0.3)
+        `,
         padding: inset,
         position: "relative",
-        color: stFt.fg,
-        textShadow: "1px 1px 0 rgba(0,0,0,0.6)",
+        color: stFt.panelFg,
       }}>
         {title && (
           <div style={{
-            fontFamily: stFt.pixel,
-            fontSize: 9,
-            color: stFt.accent,
-            letterSpacing: 2,
-            paddingBottom: 8,
-            marginBottom: 10,
-            borderBottom: `1px solid ${stFt.panelInnerHi2}80`,
+            paddingBottom: 12,
+            marginBottom: 16,
+            borderBottom: `1px solid ${stFt.panelInnerHi2}`,
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
+            gap: 12,
           }}>
-            <span>◆ {title}</span>
-            {cornerStat && <span style={{ color: stFt.fgSoft, fontSize: 8 }}>{cornerStat}</span>}
+            <div style={{
+              fontFamily: stFt.serif,
+              fontSize: 18,
+              fontWeight: 600,
+              color: stFt.panelFg,
+              letterSpacing: 1.5,
+              display: "flex",
+              alignItems: "center",
+              gap: 12,
+            }}>
+              <span style={{ color: stFt.gold, fontSize: 12 }}>◆</span>
+              <span>{title}</span>
+              <span style={{ color: stFt.gold, fontSize: 12 }}>◆</span>
+            </div>
+            {cornerStat && (
+              <span style={{
+                fontFamily: stFt.mono,
+                fontSize: 11,
+                color: stFt.panelDim,
+                letterSpacing: 1,
+              }}>{cornerStat}</span>
+            )}
           </div>
         )}
         {children}
@@ -65,55 +92,51 @@ export function FFTPanel({ children, style, title, cornerStat, inset = 14 }) {
 export function StatLine({ label, value, max, color }) {
   const pct = Math.min(1, value / max);
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "60px 1fr 70px", gap: 8, alignItems: "center", fontFamily: stFt.mono, fontSize: 11, padding: "2px 0" }}>
-      <span style={{ fontFamily: stFt.pixel, fontSize: 8, color: stFt.accent, letterSpacing: 1 }}>{label}</span>
-      <div style={{ height: 8, background: stFt.panelOuter, border: `1px solid ${stFt.panelBorderDk}` }}>
-        <div style={{ height: "100%", width: `${pct * 100}%`, background: color, boxShadow: `inset 0 1px 0 rgba(255,255,255,0.4)` }} />
+    <div style={{ display: "grid", gridTemplateColumns: "64px 1fr 72px", gap: 10, alignItems: "center", fontFamily: stFt.mono, fontSize: 11, padding: "3px 0" }}>
+      <span style={{ fontFamily: stFt.serif, fontSize: 11, fontWeight: 600, color: stFt.panelAccent, letterSpacing: 1.5 }}>{label}</span>
+      <div style={{ height: 9, background: stFt.panelBot, border: `1px solid ${stFt.panelBorderMd}`, borderRadius: 1, boxShadow: "inset 0 1px 0 rgba(90,48,24,0.18)" }}>
+        <div style={{ height: "100%", width: `${pct * 100}%`, background: `linear-gradient(180deg, ${color} 0%, ${color}cc 100%)`, boxShadow: `inset 0 1px 0 rgba(255,255,255,0.4)` }} />
       </div>
-      <span style={{ textAlign: "right", fontVariantNumeric: "tabular-nums" }}>
-        {value}<span style={{ color: stFt.fgSoft }}>/{max}</span>
+      <span style={{ textAlign: "right", fontVariantNumeric: "tabular-nums", color: stFt.panelFg, fontWeight: 600 }}>
+        {value}<span style={{ color: stFt.panelDim, fontWeight: 400 }}>/{max}</span>
       </span>
     </div>
   );
 }
 
-export function FFTMenuItem({ children, badge, selected, href, to, onClick }) {
+export function FFTMenuItem({ children, badge, selected, href, onClick }) {
   const [hover, setHover] = React.useState(false);
   const active = hover || selected;
-  const sharedStyle = {
-    display: "grid",
-    gridTemplateColumns: "22px 1fr auto",
-    gap: 10,
-    padding: "8px 6px",
-    textDecoration: "none",
-    color: active ? stFt.accent : stFt.fg,
-    background: active ? "rgba(255,224,122,0.08)" : "transparent",
-    borderBottom: `1px solid ${stFt.panelInnerHi2}30`,
-    fontFamily: stFt.mono,
-    fontSize: 13,
-    textShadow: "1px 1px 0 rgba(0,0,0,0.6)",
-    transition: "all .12s",
-  };
-
-  const content = (
-    <>
-      <span style={{ fontFamily: stFt.pixel, fontSize: 11, color: active ? stFt.accent : "transparent", textShadow: active ? `0 0 6px ${stFt.accent}` : "none" }}>▶</span>
-      {typeof children === "string" ? <span>{children}</span> : children}
-      {badge && <span style={{ fontFamily: stFt.pixel, fontSize: 8, color: stFt.fgSoft, letterSpacing: 1 }}>{badge}</span>}
-    </>
-  );
-
-  if (to) {
-    return (
-      <Link to={to} onClick={onClick} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} style={sharedStyle}>
-        {content}
-      </Link>
-    );
-  }
-
   return (
-    <a href={href || "#"} onClick={onClick} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} style={sharedStyle}>
-      {content}
+    <a href={href || "#"} onClick={onClick} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} style={{
+      display: "grid",
+      gridTemplateColumns: "22px 1fr auto",
+      gap: 10,
+      padding: "10px 8px",
+      textDecoration: "none",
+      color: stFt.panelFg,
+      background: active ? stFt.panelHover : "transparent",
+      borderLeft: active ? `2px solid ${stFt.gold}` : `2px solid transparent`,
+      borderBottom: `1px solid ${stFt.panelInnerHi2}50`,
+      borderRadius: 2,
+      fontFamily: stFt.mono,
+      fontSize: 13,
+      transition: "all .15s",
+    }}>
+      <span style={{
+        fontFamily: stFt.serif,
+        fontSize: 14,
+        fontWeight: 600,
+        color: active ? stFt.gold : "transparent",
+        transition: "all .15s",
+      }}>▸</span>
+      {typeof children === "string" ? <span>{children}</span> : children}
+      {badge && <span style={{
+        fontFamily: stFt.mono,
+        fontSize: 10,
+        color: stFt.panelDim,
+        letterSpacing: 1,
+      }}>{badge}</span>}
     </a>
   );
 }
@@ -139,21 +162,22 @@ export function btnStyle(primary) {
 
 export function fftButtonStyle(active) {
   return {
-    fontFamily: stFt.mono,
-    fontSize: 12,
+    fontFamily: stFt.serif,
+    fontSize: 13,
     fontWeight: 600,
-    color: active ? stFt.accent : stFt.fg,
+    color: stFt.panelFg,
     textDecoration: "none",
     padding: "8px 16px",
-    background: `linear-gradient(180deg, ${stFt.panelTop} 0%, ${stFt.panelMid} 100%)`,
-    border: `1px solid ${active ? stFt.accent : stFt.panelInnerHi2}`,
-    boxShadow: `inset 0 1px 0 ${stFt.panelInnerHi}60, 0 2px 0 rgba(0,0,0,0.4)`,
-    textShadow: "1px 1px 0 rgba(0,0,0,0.6)",
+    background: `linear-gradient(180deg, ${stFt.panelTop} 0%, ${stFt.panelHeader} 100%)`,
+    border: `1px solid ${active ? stFt.gold : stFt.panelBorderMd}`,
+    borderRadius: 3,
+    boxShadow: `inset 0 1px 0 ${stFt.panelInnerHi}, 0 2px 0 rgba(90,48,24,0.25)`,
     cursor: "pointer",
-    transition: "all .12s",
+    transition: "all .15s",
     display: "inline-flex",
     alignItems: "center",
     gap: 8,
+    letterSpacing: 0.5,
   };
 }
 
@@ -161,7 +185,7 @@ export function UtilityBar({ onTogglePlain, plain }) {
   const email = PROFILE.links.find((l) => l.label === "email")?.href || "mailto:";
   const resume = PROFILE.links.find((l) => l.label === "resume")?.href || "#";
   return (
-    <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", marginBottom: 20 }}>
+    <div className="fft-utility-bar" style={{ display: "flex", gap: 8, justifyContent: "flex-end", marginBottom: 20, flexWrap: "wrap" }}>
       <a href={resume} style={btnStyle(true)}>
         <span style={{ fontFamily: stFt.pixel, fontSize: 8, color: stFt.bg }}>↓</span>
         Resume

@@ -249,27 +249,35 @@ const MAP_TILES = (() => {
 
 export function BattleMap() {
   return (
-    <div style={{ position: "relative", width: "100%", height: 360, overflow: "hidden", borderRadius: 4, border: `1px solid ${stFt.panelBorderDk}`, boxShadow: "inset 0 0 60px rgba(0,0,0,0.5)" }}>
-      <div style={{ position: "absolute", inset: 0, background: `linear-gradient(180deg, #1a2548 0%, #2a3068 35%, #4a3868 65%, #6a4868 85%, ${stFt.bg} 100%)` }} />
-      {Array.from({ length: 30 }).map((_, i) => {
-        const x = (i * 379) % 100;
-        const y = ((i * 217) % 30);
-        const sz = i % 6 === 0 ? 2 : 1;
-        return <div key={i} style={{ position: "absolute", left: `${x}%`, top: `${y}%`, width: sz, height: sz, background: "#e8f0ff", opacity: 0.45 + (i % 3) * 0.18 }} />;
-      })}
-      <svg viewBox="0 0 100 18" preserveAspectRatio="none" style={{ position: "absolute", left: 0, right: 0, top: 110, height: 56, width: "100%" }} shapeRendering="crispEdges">
-        <polygon points="0,18 0,10 6,6 12,11 20,4 28,9 36,3 44,8 52,2 60,7 68,5 76,9 84,4 92,8 100,5 100,18" fill="#1a2244" />
-        <polygon points="0,18 0,14 8,11 16,13 24,9 32,12 40,8 48,11 56,7 64,11 72,9 80,12 88,8 96,11 100,9 100,18" fill="#0e1530" />
-      </svg>
+    <div className="bm-frame" style={{ position: "relative", width: "100%", borderRadius: 4, border: `1px solid ${stFt.panelBorderDk}` }}>
+      {/* Stage holds the iso scene. On desktop fills bm-frame; on mobile its
+          height comes from --bm-h while ACT/CT flow as siblings below it. */}
+      <div className="bm-stage" style={{
+        position: "relative",
+        height: "var(--bm-h, 360px)",
+        overflow: "hidden",
+        borderRadius: 3,
+        boxShadow: "inset 0 0 60px rgba(0,0,0,0.5)",
+      }}>
+        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(180deg, #1a2548 0%, #2a3068 35%, #4a3868 65%, #6a4868 85%, ${stFt.bg} 100%)` }} />
+        {Array.from({ length: 30 }).map((_, i) => {
+          const x = (i * 379) % 100;
+          const y = ((i * 217) % 30);
+          const sz = i % 6 === 0 ? 2 : 1;
+          return <div key={i} style={{ position: "absolute", left: `${x}%`, top: `${y}%`, width: sz, height: sz, background: "#e8f0ff", opacity: 0.45 + (i % 3) * 0.18 }} />;
+        })}
+        <svg viewBox="0 0 100 18" preserveAspectRatio="none" style={{ position: "absolute", left: 0, right: 0, top: "30%", height: 56, width: "100%" }} shapeRendering="crispEdges">
+          <polygon points="0,18 0,10 6,6 12,11 20,4 28,9 36,3 44,8 52,2 60,7 68,5 76,9 84,4 92,8 100,5 100,18" fill="#1a2244" />
+          <polygon points="0,18 0,14 8,11 16,13 24,9 32,12 40,8 48,11 56,7 64,11 72,9 80,12 88,8 96,11 100,9 100,18" fill="#0e1530" />
+        </svg>
 
-      <div style={{ position: "absolute", inset: 0 }}>
-        <div style={{ position: "absolute", left: 0, right: 0, top: 80, height: 280 }}>
+        <div className="bm-iso-layer" style={{ position: "absolute", left: 0, right: 0, top: 80, bottom: 0, transformOrigin: "50% 0" }}>
           {MAP_TILES.map((t, i) => (
             <IsoTile key={i} x={t.x} y={t.y} terrain={t.terrain} height={t.height} variant={t.variant}>
               {t.hasHero && (
                 <div style={{ position: "relative" }}>
                   <div style={{ position: "absolute", left: "50%", top: -16, transform: "translateX(-50%)", fontFamily: stFt.pixel, fontSize: 13, color: stFt.accent, textShadow: `0 0 8px ${stFt.accent}, 1px 1px 0 #000`, animation: "ft-bob 0.8s ease-in-out infinite" }}>▼</div>
-                  <FFTCharacter scale={2} />
+                  <FFTCharacter />
                 </div>
               )}
               {t.hasTree && <PixelTree scale={3} />}
@@ -281,30 +289,36 @@ export function BattleMap() {
         </div>
       </div>
 
-      {/* Floating ACT menu */}
-      <div style={{ position: "absolute", left: 20, bottom: 14, zIndex: 20, width: 200 }}>
+      {/* Floating ACT menu — absolute over stage on desktop, stacked below on mobile */}
+      <div className="bm-act" style={{ position: "absolute", left: 20, bottom: 14, zIndex: 20, width: 200 }}>
         <FFTPanel>
-          <div style={{ fontFamily: stFt.pixel, fontSize: 9, color: stFt.accent, letterSpacing: 2, marginBottom: 6 }}>◆ ACT</div>
+          <div style={{ fontFamily: stFt.serif, fontSize: 14, fontWeight: 600, color: stFt.panelFg, letterSpacing: 2, marginBottom: 10, display: "flex", alignItems: "center", gap: 8 }}>
+            <span style={{ color: stFt.gold, fontSize: 10 }}>◆</span>
+            <span>Act</span>
+          </div>
           {[
-            ["ABOUT", "→ profile"],
-            ["WORK", "→ inventory"],
-            ["NOW", "→ status"],
-            ["CONTACT", "→ talk"],
+            ["About", "→ profile"],
+            ["Work", "→ inventory"],
+            ["Now", "→ status"],
+            ["Contact", "→ talk"],
           ].map(([k, v]) => (
             <FFTMenuItem key={k} badge={v}>{k}</FFTMenuItem>
           ))}
         </FFTPanel>
       </div>
 
-      {/* Floating CT panel */}
-      <div style={{ position: "absolute", right: 20, top: 14, zIndex: 20, width: 184 }}>
+      {/* Floating CT panel — absolute over stage on desktop, stacked below on mobile */}
+      <div className="bm-ct" style={{ position: "absolute", right: 20, top: 14, zIndex: 20, width: 184 }}>
         <FFTPanel>
-          <div style={{ fontFamily: stFt.pixel, fontSize: 9, color: stFt.accent, letterSpacing: 2, marginBottom: 6 }}>◆ CT</div>
-          <div style={{ display: "grid", gap: 4, fontFamily: stFt.mono, fontSize: 11 }}>
-            {[["BRAVE", 70], ["FAITH", 52], ["SPEED", 14], ["MOVE", 4]].map(([k, v]) => (
-              <div key={k} style={{ display: "flex", justifyContent: "space-between" }}>
-                <span style={{ color: stFt.accent, fontFamily: stFt.pixel, fontSize: 8 }}>{k}</span>
-                <span>{v}</span>
+          <div style={{ fontFamily: stFt.serif, fontSize: 14, fontWeight: 600, color: stFt.panelFg, letterSpacing: 2, marginBottom: 10, display: "flex", alignItems: "center", gap: 8 }}>
+            <span style={{ color: stFt.gold, fontSize: 10 }}>◆</span>
+            <span>CT</span>
+          </div>
+          <div style={{ display: "grid", gap: 5, fontFamily: stFt.mono, fontSize: 12 }}>
+            {[["Brave", 70], ["Faith", 52], ["Speed", 14], ["Move", 4]].map(([k, v]) => (
+              <div key={k} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                <span style={{ color: stFt.panelAccent, fontFamily: stFt.serif, fontSize: 12, fontWeight: 600, letterSpacing: 1, textTransform: "uppercase" }}>{k}</span>
+                <span style={{ fontVariantNumeric: "tabular-nums", color: stFt.panelFg, fontWeight: 600 }}>{v}</span>
               </div>
             ))}
           </div>

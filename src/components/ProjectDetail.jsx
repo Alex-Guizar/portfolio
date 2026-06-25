@@ -8,8 +8,8 @@ function ScreenshotPlaceholder({ project }) {
     <div style={{
       width: "100%",
       aspectRatio: "16 / 9",
-      background: stFt.bgPanel,
-      border: `1px solid ${stFt.panelBorderDk}`,
+      background: stP.bgPanel,
+      border: `1px solid ${stP.panelBorderDk}`,
       backgroundImage: `repeating-linear-gradient(
         135deg,
         transparent 0px,
@@ -24,23 +24,24 @@ function ScreenshotPlaceholder({ project }) {
       alignItems: "center",
       justifyContent: "center",
       gap: 12,
-      color: stFt.dim,
+      color: stP.dim,
     }}>
+      {/* corner crosshairs */}
       {[
         { top: 8, left: 8 }, { top: 8, right: 8 },
         { bottom: 8, left: 8 }, { bottom: 8, right: 8 },
       ].map((pos, i) => (
         <div key={i} style={{ position: "absolute", ...pos, width: 14, height: 14 }}>
-          <div style={{ position: "absolute", inset: 0, borderTop: `1px solid ${stFt.panelInnerHi2}`, borderLeft: `1px solid ${stFt.panelInnerHi2}`, transform: (pos.right !== undefined ? "scaleX(-1)" : "") + (pos.bottom !== undefined ? " scaleY(-1)" : "") }} />
+          <div style={{ position: "absolute", inset: 0, borderTop: `1px solid ${stP.panelInnerHi2}`, borderLeft: `1px solid ${stP.panelInnerHi2}`, transform: (pos.right !== undefined ? "scaleX(-1)" : "") + (pos.bottom !== undefined ? " scaleY(-1)" : "") }} />
         </div>
       ))}
 
-      <div style={{ fontFamily: stFt.pixel, fontSize: 10, color: stFt.accent, letterSpacing: 2 }}>◆ PREVIEW</div>
-      <div style={{ fontFamily: stFt.mono, fontSize: 22, fontWeight: 600, color: stFt.fg, textShadow: "1px 1px 0 rgba(0,0,0,0.6)" }}>{project.title}</div>
-      <div style={{ fontFamily: stFt.mono, fontSize: 12, color: stFt.fgSoft, maxWidth: 380, textAlign: "center", padding: "0 16px", lineHeight: 1.5 }}>
+      <div style={{ fontFamily: stP.serif, fontSize: 13, fontWeight: 600, color: stP.accent, letterSpacing: 3, textShadow: `0 0 6px ${stP.accent}40`, textTransform: "uppercase" }}>◆ Preview</div>
+      <div style={{ fontFamily: stP.serif, fontSize: 26, fontWeight: 600, color: stP.fg, textShadow: "1px 1px 0 rgba(0,0,0,0.6)" }}>{project.title}</div>
+      <div style={{ fontFamily: stP.mono, fontSize: 12, color: stP.fgSoft, maxWidth: 380, textAlign: "center", padding: "0 16px", lineHeight: 1.5 }}>
         {project.tagline || project.blurb}
       </div>
-      <div style={{ fontFamily: stFt.pixel, fontSize: 8, color: stFt.dim, letterSpacing: 1.5, marginTop: 8 }}>
+      <div style={{ fontFamily: stP.mono, fontSize: 10, color: stP.dim, letterSpacing: 1, marginTop: 8, fontStyle: "italic" }}>
         [ drop screenshot or demo gif here ]
       </div>
     </div>
@@ -50,13 +51,15 @@ function ScreenshotPlaceholder({ project }) {
 function StatTile({ label, value }) {
   return (
     <div style={{
-      background: stFt.bgPanel,
-      border: `1px solid ${stFt.panelInnerHi2}40`,
+      background: `linear-gradient(180deg, ${stP.panelTop} 0%, ${stP.panelHeader} 100%)`,
+      border: `1px solid ${stP.panelBorderMd}`,
+      borderRadius: 3,
+      boxShadow: `inset 0 1px 0 ${stP.panelInnerHi}, 0 2px 0 rgba(90,48,24,0.18)`,
       padding: "12px 16px",
       flex: 1,
     }}>
-      <div style={{ fontFamily: stFt.pixel, fontSize: 8, color: stFt.accent, letterSpacing: 1.5, marginBottom: 8 }}>◆ {label}</div>
-      <div style={{ fontFamily: stFt.mono, fontSize: 15, color: stFt.fg, fontWeight: 600 }}>{value || "—"}</div>
+      <div style={{ fontFamily: stP.serif, fontSize: 11, fontWeight: 600, color: stP.panelAccent, letterSpacing: 2, marginBottom: 6, textTransform: "uppercase" }}>{label}</div>
+      <div style={{ fontFamily: stP.mono, fontSize: 14, color: stP.panelFg, fontWeight: 600 }}>{value || "—"}</div>
     </div>
   );
 }
@@ -64,36 +67,38 @@ function StatTile({ label, value }) {
 function MetricCallout({ label, value }) {
   return (
     <div style={{
-      background: `linear-gradient(180deg, ${stFt.panelTop}20 0%, transparent 100%)`,
-      border: `1px solid ${stFt.panelInnerHi2}50`,
-      padding: "12px 14px",
+      background: `linear-gradient(180deg, ${stP.panelHeader} 0%, ${stP.panelMid} 100%)`,
+      border: `1px solid ${stP.panelBorderMd}`,
+      borderRadius: 3,
+      boxShadow: `inset 0 1px 0 ${stP.panelInnerHi}`,
+      padding: "14px 12px",
       textAlign: "center",
       flex: 1,
       minWidth: 90,
     }}>
-      <div style={{ fontFamily: stFt.mono, fontSize: 22, fontWeight: 800, color: stFt.accent, letterSpacing: -0.5, textShadow: `0 0 8px ${stFt.accent}40` }}>{value}</div>
-      <div style={{ fontFamily: stFt.pixel, fontSize: 7, color: stFt.fgSoft, letterSpacing: 1.5, marginTop: 6 }}>{label}</div>
+      <div style={{ fontFamily: stP.serif, fontSize: 26, fontWeight: 700, color: stP.panelAccent, letterSpacing: -0.5 }}>{value}</div>
+      <div style={{ fontFamily: stP.serif, fontSize: 10, fontWeight: 600, color: stP.panelDim, letterSpacing: 2, marginTop: 4, textTransform: "uppercase" }}>{label}</div>
     </div>
   );
 }
 
 function ProjectSection({ title, num, children, empty }) {
   return (
-    <FFTPanel title={title} cornerStat={num ? `${num}` : null} style={{ marginBottom: 16 }}>
+    <FP title={title} cornerStat={num ? `${num}` : null} style={{ marginBottom: 16 }}>
       {empty ? (
-        <div style={{ fontFamily: stFt.mono, fontSize: 12, color: stFt.fgSoft, fontStyle: "italic", padding: "8px 0" }}>
-          — placeholder — fill in data for this project.
+        <div style={{ fontFamily: stP.mono, fontSize: 12, color: stP.panelDim, fontStyle: "italic", padding: "8px 0" }}>
+          — placeholder — fill in <code style={{ background: stP.panelHeader, padding: "1px 5px", border: `1px solid ${stP.panelInnerHi2}`, color: stP.panelAccent }}>data.jsx</code> for this project.
         </div>
       ) : children}
-    </FFTPanel>
+    </FP>
   );
 }
 
 function Paragraphs({ items }) {
   const arr = Array.isArray(items) ? items : items ? [items] : [];
   return arr.map((t, i) => (
-    <p key={i} style={{ fontSize: 14, lineHeight: 1.75, color: stFt.fgSoft, margin: "0 0 12px", textShadow: "1px 1px 0 rgba(0,0,0,0.5)" }}>
-      <span style={{ color: stFt.accent, fontFamily: stFt.pixel, fontSize: 9, marginRight: 8, letterSpacing: 1 }}>{String(i + 1).padStart(2, "0")}</span>
+    <p key={i} style={{ fontSize: 14, lineHeight: 1.75, color: stP.panelFgSoft, margin: "0 0 12px" }}>
+      <span style={{ color: stP.panelAccent, fontFamily: stP.serif, fontSize: 14, fontWeight: 600, marginRight: 8, letterSpacing: 1 }}>{String(i + 1).padStart(2, "0")}</span>
       {t}
     </p>
   ));
@@ -101,85 +106,90 @@ function Paragraphs({ items }) {
 
 function StatusPill({ status }) {
   const colors = {
-    LIVE:           { bg: stFt.hpGreen, fg: "#0a1a08" },
-    "IN-PROGRESS":  { bg: stFt.ctYellow, fg: "#1a1408" },
+    LIVE:           { bg: stP.hpGreen, fg: "#0a1a08" },
+    "IN-PROGRESS":  { bg: stP.ctYellow, fg: "#1a1408" },
     ARCHIVED:       { bg: "#7080a0", fg: "#0a0e18" },
   };
   const c = colors[status] || colors.LIVE;
   return (
     <span style={{
       display: "inline-block",
-      fontFamily: stFt.pixel,
-      fontSize: 9,
-      letterSpacing: 1.5,
-      padding: "5px 10px",
+      fontFamily: stP.serif,
+      fontSize: 11,
+      fontWeight: 600,
+      letterSpacing: 2,
+      padding: "5px 12px",
       background: c.bg,
       color: c.fg,
       boxShadow: `inset 0 1px 0 rgba(255,255,255,0.4)`,
+      textTransform: "uppercase",
     }}>● {status || "DRAFT"}</span>
   );
 }
 
 export function ProjectDetail({ project, onTogglePlain, plain, onBack }) {
-  const i = PROFILE.work.findIndex((w) => w.id === project.id);
-  const prev = PROFILE.work[(i - 1 + PROFILE.work.length) % PROFILE.work.length];
-  const next = PROFILE.work[(i + 1) % PROFILE.work.length];
+  const p = window.PROFILE;
+  const i = p.work.findIndex((w) => w.id === project.id);
+  const prev = p.work[(i - 1 + p.work.length) % p.work.length];
+  const next = p.work[(i + 1) % p.work.length];
 
   const primary = project.projectLinks?.find((l) => l.kind === "primary") || (project.href ? { label: "Visit site", href: project.href } : null);
   const secondary = project.projectLinks?.filter((l) => l.kind !== "primary") || [];
 
   return (
-    <div className="min-h-screen" style={{ background: stFt.bg, color: stFt.fg, fontFamily: stFt.mono }}>
-      <div className="pt-8 px-10 pb-14 container-max mx-auto box-border">
+    <div style={{ background: stP.bg, color: stP.fg, fontFamily: stP.mono, minHeight: "100%" }}>
+      <div className="fft-page" style={{ padding: "32px 40px 56px", maxWidth: 1200, margin: "0 auto", boxSizing: "border-box" }}>
 
-        <div className="flex justify-between items-center gap-4 flex-wrap mb-5">
-          <div className="flex items-center gap-4 text-sm" style={{ color: stFt.fgSoft }}>
-            <button type="button" onClick={(e) => { e.preventDefault(); onBack(); }} style={{ ...btnStyle(false), fontSize: 12, padding: "6px 12px" }}>
-              <span style={{ fontFamily: stFt.pixel, fontSize: 8 }}>◀</span>
+        {/* Top bar: back + breadcrumb + utility */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, gap: 16, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 12, color: stP.fgSoft }}>
+            <a href="#" onClick={(e) => { e.preventDefault(); onBack(); }} style={{ ...bs(false), fontSize: 12, padding: "6px 12px" }}>
+              <span style={{ fontFamily: stP.serif, fontSize: 12, fontWeight: 600 }}>◀</span>
               Back to map
-            </button>
-            <span style={{ fontFamily: stFt.pixel, fontSize: 9, color: stFt.dim, letterSpacing: 1.5 }}>
-              INVENTORY <span style={{ margin: "0 8px" }}>▸</span> <span style={{ color: stFt.accent }}>{project.title.toUpperCase()}</span>
+            </a>
+            <span style={{ fontFamily: stP.serif, fontSize: 11, fontWeight: 500, color: stP.dim, letterSpacing: 2, textTransform: "uppercase" }}>
+              Inventory <span style={{ margin: "0 8px" }}>▸</span> <span style={{ color: stP.accent }}>{project.title}</span>
             </span>
           </div>
-          <UtilityBar onTogglePlain={onTogglePlain} plain={plain} />
+          <UB onTogglePlain={onTogglePlain} plain={plain} />
         </div>
 
-        <div className="grid grid-cols-[1.6fr_1fr] gap-4 mb-4">
-          <FFTPanel inset={2}>
-            <div className="p-0.5">
+        {/* HERO: screenshot + summary side-by-side */}
+        <div className="fft-grid-project-hero" style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr", gap: 16, marginBottom: 16 }}>
+          <FP inset={2}>
+            <div style={{ padding: 2 }}>
               <ScreenshotPlaceholder project={project} />
             </div>
-          </FFTPanel>
+          </FP>
 
-          <FFTPanel title="ITEM" cornerStat={`#${String(i + 1).padStart(2, "0")} OF ${String(PROFILE.work.length).padStart(2, "0")}`}>
-            <div className="flex flex-col h-full gap-3">
-              <div className="flex justify-between items-center">
+          <FP title="Item" cornerStat={`#${String(i + 1).padStart(2, "0")} of ${String(p.work.length).padStart(2, "0")}`}>
+            <div style={{ display: "flex", flexDirection: "column", height: "100%", gap: 14 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <StatusPill status={project.status} />
-                <span style={{ fontFamily: stFt.pixel, fontSize: 11, color: stFt.accent, letterSpacing: 1 }}>{project.year}</span>
+                <span style={{ fontFamily: stP.serif, fontSize: 14, fontWeight: 600, color: stP.panelAccent, letterSpacing: 1.5 }}>{project.year}</span>
               </div>
 
-              <h1 style={{ fontFamily: stFt.mono, fontSize: 32, fontWeight: 800, margin: 0, letterSpacing: -1, lineHeight: 1.1, color: stFt.fg, textShadow: "1px 1px 0 rgba(0,0,0,0.6)" }}>
+              <h1 className="fft-project-title" style={{ fontFamily: stP.serif, fontSize: 30, fontWeight: 700, margin: 0, letterSpacing: 0.5, lineHeight: 1.15, color: stP.panelFg }}>
                 {project.title}
               </h1>
 
               {project.tagline && (
-                <p style={{ fontSize: 14, color: stFt.fgSoft, margin: 0, lineHeight: 1.6, textShadow: "1px 1px 0 rgba(0,0,0,0.5)" }}>
+                <p style={{ fontSize: 14, color: stP.panelFgSoft, margin: 0, lineHeight: 1.6 }}>
                   {project.tagline}
                 </p>
               )}
 
-              <div className="flex flex-col gap-2 mt-auto">
+              <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: "auto" }}>
                 {primary && (
-                  <a href={primary.href} style={{ ...fftButtonStyle(false), justifyContent: "center", padding: "10px 16px" }}>
-                    <span style={{ fontFamily: stFt.pixel, fontSize: 9, color: stFt.accent }}>▶</span>
-                    {primary.label} <span style={{ color: stFt.accent }}>↗</span>
+                  <a href={primary.href} style={{ ...ffbs(false), justifyContent: "center", padding: "10px 16px" }}>
+                    <span style={{ fontFamily: stP.serif, fontSize: 12, fontWeight: 600, color: stP.gold }}>▸</span>
+                    {primary.label} <span style={{ color: stP.gold }}>↗</span>
                   </a>
                 )}
                 {secondary.length > 0 && (
-                  <div className="flex gap-2 flex-wrap">
+                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
                     {secondary.map((l) => (
-                      <a key={l.label} href={l.href} style={{ ...btnStyle(false), padding: "6px 10px", fontSize: 11, flex: "1 1 0", minWidth: 0, justifyContent: "center" }}>
+                      <a key={l.label} href={l.href} style={{ ...bs(false), padding: "6px 10px", fontSize: 11, flex: "1 1 0", minWidth: 0, justifyContent: "center" }}>
                         {l.label} ↗
                       </a>
                     ))}
@@ -187,34 +197,36 @@ export function ProjectDetail({ project, onTogglePlain, plain, onBack }) {
                 )}
               </div>
             </div>
-          </FFTPanel>
+          </FP>
         </div>
 
-        <div className="flex flex-wrap gap-4 mb-4">
+        {/* STAT STRIP */}
+        <div className="fft-stat-strip" style={{ display: "flex", gap: 16, marginBottom: 16, flexWrap: "wrap" }}>
           <StatTile label="ROLE" value={project.role} />
           <StatTile label="DURATION" value={project.duration} />
           <StatTile label="TEAM" value={project.team} />
           <StatTile label="STACK" value={project.stack} />
         </div>
 
-        <div className="grid grid-cols-[2fr_1fr] gap-4">
+        {/* TWO-COLUMN: narrative + side info */}
+        <div className="fft-grid-2col-aside" style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 16 }}>
           <div>
-            <ProjectSection title="DESCRIPTION · BLURB" empty={!project.blurb && !project.longBlurb}>
-              <p style={{ fontSize: 15, color: stFt.fg, lineHeight: 1.7, margin: 0, textShadow: "1px 1px 0 rgba(0,0,0,0.5)" }}>{project.blurb}</p>
+            <ProjectSection title="Description" empty={!project.blurb && !project.longBlurb}>
+              <p style={{ fontSize: 15, color: stP.panelFg, lineHeight: 1.7, margin: 0 }}>{project.blurb}</p>
             </ProjectSection>
 
-            <ProjectSection title="◆ I · THE PROBLEM" empty={!project.problem}>
+            <ProjectSection title="I · The Problem" empty={!project.problem}>
               <Paragraphs items={project.problem} />
             </ProjectSection>
 
-            <ProjectSection title="◆ II · THE APPROACH" empty={!project.approach}>
+            <ProjectSection title="II · The Approach" empty={!project.approach}>
               <Paragraphs items={project.approach} />
             </ProjectSection>
 
-            <ProjectSection title="◆ III · THE OUTCOME" empty={!project.outcome && !project.metrics}>
+            <ProjectSection title="III · The Outcome" empty={!project.outcome && !project.metrics}>
               <Paragraphs items={project.outcome} />
               {project.metrics?.length > 0 && (
-                <div className="flex flex-wrap gap-2 mt-3 pt-3" style={{ borderTop: `1px solid ${stFt.panelInnerHi2}40` }}>
+                <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14, paddingTop: 14, borderTop: `1px solid ${stP.panelInnerHi2}` }}>
                   {project.metrics.map((m, i) => <MetricCallout key={i} label={m.label} value={m.value} />)}
                 </div>
               )}
@@ -222,94 +234,98 @@ export function ProjectDetail({ project, onTogglePlain, plain, onBack }) {
           </div>
 
           <div>
-            <ProjectSection title="ABILITIES · FEATURES" empty={!project.features}>
+            <ProjectSection title="Abilities · Features" empty={!project.features}>
               <div>
                 {project.features?.map((f, i) => (
-                  <div key={i} className="grid grid-cols-[22px_1fr] gap-2 py-2 border-b" style={{ borderBottom: `1px dashed ${stFt.panelInnerHi2}30`, color: stFt.fg, textShadow: "1px 1px 0 rgba(0,0,0,0.5)", lineHeight: 1.5, fontSize: 12 }}>
-                    <span style={{ fontFamily: stFt.pixel, fontSize: 9, color: stFt.accent, letterSpacing: 1 }}>{String(i + 1).padStart(2, "0")}</span>
+                  <div key={i} style={{ display: "grid", gridTemplateColumns: "22px 1fr", gap: 8, padding: "8px 4px", borderBottom: `1px dashed ${stP.panelInnerHi2}`, fontSize: 12, color: stP.panelFg, lineHeight: 1.5 }}>
+                    <span style={{ fontFamily: stP.serif, fontSize: 12, fontWeight: 600, color: stP.panelAccent, letterSpacing: 1 }}>{String(i + 1).padStart(2, "0")}</span>
                     <span>{f}</span>
                   </div>
                 ))}
               </div>
             </ProjectSection>
 
-            <ProjectSection title="ENCHANTMENTS · STACK" empty={!project.stackDetail && !project.stack}>
+            <ProjectSection title="Enchantments · Stack" empty={!project.stackDetail && !project.stack}>
               {project.stackDetail?.length > 0 ? (
-                <div className="grid gap-2">
+                <div style={{ display: "grid", gap: 12 }}>
                   {project.stackDetail.map((s, i) => (
                     <div key={i}>
-                      <div style={{ fontFamily: stFt.pixel, fontSize: 10, color: stFt.accent, letterSpacing: 1, marginBottom: 4 }}>{s.tech}</div>
-                      <div style={{ fontSize: 11, color: stFt.fgSoft, lineHeight: 1.5 }}>{s.reason}</div>
+                      <div style={{ fontFamily: stP.serif, fontSize: 13, fontWeight: 600, color: stP.panelAccent, letterSpacing: 1.5, marginBottom: 4, textTransform: "uppercase" }}>{s.tech}</div>
+                      <div style={{ fontSize: 11, color: stP.panelFgSoft, lineHeight: 1.5 }}>{s.reason}</div>
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className="flex gap-2 flex-wrap">
+                <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
                   {(project.stack || "").split(" · ").map((s) => (
-                    <span key={s} style={{ fontFamily: stFt.mono, fontSize: 11, color: stFt.fg, padding: "4px 10px", background: stFt.panelOuter, border: `1px solid ${stFt.panelInnerHi2}` }}>{s}</span>
+                    <span key={s} style={{ fontFamily: stP.mono, fontSize: 11, color: stP.panelFg, padding: "4px 10px", background: stP.panelHeader, border: `1px solid ${stP.panelBorderMd}`, borderRadius: 99 }}>{s}</span>
                   ))}
                 </div>
               )}
             </ProjectSection>
 
-            <ProjectSection title="WAYPOINTS · LINKS" empty={!project.projectLinks && !project.href}>
-              <div className="grid gap-1">
+            <ProjectSection title="Waypoints · Links" empty={!project.projectLinks && !project.href}>
+              <div style={{ display: "grid", gap: 4 }}>
                 {project.projectLinks?.map((l) => (
-                  <FFTMenuItem key={l.label} href={l.href} badge={l.kind === "primary" ? "primary" : null}>
-                    <span className="flex items-center gap-2">{l.label}<span style={{ color: stFt.accent }}>↗</span></span>
-                  </FFTMenuItem>
+                  <FMI key={l.label} href={l.href} badge={l.kind === "primary" ? "primary" : null}>
+                    <span style={{ display: "flex", alignItems: "center", gap: 8 }}>{l.label}<span style={{ color: stP.gold }}>↗</span></span>
+                  </FMI>
                 ))}
               </div>
             </ProjectSection>
           </div>
         </div>
 
+        {/* GALLERY */}
         {project.gallery?.length > 0 && (
-          <ProjectSection title={`GALLERY · ${project.gallery.length} FRAMES`} style={{ marginTop: 16 }}>
-            <div style={{ gridTemplateColumns: `repeat(${Math.min(project.gallery.length, 3)}, 1fr)` }} className="grid gap-3">
+          <ProjectSection title={`Gallery · ${project.gallery.length} Frames`} style={{ marginTop: 16 }}>
+            <div className="fft-gallery-grid" style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(project.gallery.length, 3)}, 1fr)`, gap: 12 }}>
               {project.gallery.map((g, i) => (
-                <div key={i} className="flex flex-col gap-2">
+                <div key={i} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                   <div style={{
                     aspectRatio: "16 / 10",
-                    background: stFt.bgPanel,
-                    border: `1px solid ${stFt.panelInnerHi2}40`,
-                    backgroundImage: `repeating-linear-gradient(135deg, transparent 0, transparent 10px, rgba(74,112,200,0.06) 10px, rgba(74,112,200,0.06) 20px)`,
+                    background: stP.panelHeader,
+                    border: `1px solid ${stP.panelBorderMd}`,
+                    borderRadius: 3,
+                    backgroundImage: `repeating-linear-gradient(135deg, transparent 0, transparent 10px, rgba(90,48,24,0.06) 10px, rgba(90,48,24,0.06) 20px)`,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontFamily: stFt.pixel,
-                    fontSize: 8,
-                    color: stFt.dim,
-                    letterSpacing: 1.5,
+                    fontFamily: stP.serif,
+                    fontSize: 11,
+                    fontWeight: 600,
+                    color: stP.panelDim,
+                    letterSpacing: 2,
                   }}>
                     [ {String(i + 1).padStart(2, "0")} ]
                   </div>
-                  <div style={{ fontFamily: stFt.mono, fontSize: 11, color: stFt.fgSoft, lineHeight: 1.4 }}>{g.caption}</div>
+                  <div style={{ fontFamily: stP.mono, fontSize: 11, color: stP.panelFgSoft, lineHeight: 1.4 }}>{g.caption}</div>
                 </div>
               ))}
             </div>
           </ProjectSection>
         )}
 
-        <div className="grid grid-cols-[1fr_auto_1fr] gap-4 items-center mt-6">
-          <Link to={`/project/${prev.id}`} style={{ ...btnStyle(false), justifyContent: "flex-start", padding: "12px 16px", fontSize: 12 }} className="flex items-center gap-3">
-            <span style={{ fontFamily: stFt.pixel, fontSize: 9, color: stFt.accent }}>◀</span>
-            <div className="flex flex-col items-start text-left">
-              <span style={{ fontFamily: stFt.pixel, fontSize: 7, color: stFt.dim, letterSpacing: 1 }}>PREV ITEM</span>
-              <span style={{ color: stFt.fg, marginTop: 2 }}>{prev.title}</span>
+        {/* Footer nav: prev / back / next */}
+        <div className="fft-prev-back-next" style={{ marginTop: 24, display: "grid", gridTemplateColumns: "1fr auto 1fr", gap: 16, alignItems: "center" }}>
+          <a href={`#/project/${prev.id}`} style={{ ...bs(false), justifyContent: "flex-start", padding: "12px 16px", fontSize: 12 }}>
+            <span style={{ fontFamily: stP.serif, fontSize: 13, fontWeight: 600, color: stP.accent }}>◀</span>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", textAlign: "left" }}>
+              <span style={{ fontFamily: stP.serif, fontSize: 10, fontWeight: 600, color: stP.dim, letterSpacing: 2, textTransform: "uppercase" }}>Prev Item</span>
+              <span style={{ color: stP.fg, marginTop: 2 }}>{prev.title}</span>
             </div>
-          </Link>
-          <button type="button" onClick={(e) => { e.preventDefault(); onBack(); }} style={{ ...btnStyle(true), padding: "12px 20px", fontSize: 12 }} className="mx-auto">
-            <span style={{ fontFamily: stFt.pixel, fontSize: 9 }}>◆</span>
+          </a>
+          <a href="#" onClick={(e) => { e.preventDefault(); onBack(); }} style={{ ...bs(true), padding: "12px 20px", fontSize: 12 }}>
+            <span style={{ fontFamily: stP.serif, fontSize: 13, fontWeight: 600 }}>◆</span>
             Back to map
-          </button>
-          <Link to={`/project/${next.id}`} style={{ ...btnStyle(false), justifyContent: "flex-end", padding: "12px 16px", fontSize: 12 }} className="flex items-center gap-3 justify-end">
-            <div className="flex flex-col items-end text-right">
-              <span style={{ fontFamily: stFt.pixel, fontSize: 7, color: stFt.dim, letterSpacing: 1 }}>NEXT ITEM</span>
-              <span style={{ color: stFt.fg, marginTop: 2 }}>{next.title}</span>
+          </a>
+          <a href={`#/project/${next.id}`} style={{ ...bs(false), justifyContent: "flex-end", padding: "12px 16px", fontSize: 12 }}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", textAlign: "right" }}>
+              <span style={{ fontFamily: stP.serif, fontSize: 10, fontWeight: 600, color: stP.dim, letterSpacing: 2, textTransform: "uppercase" }}>Next Item</span>
+              <span style={{ color: stP.fg, marginTop: 2 }}>{next.title}</span>
             </div>
-            <span style={{ fontFamily: stFt.pixel, fontSize: 9, color: stFt.accent }}>▶</span>
-          </Link>
+            <span style={{ fontFamily: stP.serif, fontSize: 13, fontWeight: 600, color: stP.accent }}>▶</span>
+          </a>
         </div>
       </div>
     </div>
