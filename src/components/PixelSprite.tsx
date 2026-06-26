@@ -135,7 +135,7 @@ const SPRITES = {
   },
 };
 
-export function PixelSprite({ name, scale = 4, style }) {
+export function PixelSprite({ name, scale = 4, style }: { name: keyof typeof SPRITES; scale?: number; style?: React.CSSProperties }) {
   const s = SPRITES[name];
   if (!s) return null;
   return (
@@ -152,17 +152,18 @@ export function PixelSprite({ name, scale = 4, style }) {
       }}
       aria-hidden="true"
     >
-      {s.pixels.flat().map((p, i) => (
-        <div key={i} style={{ background: p ? s.palette[p] : "transparent" }} />
-      ))}
+      {s.pixels.flat().map((p, i) => {
+        const background = s.palette[p] ?? "transparent";
+        return <div key={i} style={{ background: p ? background : "transparent" }} />;
+      })}
     </div>
   );
 }
 
-export function IdleAvatar({ scale = 6, style }) {
+export function IdleAvatar({ scale = 6, style }: { scale?: number; style?: React.CSSProperties }) {
   const [blink, setBlink] = React.useState(false);
   React.useEffect(() => {
-    let t;
+    let t: ReturnType<typeof setTimeout>;
     function loop() {
       setBlink(true);
       setTimeout(() => setBlink(false), 140);
@@ -192,9 +193,10 @@ export function IdleAvatar({ scale = 6, style }) {
       }}
       aria-hidden="true"
     >
-      {pixels.flat().map((p, i) => (
-        <div key={i} style={{ background: p ? s.palette[p] : "transparent" }} />
-      ))}
+      {pixels.flat().map((p, i) => {
+        const background = s.palette[p] ?? "transparent";
+        return <div key={i} style={{ background: p ? background : "transparent" }} />;
+      })}
     </div>
   );
 }

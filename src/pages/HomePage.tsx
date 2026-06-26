@@ -7,7 +7,15 @@ import { PROFILE } from '../data/profile';
 
 const STORAGE_KEY = "alex-profile-mode";
 
-function TacticsGame({ onTogglePlain }) {
+interface TogglePlainProps {
+  onTogglePlain: () => void;
+}
+
+interface HomePageProps {
+  onNavigateToProject?: () => void;
+}
+
+function TacticsGame({ onTogglePlain }: TogglePlainProps) {
   return (
     <div style={{ background: stFt.bg, color: stFt.fg, fontFamily: stFt.mono, minHeight: "100%" }}>
       <style>{`
@@ -92,7 +100,7 @@ function TacticsGame({ onTogglePlain }) {
         <FFTPanel title={`Inventory · ${PROFILE.work.length} Items Deployed`} cornerStat="◆ ◆ ◆" style={{ marginBottom: 16 }}>
           <div>
             {PROFILE.work.map((w) => (
-              <FFTMenuItem key={w.id} badge={w.year} href={`#/project/${w.id}`}>
+              <FFTMenuItem key={w.id} badge={w.year} to={`/project/${w.id}`}>
                 <div className="fft-grid-inv-row" style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", gap: 12, alignItems: "center" }}>
                   <PixelSprite name="floppy" scale={3} />
                   <div>
@@ -150,7 +158,7 @@ function TacticsGame({ onTogglePlain }) {
   );
 }
 
-function TacticsPlain({ onTogglePlain }) {
+function TacticsPlain({ onTogglePlain }: TogglePlainProps) {
   return (
     <div style={{ background: stFt.bg, color: stFt.fgPlain, fontFamily: stFt.mono, minHeight: "100%" }}>
       <div className="plain-page" style={{ padding: "40px 56px 64px", maxWidth: 880, margin: "0 auto", boxSizing: "border-box" }}>
@@ -165,14 +173,14 @@ function TacticsPlain({ onTogglePlain }) {
           <img src="assets/character.png" width={66} height={117} style={{ imageRendering: "pixelated", opacity: 0.85 }} alt="" />
         </div>
 
-        <SPlain title="About">
+        <SectionPlain title="About">
           {PROFILE.longBlurb.map((b, i) => <p key={i} style={{ fontSize: 15, lineHeight: 1.8, color: stFt.fgPlainSoft, margin: "0 0 14px" }}>{b}</p>)}
-        </SPlain>
+        </SectionPlain>
 
-        <SPlain title="Selected Work">
+        <SectionPlain title="Selected Work">
           <div>
             {PROFILE.work.map((w, i) => (
-              <a key={w.id} href={`#/project/${w.id}`} className="plain-work-row" style={{
+              <Link key={w.id} to={`/project/${w.id}`} className="plain-work-row" style={{
                 display: "grid",
                 gridTemplateColumns: "auto 1fr 100px",
                 gap: 20,
@@ -197,12 +205,12 @@ function TacticsPlain({ onTogglePlain }) {
                   </div>
                 </div>
                 <span className="plain-view-arrow" style={{ fontSize: 12, color: stFt.dimPlain, textAlign: "right" }}>view →</span>
-              </a>
+              </Link>
             ))}
           </div>
-        </SPlain>
+        </SectionPlain>
 
-        <SPlain title="Experience">
+        <SectionPlain title="Experience">
           {PROFILE.experience.map((e) => (
             <div key={e.id} className="plain-exp-row" style={{ display: "grid", gridTemplateColumns: "160px 1fr 1fr", gap: 24, padding: "12px 0", borderBottom: `1px solid ${stFt.line}`, fontSize: 14 }}>
               <span style={{ color: stFt.dimPlain }}>{e.range}</span>
@@ -210,9 +218,9 @@ function TacticsPlain({ onTogglePlain }) {
               <span style={{ color: stFt.fgPlainSoft }}>{e.role}</span>
             </div>
           ))}
-        </SPlain>
+        </SectionPlain>
 
-        <SPlain title="Now" cornerNote={`Updated ${new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`}>
+        <SectionPlain title="Now" cornerNote={`Updated ${new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`}>
           <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 8 }}>
             {PROFILE.now.map((n, i) => (
               <li key={i} style={{ display: "flex", gap: 12, fontSize: 15, color: stFt.fgPlainSoft, lineHeight: 1.6 }}>
@@ -221,9 +229,9 @@ function TacticsPlain({ onTogglePlain }) {
               </li>
             ))}
           </ul>
-        </SPlain>
+        </SectionPlain>
 
-        <SPlain title="Contact">
+        <SectionPlain title="Contact">
           <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
             {PROFILE.links.map((l) => (
               <a key={l.label} href={l.href} style={{ fontSize: 14, fontWeight: 500, color: stFt.fgPlain, textDecoration: "none", padding: "10px 16px", border: `1px solid ${stFt.line}`, background: stFt.bgPanel }}>
@@ -231,7 +239,7 @@ function TacticsPlain({ onTogglePlain }) {
               </a>
             ))}
           </div>
-        </SPlain>
+        </SectionPlain>
 
         <div style={{ marginTop: 64, paddingTop: 24, borderTop: `1px solid ${stFt.line}`, fontSize: 12, color: stFt.dimPlain, display: "flex", justifyContent: "space-between" }}>
           <span>© {new Date().getFullYear()} {PROFILE.name}</span>
@@ -244,7 +252,7 @@ function TacticsPlain({ onTogglePlain }) {
   );
 }
 
-export function HomePage({ onNavigateToProject }) {
+export function HomePage({ onNavigateToProject }: HomePageProps) {
   const [plain, setPlain] = React.useState(() => {
     try { return localStorage.getItem(STORAGE_KEY) === "plain"; } catch { return false; }
   });

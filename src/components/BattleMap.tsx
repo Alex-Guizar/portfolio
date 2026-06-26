@@ -9,10 +9,32 @@ const NW = 32;
 const NH = 16;
 const ND = 6;
 
-function detailsFor(terrain, variant) {
+type TerrainType = 'grass' | 'stone' | 'path' | 'water';
+type DetailKind = 'hi' | 'dk' | 'crack' | 'flower';
+type TileDetail = [number, number, number, number, DetailKind?];
+
+type TerrainPalette = {
+  top: string;
+  topHi: string;
+  topDk: string;
+  topAccent?: string;
+  sideL: string;
+  sideR: string;
+};
+
+type IsoTileProps = {
+  x: number;
+  y: number;
+  terrain: TerrainType;
+  height?: number;
+  variant?: number;
+  children?: React.ReactNode;
+};
+
+function detailsFor(terrain: TerrainType, variant: number): TileDetail[] {
   const v = variant % 4;
   if (terrain === "grass") {
-    const sets = [
+    const sets: TileDetail[][] = [
       [[10, 5, 2, 1], [18, 9, 2, 1], [14, 7, 1, 1, "hi"], [22, 6, 1, 1, "hi"]],
       [[12, 4, 2, 1], [16, 10, 3, 1], [20, 5, 1, 1, "hi"]],
       [[9, 6, 3, 1], [21, 8, 2, 1], [13, 9, 1, 1, "hi"], [25, 6, 1, 1, "hi"]],
@@ -21,7 +43,7 @@ function detailsFor(terrain, variant) {
     return sets[v];
   }
   if (terrain === "stone") {
-    const sets = [
+    const sets: TileDetail[][] = [
       [[12, 5, 4, 1, "crack"], [20, 8, 1, 1, "hi"], [10, 9, 1, 1, "dk"]],
       [[14, 4, 1, 3, "crack"], [18, 9, 3, 1, "dk"]],
       [[10, 6, 2, 1, "dk"], [22, 7, 2, 1, "dk"], [15, 8, 1, 1, "hi"]],
@@ -30,7 +52,7 @@ function detailsFor(terrain, variant) {
     return sets[v];
   }
   if (terrain === "path") {
-    const sets = [
+    const sets: TileDetail[][] = [
       [[10, 6, 1, 1, "dk"], [18, 8, 1, 1, "dk"], [22, 5, 2, 1], [14, 9, 1, 1, "hi"]],
       [[12, 5, 1, 1, "dk"], [20, 7, 1, 1, "dk"], [16, 9, 2, 1]],
       [[14, 6, 2, 1, "dk"], [20, 8, 1, 1, "dk"], [11, 8, 1, 1, "hi"]],
@@ -39,25 +61,30 @@ function detailsFor(terrain, variant) {
     return sets[v];
   }
   if (terrain === "water") {
-    return [
+    const sets: TileDetail[] = [
       [10, 6, 6, 1, "hi"],
       [18, 9, 5, 1, "hi"],
       [13, 10, 3, 1, "hi"],
     ];
+    return sets;
   }
   return [];
 }
 
-function detailColor(pal, kind) {
-  if (kind === "hi") return pal.topAccent;
+function detailColor(pal: TerrainPalette, kind?: DetailKind): string {
+  if (kind === "hi") return pal.topAccent || pal.topDk;
   if (kind === "dk") return pal.topDk;
   if (kind === "crack") return pal.topDk;
   if (kind === "flower") return "#ffe070";
   return pal.topDk;
 }
 
-function IsoTile({ x, y, terrain, height = 0, children, variant = 0 }) {
-  const pal = stFt[terrain] || stFt.grass;
+function IsoTile({ x, y, terrain, height = 0, children, variant = 0 }: IsoTileProps) {
+  const pal =
+    terrain === "stone" ? stFt.stone :
+    terrain === "path" ? stFt.path :
+    terrain === "water" ? stFt.water :
+    stFt.grass;
   const screenX = (x - y) * (TW / 2);
   const screenY = (x + y) * (TH / 2) - height * TD;
   const sideD = ND + height * ND;
@@ -113,8 +140,8 @@ function IsoTile({ x, y, terrain, height = 0, children, variant = 0 }) {
   );
 }
 
-function PixelTree({ scale = 3 }) {
-  const c = { o: "#0a0e08", t: "#1a4a18", T: "#3a7a30", th: "#5a9a40", w: "#5a3818", W: "#3a2410" };
+function PixelTree({ scale = 3 }: { scale?: number }) {
+  const c: Record<string, string> = { o: "#0a0e08", t: "#1a4a18", T: "#3a7a30", th: "#5a9a40", w: "#5a3818", W: "#3a2410" };
   const rows = [
     "   ttt   ",
     "  tTTTt  ",
@@ -135,8 +162,8 @@ function PixelTree({ scale = 3 }) {
   );
 }
 
-function PixelCrystal({ scale = 3 }) {
-  const c = { o: "#102050", b: "#5a98e8", B: "#3068c0", h: "#b8d8f8", H: "#ffffff" };
+function PixelCrystal({ scale = 3 }: { scale?: number }) {
+  const c: Record<string, string> = { o: "#102050", b: "#5a98e8", B: "#3068c0", h: "#b8d8f8", H: "#ffffff" };
   const rows = [
     "  oo  ",
     " oHbo ",
@@ -155,15 +182,16 @@ function PixelCrystal({ scale = 3 }) {
       filter: `drop-shadow(0 0 6px ${stFt.mpBlue})`,
       animation: "ft-crystal 3s ease-in-out infinite",
     }}>
-      {rows.flatMap((row, y) => row.split("").map((ch, x) => (
-        <div key={`${x}-${y}`} style={{ background: ch === " " ? "transparent" : c[ch] }} />
-      )))}
+      {rows.flatMap((row, y) => row.split("").map((ch, x) => {
+        const fill = ch === " " ? "transparent" : c[ch] ?? "transparent";
+        return <div key={`${x}-${y}`} style={{ background: fill }} />;
+      }))}
     </div>
   );
 }
 
-function PixelLamp({ scale = 3 }) {
-  const c = { o: "#0a0e08", p: "#2a2018", f: "#ffd060", F: "#fff0a0", g: "#6a5a40" };
+function PixelLamp({ scale = 3 }: { scale?: number }) {
+  const c: Record<string, string> = { o: "#0a0e08", p: "#2a2018", f: "#ffd060", F: "#fff0a0", g: "#6a5a40" };
   const rows = [
     "  ooo  ",
     " ofFFo ",
@@ -184,16 +212,17 @@ function PixelLamp({ scale = 3 }) {
         pointerEvents: "none",
       }} />
       <div style={{ display: "grid", gridTemplateColumns: `repeat(7, ${scale}px)`, gridTemplateRows: `repeat(9, ${scale}px)`, imageRendering: "pixelated", position: "relative", filter: `drop-shadow(0 ${scale}px 0 rgba(0,0,0,0.5))` }}>
-        {rows.flatMap((row, y) => row.split("").map((ch, x) => (
-          <div key={`${x}-${y}`} style={{ background: ch === " " ? "transparent" : c[ch] }} />
-        )))}
+        {rows.flatMap((row, y) => row.split("").map((ch, x) => {
+          const fill = ch === " " ? "transparent" : c[ch] ?? "transparent";
+          return <div key={`${x}-${y}`} style={{ background: fill }} />;
+        }))}
       </div>
     </div>
   );
 }
 
-function PixelChest({ scale = 3 }) {
-  const c = { o: "#0a0e08", w: "#8a5828", W: "#6a3818", h: "#c08c48", g: "#d4a838", y: "#ffe070" };
+function PixelChest({ scale = 3 }: { scale?: number }) {
+  const c: Record<string, string> = { o: "#0a0e08", w: "#8a5828", W: "#6a3818", h: "#c08c48", g: "#d4a838", y: "#ffe070" };
   const rows = [
     " ooooooo ",
     "ohhWhhWho",
@@ -226,13 +255,29 @@ const MAP = [
 ];
 
 const MAP_TILES = (() => {
-  const out = [];
+  const out: Array<{
+    x: number;
+    y: number;
+    terrain: TerrainType;
+    height: number;
+    hasHero: boolean;
+    hasTree: boolean;
+    hasCrystal: boolean;
+    hasLamp: boolean;
+    hasChest: boolean;
+    variant: number;
+  }> = [];
   for (let y = 0; y < MAP.length; y++) {
     for (let x = 0; x < MAP[y].length; x++) {
       const ch = MAP[y][x];
       if (ch === ".") continue;
-      let terrain = "grass", height = 0;
-      let hasHero = false, hasTree = false, hasCrystal = false, hasLamp = false, hasChest = false;
+      let terrain: TerrainType = "grass";
+      let height = 0;
+      let hasHero = false;
+      let hasTree = false;
+      let hasCrystal = false;
+      let hasLamp = false;
+      let hasChest = false;
       if (ch === "W") terrain = "water";
       else if (ch === "P") terrain = "path";
       else if (ch === "H") { terrain = "stone"; height = 1; hasHero = true; }
