@@ -1,4 +1,4 @@
-import React from 'react';
+import { CSSProperties } from 'react';
 
 const SPRITES = {
   // 16x16 developer avatar — hoodie + headphones, palette: skin, hood, hair, screen, outline
@@ -135,7 +135,7 @@ const SPRITES = {
   },
 };
 
-export function PixelSprite({ name, scale = 4, style }) {
+export function PixelSprite({ name, scale = 4, style }: { name: keyof typeof SPRITES; scale?: number; style?: CSSProperties }) {
   const s = SPRITES[name];
   if (!s) return null;
   return (
@@ -152,49 +152,11 @@ export function PixelSprite({ name, scale = 4, style }) {
       }}
       aria-hidden="true"
     >
-      {s.pixels.flat().map((p, i) => (
-        <div key={i} style={{ background: p ? s.palette[p] : "transparent" }} />
-      ))}
+      {s.pixels.flat().map((p, i) => {
+        const background = s.palette[p] ?? "transparent";
+        return <div key={i} style={{ background: p ? background : "transparent" }} />;
+      })}
     </div>
   );
 }
 
-export function IdleAvatar({ scale = 6, style }) {
-  const [blink, setBlink] = React.useState(false);
-  React.useEffect(() => {
-    let t;
-    function loop() {
-      setBlink(true);
-      setTimeout(() => setBlink(false), 140);
-      t = setTimeout(loop, 2500 + Math.random() * 2500);
-    }
-    t = setTimeout(loop, 1500);
-    return () => clearTimeout(t);
-  }, []);
-  const s = SPRITES.avatar;
-  // overwrite the eye row (index 7) with closed eyes when blinking
-  const pixels = blink
-    ? s.pixels.map((row, i) =>
-        i === 7 ? [0, 1, 2, 4, 3, 3, 3, 3, 3, 3, 3, 3, 4, 2, 1, 0] : row
-      )
-    : s.pixels;
-  return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: `repeat(${s.w}, ${scale}px)`,
-        gridTemplateRows: `repeat(${s.h}, ${scale}px)`,
-        width: s.w * scale,
-        height: s.h * scale,
-        imageRendering: "pixelated",
-        flex: "0 0 auto",
-        ...style,
-      }}
-      aria-hidden="true"
-    >
-      {pixels.flat().map((p, i) => (
-        <div key={i} style={{ background: p ? s.palette[p] : "transparent" }} />
-      ))}
-    </div>
-  );
-}
