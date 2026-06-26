@@ -70,6 +70,8 @@ export interface Profile {
   work: Project[];
   experience: ExperienceItem[];
   links: ProfileLink[];
+  email: string;
+  resume: string;
 }
 
 export const PROFILE: Profile = {
@@ -288,6 +290,8 @@ export const PROFILE: Profile = {
     { id: "e3", co: "Independent",        role: "Lead Barista · soft-skill foundation",      range: "2006 — 2013"    },
   ],
 
+  email: "mailto:alexguizar90@gmail.com",
+  resume: "Alex-Guizar-Resume.pdf",
   links: [
     { label: "github",   href: "https://github.com/" },                       // ← drop your username
     { label: "linkedin", href: "https://www.linkedin.com/in/alexguizar/" },   // ← confirm slug

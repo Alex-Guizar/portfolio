@@ -1,9 +1,8 @@
-import React, { CSSProperties, ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { stFt, FFTPanel, FFTMenuItem, btnStyle, UtilityBar } from './FFTChrome';
+import { FFTPanel, FFTMenuItem, UtilityBar } from './FFTChrome';
 import { PROFILE, type Project, type ProjectStatus } from '../data/profile';
 
-const stP = stFt;
 
 interface ScreenshotPlaceholderProps {
   project: Project;
@@ -25,6 +24,7 @@ interface ProjectSectionProps {
   children?: ReactNode;
   empty?: boolean;
   style?: CSSProperties;
+  className?: string;
 }
 
 interface ParagraphsProps {
@@ -40,43 +40,34 @@ interface ProjectDetailProps {
 
 function ScreenshotPlaceholder({ project }: ScreenshotPlaceholderProps) {
   return (
-    <div style={{
-      width: "100%",
-      aspectRatio: "16 / 9",
-      background: stP.bgPanel,
-      border: `1px solid ${stP.panelBorderDk}`,
-      backgroundImage: `repeating-linear-gradient(
-        135deg,
-        transparent 0px,
-        transparent 14px,
-        rgba(74,112,200,0.08) 14px,
-        rgba(74,112,200,0.08) 28px
-      )`,
-      position: "relative",
-      overflow: "hidden",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      gap: 12,
-      color: stP.dim,
-    }}>
+    <div
+      className="relative w-full aspect-[16/9] flex flex-col items-center justify-center gap-3 overflow-hidden text-ft-dim bg-ft-bg-panel border border-ft-panel-border-dk"
+      style={{
+        backgroundImage: `repeating-linear-gradient(
+          135deg,
+          transparent 0px,
+          transparent 14px,
+          rgba(74,112,200,0.08) 14px,
+          rgba(74,112,200,0.08) 28px
+        )`,
+      }}
+    >
       {/* corner crosshairs */}
       {[
         { top: 8, left: 8 }, { top: 8, right: 8 },
         { bottom: 8, left: 8 }, { bottom: 8, right: 8 },
       ].map((pos, i) => (
-        <div key={i} style={{ position: "absolute", ...pos, width: 14, height: 14 }}>
-          <div style={{ position: "absolute", inset: 0, borderTop: `1px solid ${stP.panelInnerHi2}`, borderLeft: `1px solid ${stP.panelInnerHi2}`, transform: (pos.right !== undefined ? "scaleX(-1)" : "") + (pos.bottom !== undefined ? " scaleY(-1)" : "") }} />
+        <div key={i} className="absolute w-[14px] h-[14px]" style={pos}>
+          <div style={{ position: "absolute", inset: 0, borderTop: `1px solid var(--color-ft-panel-inner-hi2)`, borderLeft: `1px solid var(--color-ft-panel-inner-hi2)`, transform: (pos.right !== undefined ? "scaleX(-1)" : "") + (pos.bottom !== undefined ? " scaleY(-1)" : "") }} />
         </div>
       ))}
 
-      <div style={{ fontFamily: stP.serif, fontSize: 13, fontWeight: 600, color: stP.accent, letterSpacing: 3, textShadow: `0 0 6px ${stP.accent}40`, textTransform: "uppercase" }}>◆ Preview</div>
-      <div style={{ fontFamily: stP.serif, fontSize: 26, fontWeight: 600, color: stP.fg, textShadow: "1px 1px 0 rgba(0,0,0,0.6)" }}>{project.title}</div>
-      <div style={{ fontFamily: stP.mono, fontSize: 12, color: stP.fgSoft, maxWidth: 380, textAlign: "center", padding: "0 16px", lineHeight: 1.5 }}>
+      <div className="font-cinzel text-[13px] font-semibold uppercase tracking-[0.35em] text-ft-accent" style={{ textShadow: `0 0 6px color-mix(in srgb, var(--color-ft-accent) 25%, transparent)` }}>◆ Preview</div>
+      <div className="font-cinzel text-[26px] font-semibold text-ft-fg" style={{ textShadow: "1px 1px 0 rgba(0,0,0,0.6)" }}>{project.title}</div>
+      <div className="font-jetbrains text-[12px] text-ft-fg-soft max-w-[380px] text-center px-4 leading-[1.5]">
         {project.tagline || project.blurb}
       </div>
-      <div style={{ fontFamily: stP.mono, fontSize: 10, color: stP.dim, letterSpacing: 1, marginTop: 8, fontStyle: "italic" }}>
+      <div className="font-jetbrains text-[10px] italic tracking-[0.1em] text-ft-dim mt-2">
         [ drop screenshot or demo gif here ]
       </div>
     </div>
@@ -85,44 +76,42 @@ function ScreenshotPlaceholder({ project }: ScreenshotPlaceholderProps) {
 
 function StatTile({ label, value }: StatTileProps) {
   return (
-    <div style={{
-      background: `linear-gradient(180deg, ${stP.panelTop} 0%, ${stP.panelHeader} 100%)`,
-      border: `1px solid ${stP.panelBorderMd}`,
-      borderRadius: 3,
-      boxShadow: `inset 0 1px 0 ${stP.panelInnerHi}, 0 2px 0 rgba(90,48,24,0.18)`,
-      padding: "12px 16px",
-      flex: 1,
-    }}>
-      <div style={{ fontFamily: stP.serif, fontSize: 11, fontWeight: 600, color: stP.panelAccent, letterSpacing: 2, marginBottom: 6, textTransform: "uppercase" }}>{label}</div>
-      <div style={{ fontFamily: stP.mono, fontSize: 14, color: stP.panelFg, fontWeight: 600 }}>{value || "—"}</div>
+    <div
+      className="flex-1 rounded-[3px] p-4"
+      style={{
+        background: `linear-gradient(180deg, var(--color-ft-panel-top) 0%, var(--color-ft-panel-header) 100%)`,
+        border: `1px solid var(--color-ft-panel-border-md)`,
+        boxShadow: `inset 0 1px 0 var(--color-ft-panel-inner-hi), 0 2px 0 rgba(90,48,24,0.18)`,
+      }}
+    >
+      <div className="font-cinzel text-[11px] font-semibold uppercase tracking-[0.15em] mb-1 text-ft-accent">{label}</div>
+      <div className="font-jetbrains text-[14px] font-semibold text-ft-fg">{value || "—"}</div>
     </div>
   );
 }
 
 function MetricCallout({ label, value }: MetricCalloutProps) {
   return (
-    <div style={{
-      background: `linear-gradient(180deg, ${stP.panelHeader} 0%, ${stP.panelMid} 100%)`,
-      border: `1px solid ${stP.panelBorderMd}`,
-      borderRadius: 3,
-      boxShadow: `inset 0 1px 0 ${stP.panelInnerHi}`,
-      padding: "14px 12px",
-      textAlign: "center",
-      flex: 1,
-      minWidth: 90,
-    }}>
-      <div style={{ fontFamily: stP.serif, fontSize: 26, fontWeight: 700, color: stP.panelAccent, letterSpacing: -0.5 }}>{value}</div>
-      <div style={{ fontFamily: stP.serif, fontSize: 10, fontWeight: 600, color: stP.panelDim, letterSpacing: 2, marginTop: 4, textTransform: "uppercase" }}>{label}</div>
+    <div
+      className="flex-1 min-w-[90px] rounded-[3px] px-3 py-4 text-center"
+      style={{
+        background: `linear-gradient(180deg, var(--color-ft-panel-header) 0%, var(--color-ft-panel-mid) 100%)`,
+        border: `1px solid var(--color-ft-panel-border-md)`,
+        boxShadow: `inset 0 1px 0 var(--color-ft-panel-inner-hi)`,
+      }}
+    >
+      <div className="font-cinzel text-[26px] font-bold text-ft-accent">{value}</div>
+      <div className="font-cinzel text-[10px] font-semibold uppercase tracking-[0.2em] mt-1 text-ft-dim">{label}</div>
     </div>
   );
 }
 
-function ProjectSection({ title, num, children, empty }: ProjectSectionProps) {
+function ProjectSection({ title, num, children, empty, className, style }: ProjectSectionProps) {
   return (
-    <FFTPanel title={title} cornerStat={num ? `${num}` : undefined} style={{ marginBottom: 16 }}>
+    <FFTPanel title={title} cornerStat={num ? `${num}` : undefined} className={className} style={style}>
       {empty ? (
-        <div style={{ fontFamily: stP.mono, fontSize: 12, color: stP.panelDim, fontStyle: "italic", padding: "8px 0" }}>
-          — placeholder — fill in <code style={{ background: stP.panelHeader, padding: "1px 5px", border: `1px solid ${stP.panelInnerHi2}`, color: stP.panelAccent }}>data.ts</code> for this project.
+        <div className="font-jetbrains text-[12px] italic text-ft-dim py-2">
+          — placeholder — fill in <code className="bg-ft-panel-header px-1 py-[1px] border border-ft-panel-inner-hi2 text-ft-panel-accent">data.ts</code> for this project.
         </div>
       ) : children}
     </FFTPanel>
@@ -132,8 +121,8 @@ function ProjectSection({ title, num, children, empty }: ProjectSectionProps) {
 function Paragraphs({ items }: ParagraphsProps) {
   const arr = Array.isArray(items) ? items : items ? [items] : [];
   return arr.map((t, i) => (
-    <p key={i} style={{ fontSize: 14, lineHeight: 1.75, color: stP.panelFgSoft, margin: "0 0 12px" }}>
-      <span style={{ color: stP.panelAccent, fontFamily: stP.serif, fontSize: 14, fontWeight: 600, marginRight: 8, letterSpacing: 1 }}>{String(i + 1).padStart(2, "0")}</span>
+    <p key={i} className="mb-3 text-[14px] leading-[1.75] text-ft-fg-soft">
+      <span className="font-cinzel text-[14px] font-semibold text-ft-accent mr-2 tracking-[0.05em]">{String(i + 1).padStart(2, "0")}</span>
       {t}
     </p>
   ));
@@ -141,24 +130,20 @@ function Paragraphs({ items }: ParagraphsProps) {
 
 function StatusPill({ status }: { status?: ProjectStatus }) {
   const colors = {
-    LIVE:           { bg: stP.hpGreen, fg: "#0a1a08" },
-    "IN-PROGRESS":  { bg: stP.ctYellow, fg: "#1a1408" },
+    LIVE:           { bg: 'var(--color-ft-hp-green)', fg: "#0a1a08" },
+    "IN-PROGRESS":  { bg: 'var(--color-ft-ct-yellow)', fg: "#1a1408" },
     ARCHIVED:       { bg: "#7080a0", fg: "#0a0e18" },
   } as const;
   const c = status ? colors[status] ?? colors.LIVE : colors.LIVE;
   return (
-    <span style={{
-      display: "inline-block",
-      fontFamily: stP.serif,
-      fontSize: 11,
-      fontWeight: 600,
-      letterSpacing: 2,
-      padding: "5px 12px",
-      background: c.bg,
-      color: c.fg,
-      boxShadow: `inset 0 1px 0 rgba(255,255,255,0.4)`,
-      textTransform: "uppercase",
-    }}>● {status || "DRAFT"}</span>
+    <span
+      className="inline-block font-cinzel text-[11px] font-semibold tracking-[2px] px-3 py-[5px] uppercase"
+      style={{
+        background: c.bg,
+        color: c.fg,
+        boxShadow: `inset 0 1px 0 rgba(255,255,255,0.4)`,
+      }}
+    >● {status || "DRAFT"}</span>
   );
 }
 
@@ -175,59 +160,69 @@ export function ProjectDetail({ project, onTogglePlain, plain, onBack }: Project
   const gallery = project.gallery ?? [];
 
   return (
-    <div style={{ background: stP.bg, color: stP.fg, fontFamily: stP.mono, minHeight: "100%" }}>
-      <div className="fft-page" style={{ padding: "32px 40px 56px", maxWidth: 1200, margin: "0 auto", boxSizing: "border-box" }}>
+    <div className="min-h-full bg-ft-bg text-ft-fg font-jetbrains">
+      <div className="fft-page px-[40px] pt-[32px] pb-[56px] max-w-container mx-auto box-border">
 
         {/* Top bar: back + breadcrumb + utility */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, gap: 16, flexWrap: "wrap" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 12, color: stP.fgSoft }}>
-            <button onClick={onBack} style={{ ...btnStyle(false), fontSize: 12, padding: "6px 12px", background: "transparent", border: `1px solid ${stP.line}` }}>
-              <span style={{ fontFamily: stP.serif, fontSize: 12, fontWeight: 600 }}>◀</span>
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-5 text-xs text-ft-fg-soft">
+          <div className="flex flex-wrap items-center gap-4">
+            <button
+              onClick={onBack}
+              className="inline-flex items-center gap-2 rounded-sm border border-ft-line bg-transparent px-3 py-2 text-[12px] font-jetbrains font-semibold text-ft-fg transition"
+            >
+              <span className="font-cinzel text-[12px] font-semibold">◀</span>
               Back to map
             </button>
-            <span style={{ fontFamily: stP.serif, fontSize: 11, fontWeight: 500, color: stP.dim, letterSpacing: 2, textTransform: "uppercase" }}>
-              Inventory <span style={{ margin: "0 8px" }}>▸</span> <span style={{ color: stP.accent }}>{project.title}</span>
+            <span className="font-cinzel text-[11px] font-medium uppercase tracking-[0.18em] text-ft-dim">
+              Inventory <span className="mx-2">▸</span> <span className="text-ft-accent">{project.title}</span>
             </span>
           </div>
           <UtilityBar onTogglePlain={onTogglePlain} plain={plain} />
         </div>
 
         {/* HERO: screenshot + summary side-by-side */}
-        <div className="fft-grid-project-hero" style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr", gap: 16, marginBottom: 16 }}>
+        <div className="fft-grid-project-hero grid grid-cols-[1.6fr_1fr] gap-4 mb-4">
           <FFTPanel inset={2}>
-            <div style={{ padding: 2 }}>
+            <div className="p-[2px]">
               <ScreenshotPlaceholder project={project} />
             </div>
           </FFTPanel>
 
           <FFTPanel title="Item" cornerStat={`#${String(i + 1).padStart(2, "0")} of ${String(p.work.length).padStart(2, "0")}`}>
-            <div style={{ display: "flex", flexDirection: "column", height: "100%", gap: 14 }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div className="flex h-full flex-col gap-3">
+              <div className="flex items-center justify-between">
                 <StatusPill status={project.status} />
-                <span style={{ fontFamily: stP.serif, fontSize: 14, fontWeight: 600, color: stP.panelAccent, letterSpacing: 1.5 }}>{project.year}</span>
+                <span className="font-cinzel text-[14px] font-semibold tracking-[0.08em] text-ft-accent">{project.year}</span>
               </div>
 
-              <h1 className="fft-project-title" style={{ fontFamily: stP.serif, fontSize: 30, fontWeight: 700, margin: 0, letterSpacing: 0.5, lineHeight: 1.15, color: stP.panelFg }}>
+              <h1 className="fft-project-title font-cinzel text-[30px] font-bold leading-[1.15] tracking-[0.01em] text-ft-fg m-0">
                 {project.title}
               </h1>
 
               {project.tagline && (
-                <p style={{ fontSize: 14, color: stP.panelFgSoft, margin: 0, lineHeight: 1.6 }}>
+                <p className="text-[14px] leading-[1.6] text-ft-fg-soft m-0">
                   {project.tagline}
                 </p>
               )}
 
-              <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: "auto" }}>
+              <div className="mt-auto flex flex-col gap-2">
                 {primary && (
-                  <a href={primary.href} style={{ ...btnStyle(false), justifyContent: "center", padding: "10px 16px" }}>
-                    <span style={{ fontFamily: stP.serif, fontSize: 12, fontWeight: 600, color: stP.gold }}>▸</span>
-                    {primary.label} <span style={{ color: stP.gold }}>↗</span>
+                  <a
+                    href={primary.href}
+                    className="inline-flex items-center justify-center gap-2 rounded-sm border border-ft-line bg-transparent px-4 py-2 text-[12px] font-jetbrains font-semibold text-ft-fg transition"
+                  >
+                    <span className="font-cinzel text-[12px] font-semibold text-ft-gold">▸</span>
+                    {primary.label} <span className="text-ft-gold">↗</span>
                   </a>
                 )}
                 {secondary.length > 0 && (
-                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                  <div className="flex flex-wrap gap-1">
                     {secondary.map((l) => (
-                      <a key={l.label} href={l.href} style={{ ...btnStyle(false), padding: "6px 10px", fontSize: 11, flex: "1 1 0", minWidth: 0, justifyContent: "center" }}>
+                      <a
+                        key={l.label}
+                        href={l.href}
+                        className="inline-flex shrink-0 items-center justify-center gap-1 rounded-sm border border-ft-line bg-transparent px-2.5 py-1.5 text-[11px] font-jetbrains font-semibold text-ft-fg transition"
+                      >
                         {l.label} ↗
                       </a>
                     ))}
@@ -239,7 +234,7 @@ export function ProjectDetail({ project, onTogglePlain, plain, onBack }: Project
         </div>
 
         {/* STAT STRIP */}
-        <div className="fft-stat-strip" style={{ display: "flex", gap: 16, marginBottom: 16, flexWrap: "wrap" }}>
+        <div className="fft-stat-strip flex flex-wrap gap-4 mb-4">
           <StatTile label="ROLE" value={project.role} />
           <StatTile label="DURATION" value={project.duration} />
           <StatTile label="TEAM" value={project.team} />
@@ -247,10 +242,10 @@ export function ProjectDetail({ project, onTogglePlain, plain, onBack }: Project
         </div>
 
         {/* TWO-COLUMN: narrative + side info */}
-        <div className="fft-grid-2col-aside" style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 16 }}>
+        <div className="fft-grid-2col-aside grid grid-cols-[2fr_1fr] gap-4">
           <div>
             <ProjectSection title="Description" empty={!project.blurb}>
-              <p style={{ fontSize: 15, color: stP.panelFg, lineHeight: 1.7, margin: 0 }}>{project.blurb}</p>
+              <p className="text-[15px] leading-[1.7] text-ft-fg m-0">{project.blurb}</p>
             </ProjectSection>
 
             <ProjectSection title="I · The Problem" empty={!project.problem}>
@@ -264,7 +259,7 @@ export function ProjectDetail({ project, onTogglePlain, plain, onBack }: Project
             <ProjectSection title="III · The Outcome" empty={!project.outcome && metrics.length === 0}>
               <Paragraphs items={project.outcome} />
               {metrics.length > 0 && (
-                <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14, paddingTop: 14, borderTop: `1px solid ${stP.panelInnerHi2}` }}>
+                <div className="mt-3 flex flex-wrap gap-2.5 pt-3 border-t border-ft-panel-inner-hi2">
                   {metrics.map((m, i) => <MetricCallout key={i} label={m.label} value={m.value} />)}
                 </div>
               )}
@@ -275,8 +270,8 @@ export function ProjectDetail({ project, onTogglePlain, plain, onBack }: Project
             <ProjectSection title="Abilities · Features" empty={!project.features}>
               <div>
                 {project.features?.map((f, i) => (
-                  <div key={i} style={{ display: "grid", gridTemplateColumns: "22px 1fr", gap: 8, padding: "8px 4px", borderBottom: `1px dashed ${stP.panelInnerHi2}`, fontSize: 12, color: stP.panelFg, lineHeight: 1.5 }}>
-                    <span style={{ fontFamily: stP.serif, fontSize: 12, fontWeight: 600, color: stP.panelAccent, letterSpacing: 1 }}>{String(i + 1).padStart(2, "0")}</span>
+                  <div key={i} className="grid grid-cols-[22px_1fr] gap-2.5 px-1 py-2 border-b border-dashed border-ft-panel-inner-hi2 text-[12px] leading-[1.5] text-ft-fg">
+                    <span className="font-cinzel text-[12px] font-semibold tracking-[0.06em] text-ft-accent">{String(i + 1).padStart(2, "0")}</span>
                     <span>{f}</span>
                   </div>
                 ))}
@@ -285,28 +280,28 @@ export function ProjectDetail({ project, onTogglePlain, plain, onBack }: Project
 
             <ProjectSection title="Enchantments · Stack" empty={stackDetail.length === 0 && !project.stack}>
               {stackDetail.length > 0 ? (
-                <div style={{ display: "grid", gap: 12 }}>
+                <div className="grid gap-3">
                   {stackDetail.map((s, i) => (
                     <div key={i}>
-                      <div style={{ fontFamily: stP.serif, fontSize: 13, fontWeight: 600, color: stP.panelAccent, letterSpacing: 1.5, marginBottom: 4, textTransform: "uppercase" }}>{s.tech}</div>
-                      <div style={{ fontSize: 11, color: stP.panelFgSoft, lineHeight: 1.5 }}>{s.reason}</div>
+                      <div className="font-cinzel text-[13px] font-semibold uppercase tracking-[0.12em] text-ft-accent mb-1">{s.tech}</div>
+                      <div className="text-[11px] leading-6 text-ft-fg-soft">{s.reason}</div>
                     </div>
                   ))}
                 </div>
               ) : (
-                <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                <div className="flex flex-wrap gap-2">
                   {(project.stack || "").split(" · ").map((s) => (
-                    <span key={s} style={{ fontFamily: stP.mono, fontSize: 11, color: stP.panelFg, padding: "4px 10px", background: stP.panelHeader, border: `1px solid ${stP.panelBorderMd}`, borderRadius: 99 }}>{s}</span>
+                    <span key={s} className="rounded-full px-2.5 py-1 text-[11px] text-ft-fg bg-ft-panel-header border border-ft-panel-border-md">{s}</span>
                   ))}
                 </div>
               )}
             </ProjectSection>
 
             <ProjectSection title="Waypoints · Links" empty={!project.projectLinks && !project.href}>
-              <div style={{ display: "grid", gap: 4 }}>
+              <div className="grid gap-1">
                 {project.projectLinks?.map((l) => (
                   <FFTMenuItem key={l.label} href={l.href} badge={l.kind === "primary" ? "primary" : undefined}>
-                    <span style={{ display: "flex", alignItems: "center", gap: 8 }}>{l.label}<span style={{ color: stP.gold }}>↗</span></span>
+                    <span className="flex items-center gap-2">{l.label}<span className="text-ft-gold">↗</span></span>
                   </FFTMenuItem>
                 ))}
               </div>
@@ -316,28 +311,20 @@ export function ProjectDetail({ project, onTogglePlain, plain, onBack }: Project
 
         {/* GALLERY */}
         {gallery.length > 0 && (
-          <ProjectSection title={`Gallery · ${gallery.length} Frames`} style={{ marginTop: 16 }}>
-            <div className="fft-gallery-grid" style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(gallery.length, 3)}, 1fr)`, gap: 12 }}>
+          <ProjectSection title={`Gallery · ${gallery.length} Frames`} className="mt-4">
+            <div
+              className="fft-gallery-grid grid gap-3"
+              style={{ gridTemplateColumns: `repeat(${Math.min(gallery.length, 3)}, 1fr)` }}
+            >
               {gallery.map((g, i) => (
-                <div key={i} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                  <div style={{
-                    aspectRatio: "16 / 10",
-                    background: stP.panelHeader,
-                    border: `1px solid ${stP.panelBorderMd}`,
-                    borderRadius: 3,
-                    backgroundImage: `repeating-linear-gradient(135deg, transparent 0, transparent 10px, rgba(90,48,24,0.06) 10px, rgba(90,48,24,0.06) 20px)`,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontFamily: stP.serif,
-                    fontSize: 11,
-                    fontWeight: 600,
-                    color: stP.panelDim,
-                    letterSpacing: 2,
-                  }}>
+                <div key={i} className="flex flex-col gap-2">
+                  <div
+                    className="aspect-[16/10] rounded-[3px] flex items-center justify-center text-[11px] font-cinzel font-semibold tracking-[0.16em] text-ft-dim bg-ft-panel-header border border-ft-panel-border-md"
+                    style={{ backgroundImage: `repeating-linear-gradient(135deg, transparent 0, transparent 10px, rgba(90,48,24,0.06) 10px, rgba(90,48,24,0.06) 20px)` }}
+                  >
                     [ {String(i + 1).padStart(2, "0")} ]
                   </div>
-                  <div style={{ fontFamily: stP.mono, fontSize: 11, color: stP.panelFgSoft, lineHeight: 1.4 }}>{g.caption}</div>
+                  <div className="text-[11px] leading-[1.4] text-ft-fg-soft">{g.caption}</div>
                 </div>
               ))}
             </div>
@@ -345,24 +332,33 @@ export function ProjectDetail({ project, onTogglePlain, plain, onBack }: Project
         )}
 
         {/* Footer nav: prev / back / next */}
-        <div className="fft-prev-back-next" style={{ marginTop: 24, display: "grid", gridTemplateColumns: "1fr auto 1fr", gap: 16, alignItems: "center" }}>
-          <Link to={`/project/${prev.id}`} style={{ ...btnStyle(false), justifyContent: "flex-start", padding: "12px 16px", fontSize: 12 }}>
-            <span style={{ fontFamily: stP.serif, fontSize: 13, fontWeight: 600, color: stP.accent }}>◀</span>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", textAlign: "left" }}>
-              <span style={{ fontFamily: stP.serif, fontSize: 10, fontWeight: 600, color: stP.dim, letterSpacing: 2, textTransform: "uppercase" }}>Prev Item</span>
-              <span style={{ color: stP.fg, marginTop: 2 }}>{prev.title}</span>
+        <div className="fft-prev-back-next grid grid-cols-[1fr_auto_1fr] gap-4 items-center mt-6">
+          <Link
+            to={`/project/${prev.id}`}
+            className="inline-flex items-start gap-2 rounded-sm border border-ft-line bg-transparent px-4 py-3 text-[12px] font-jetbrains font-semibold text-ft-fg transition"
+          >
+            <span className="font-cinzel text-[13px] font-semibold text-ft-accent">◀</span>
+            <div className="flex flex-col items-start text-left">
+              <span className="font-cinzel text-[10px] font-semibold uppercase tracking-[0.16em] text-ft-dim">Prev Item</span>
+              <span className="text-ft-fg mt-1">{prev.title}</span>
             </div>
           </Link>
-          <button onClick={onBack} style={{ ...btnStyle(true), padding: "12px 20px", fontSize: 12, background: "transparent", border: `1px solid ${stP.accent}` }}>
-            <span style={{ fontFamily: stP.serif, fontSize: 13, fontWeight: 600 }}>◆</span>
+          <button
+            onClick={onBack}
+            className="inline-flex items-center gap-2 rounded-sm border border-ft-accent bg-transparent px-5 py-3 text-[12px] font-jetbrains font-semibold transition"
+          >
+            <span className="font-cinzel text-[13px] font-semibold">◆</span>
             Back to map
           </button>
-          <Link to={`/project/${next.id}`} style={{ ...btnStyle(false), justifyContent: "flex-end", padding: "12px 16px", fontSize: 12 }}>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", textAlign: "right" }}>
-              <span style={{ fontFamily: stP.serif, fontSize: 10, fontWeight: 600, color: stP.dim, letterSpacing: 2, textTransform: "uppercase" }}>Next Item</span>
-              <span style={{ color: stP.fg, marginTop: 2 }}>{next.title}</span>
+          <Link
+            to={`/project/${next.id}`}
+            className="inline-flex items-start justify-end gap-2 rounded-sm border border-ft-line bg-transparent px-4 py-3 text-[12px] font-jetbrains font-semibold text-ft-fg transition"
+          >
+            <div className="flex flex-col items-end text-right">
+              <span className="font-cinzel text-[10px] font-semibold uppercase tracking-[0.16em] text-ft-dim">Next Item</span>
+              <span className="text-ft-fg mt-1">{next.title}</span>
             </div>
-            <span style={{ fontFamily: stP.serif, fontSize: 13, fontWeight: 600, color: stP.accent }}>▶</span>
+            <span className="font-cinzel text-[13px] font-semibold text-ft-accent">▶</span>
           </Link>
         </div>
       </div>
