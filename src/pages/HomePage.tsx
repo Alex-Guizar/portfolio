@@ -1,27 +1,49 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { StatLine, FFTPanel, FFTMenuItem, UtilityBar, SectionPlain, FFTCharacter } from '../components/FFTChrome';
 import { PixelSprite } from '../components/PixelSprite';
 import { BattleMap } from '../components/BattleMap';
-import { PROFILE } from '../data/profile';
+import { PROFILE, type ProfileLink } from '../data/profile';
 import { usePlainMode } from '../hooks/usePlainMode';
+import { externalLinkProps } from '../utils/links';
 
 interface TogglePlainProps {
   onTogglePlain: () => void;
 }
 
-
+function PanelLinkChip({ label, href }: ProfileLink) {
+  const [hover, setHover] = useState(false);
+  return (
+    <a
+      key={label}
+      href={href}
+      {...externalLinkProps(href)}
+      className="font-cinzel text-[12px] font-semibold no-underline px-3 py-[6px] border rounded-sm tracking-[0.5px] transition"
+      style={{
+        background: `linear-gradient(180deg, var(--color-ft-panel-top) 0%, var(--color-ft-panel-header) 100%)`,
+        boxShadow: `inset 0 1px 0 var(--color-ft-panel-inner-hi), 0 1px 0 rgba(90,48,24,0.2)`,
+        borderColor: hover ? 'var(--color-ft-gold)' : 'var(--color-ft-panel-border-md)',
+        color: hover ? 'var(--color-ft-panel-accent)' : 'var(--color-ft-panel-fg)',
+      }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
+      {label} <span className="text-ft-gold">↗</span>
+    </a>
+  );
+}
 
 function TacticsGame({ onTogglePlain }: TogglePlainProps) {
   return (
-    <div className="font-jetbrains bg-ft-bg text-ft-fg min-h-full">
+    <div className="bg-ft-bg text-ft-fg min-h-full">
       {/* HERO */}
       <div className="fft-page pt-[2rem] px-[2.5rem] max-w-container mx-auto box-border">
         <UtilityBar onTogglePlain={onTogglePlain} plain={false} />
         <div className="fft-grid-hero grid grid-cols-[1fr_auto] gap-[2rem] items-end mb-[1.75rem]">
           <div>
-            <h1 className="fft-hero-name font-jetbrains text-[3.5rem] font-extrabold m-0 tracking-[-1.5px] text-ft-fg leading-none">{PROFILE.name}</h1>
-            <div className="fft-hero-role font-jetbrains text-[18px] text-ft-fg-soft mt-2">{PROFILE.role} · {PROFILE.location}</div>
-            <p className="fft-hero-blurb font-jetbrains text-[14px] text-ft-fg-soft leading-[1.7] max-w-[620px] mt-4 mb-0">{PROFILE.blurb}</p>
+            <h1 className="fft-hero-name text-[3.5rem] font-extrabold m-0 tracking-[-1.5px] text-ft-fg leading-none">{PROFILE.name}</h1>
+            <div className="fft-hero-role text-[18px] text-ft-fg-soft mt-2">{PROFILE.role} · {PROFILE.location}</div>
+            <p className="fft-hero-blurb text-[14px] text-ft-fg-soft leading-[1.7] max-w-[620px] mt-4 mb-0">{PROFILE.blurb}</p>
           </div>
           <div
             className="fft-unit-deployed font-cinzel text-[13px] font-semibold text-ft-accent tracking-[4px] whitespace-nowrap uppercase"
@@ -76,15 +98,7 @@ function TacticsGame({ onTogglePlain }: TogglePlainProps) {
               className="mt-4 pt-[14px] border-t border-ft-panel-inner-hi2 flex gap-2 flex-wrap"
             >
               {PROFILE.links.map((l) => (
-                <a key={l.label} href={l.href}
-                  className="font-cinzel text-[12px] font-semibold text-ft-panel-fg no-underline px-3 py-[6px] border border-ft-panel-border-md rounded-sm tracking-[0.5px] transition"
-                  style={{
-                    background: `linear-gradient(180deg, var(--color-ft-panel-top) 0%, var(--color-ft-panel-header) 100%)`,
-                    boxShadow: `inset 0 1px 0 var(--color-ft-panel-inner-hi), 0 1px 0 rgba(90,48,24,0.2)`,
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--color-ft-gold)'; e.currentTarget.style.color = 'var(--color-ft-panel-accent)'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--color-ft-panel-border-md)'; e.currentTarget.style.color = 'var(--color-ft-panel-fg)'; }}
-                >{l.label} <span className="text-ft-gold">↗</span></a>
+                <PanelLinkChip key={l.label} {...l} />
               ))}
             </div>
           </FFTPanel>
@@ -100,7 +114,7 @@ function TacticsGame({ onTogglePlain }: TogglePlainProps) {
                   <div>
                     <div className="font-semibold text-ft-panel-fg mb-0.5">{w.title}</div>
                     <div className="text-[11px] text-ft-panel-fg-soft mb-[3px]">{w.blurb}</div>
-                    <div className="text-[10px] text-ft-panel-accent font-jetbrains tracking-[0.5px]">{w.stack}</div>
+                    <div className="text-[10px] text-ft-panel-accent tracking-[0.5px]">{w.stack}</div>
                   </div>
                   {w.status && (
                     <span
@@ -173,17 +187,17 @@ function TacticsGame({ onTogglePlain }: TogglePlainProps) {
 
 function TacticsPlain({ onTogglePlain }: TogglePlainProps) {
   return (
-    <div className="bg-ft-bg text-ft-fg-plain font-jetbrains min-h-full">
+    <div className="bg-ft-bg text-ft-fg-plain min-h-full">
       <div className="plain-page pt-[40px] px-[56px] pb-[64px] max-w-[880px] mx-auto box-border">
         <UtilityBar onTogglePlain={onTogglePlain} plain />
 
         <div className="plain-hero grid grid-cols-[1fr_auto] gap-6 items-end pb-8 border-b border-ft-line mb-10">
           <div>
-            <h1 className="fft-hero-name font-jetbrains text-[56px] font-bold m-0 tracking-[-1.5px] text-ft-fg-plain leading-none">{PROFILE.name}</h1>
+            <h1 className="fft-hero-name text-[56px] font-bold m-0 tracking-[-1.5px] text-ft-fg-plain leading-none">{PROFILE.name}</h1>
             <div className="text-[18px] text-ft-fg-plain-soft mt-2">{PROFILE.role} · {PROFILE.location}</div>
             <p className="text-[15px] text-ft-fg-plain-soft leading-[1.7] max-w-[620px] mt-[18px] mb-0">{PROFILE.blurb}</p>
           </div>
-          <img src="assets/character.png" width={66} height={117} style={{ imageRendering: "pixelated", opacity: 0.85 }} alt="" />
+          <img src="/assets/character.png" width={66} height={117} style={{ imageRendering: "pixelated", opacity: 0.85 }} alt="" />
         </div>
 
         <SectionPlain title="About">
@@ -198,7 +212,7 @@ function TacticsPlain({ onTogglePlain }: TogglePlainProps) {
                 to={`/project/${w.id}`}
                 className="plain-work-row grid grid-cols-[auto_1fr_100px] gap-5 py-[18px] border-b border-ft-line no-underline text-ft-fg-plain items-center"
               >
-                <span className="font-jetbrains text-[12px] text-ft-dim-plain w-6">{String(i + 1).padStart(2, "0")}</span>
+                <span className="text-[12px] text-ft-dim-plain w-6">{String(i + 1).padStart(2, "0")}</span>
                 <div>
                   <div className="flex items-baseline gap-3 mb-1">
                     <span className="text-[18px] font-semibold">{w.title}</span>
@@ -256,7 +270,7 @@ function TacticsPlain({ onTogglePlain }: TogglePlainProps) {
 
         <div className="mt-16 pt-6 border-t border-ft-line text-[12px] text-ft-dim-plain flex justify-between">
           <span>© {new Date().getFullYear()} {PROFILE.name}</span>
-          <button onClick={onTogglePlain} className="bg-transparent border-none text-ft-dim-plain font-jetbrains text-[12px] cursor-pointer underline">
+          <button onClick={onTogglePlain} className="bg-transparent border-none text-ft-dim-plain text-[12px] cursor-pointer underline">
             ▶ Switch to full version
           </button>
         </div>

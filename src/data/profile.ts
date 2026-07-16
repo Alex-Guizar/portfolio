@@ -23,6 +23,7 @@ export interface ProjectStackDetail {
 
 export interface ProjectGalleryItem {
   caption: string;
+  src?: string;
 }
 
 export interface Project {
@@ -37,6 +38,7 @@ export interface Project {
   duration?: string;
   team?: string;
   href?: string | null;
+  screenshot?: string;
   problem?: string[];
   approach?: string[];
   outcome?: string[];
@@ -249,23 +251,24 @@ export const PROFILE: Profile = {
       title: "Tennis Warehouse & Sibling Sites",
       year: "2013–2022",
       stack: "Custom tooling · 12 global sites",
-      blurb: "Built internal tools that let Product Managers ship features themselves; led the company's first WCAG audit across the Warehouse network.",
+      blurb: "Built responsive, high-traffic e-commerce frontends across 12 global sites, plus the internal tooling that let Product Managers ship mailers themselves without engineering intervention. Led the company's first WCAG audit across the Warehouse network.",
+      role: "Frontend Engineer · UI Platform",
+      duration: "9 years",
+      team: "Cross-functional · multiple product teams",
 
-      status: "ARCHIVED",
       tagline: "Nine years building, shipping, and maintaining high-traffic global e-commerce frontends across Tennis Warehouse and its sibling sites — plus the tooling that let non-engineers ship safely.",
 
       problem: [
-        "The Warehouse network — Tennis Warehouse, Running Warehouse, Tackle Warehouse, Skate Warehouse, and their sibling sites — shared a frontend platform with twelve customer-facing storefronts, growing feature demand, and a single team to support it.",
-        "Every feature flag, every PDP variant, every campaign required engineering bandwidth. Product Managers were blocked on us; we were blocked on the backlog.",
+        "12 storefronts, one frontend team. Every mailer and campaign update went through engineering — PMs couldn't ship anything without filing a ticket first.",
+        "Accessibility had never been addressed across the network. No audit, no standards, no baseline.",
       ],
       approach: [
-        "Built internal tools that let Product Managers update features on their own, with guardrails. Trade-off: more up-front infra work, much less ongoing engineering toil.",
-        "Led the company's first accessibility audit — partly because it was the right thing to do, partly because WCAG compliance happened to also help SEO and Core Web Vitals.",
+        "Built internal mailer tooling that gave PMs direct control over email campaigns. Engineering handled the templates and guardrails; PMs shipped on their own schedule.",
+        "Led the first WCAG audit across all 12 sites. Fixed issues at the platform level so every storefront improved at once rather than one at a time.",
       ],
       outcome: [
-        "Product releases sped up by 20% across 12 sites.",
-        "Site performance + SEO improved by 25% as a side effect of the a11y work.",
-        "Spent the rest of the time on the interesting problems instead of pushing pixels.",
+        "PMs could ship mailers without touching engineering, freeing the team for actual frontend work. Feature velocity across the network increased by 20%.",
+        "The accessibility work had a side effect: Core Web Vitals and SEO scores improved by 25% across all sites.",
       ],
       metrics: [
         { label: "SITES",       value: "12" },
@@ -273,13 +276,22 @@ export const PROFILE: Profile = {
         { label: "PERF / SEO",  value: "+25%" },
         { label: "TENURE",      value: "9y" },
       ],
+      screenshot: "/assets/tennis-warehouse.png",
       gallery: [
-        { caption: "Tennis Warehouse — flagship of the network" },
-        { caption: "Cross-site PM tooling that let non-engineers ship feature updates" },
-        { caption: "Accessibility audit dashboard — first WCAG pass across all 12 sites" },
+        { src: "/assets/tennis-warehouse-eu.png",     caption: "Tennis Warehouse Europe — Europe focused tennis platform" },
+        { src: "/assets/running-warehouse.png",        caption: "Running Warehouse — US based running platform" },
+        { src: "/assets/tackle-warehouse.png",         caption: "Tackle Warehouse — Fishing focused platform" },
+        { src: "/assets/tackle-bait-page.png",         caption: "Bait & tackle PDP — Bait product page with color selection panel" },
+        { src: "/assets/tackle-mobile.png",            caption: "Mobile-first responsive layout across the network" },
+        { src: "/assets/raquet-page.png",              caption: "Racquet PDP — Racquet product page with detailed specifications" },
+        { src: "/assets/skate-warehouse-builder.png",  caption: "Skate Warehouse board builder — custom deck configuration tool" },
       ],
       projectLinks: [
         { label: "Tennis Warehouse", href: "https://www.tennis-warehouse.com/", kind: "primary" },
+        { label: "Tennis Warehouse Europe", href: "https://www.tenniswarehouse-europe.com/", kind: "secondary" },
+        { label: "Running Warehouse", href: "https://www.running-warehouse.com/", kind: "secondary" },
+        { label: "Tackle Warehouse", href: "https://www.tacklewarehouse.com/", kind: "secondary" },
+        { label: "Skate Warehouse", href: "https://www.skatewarehouse.com/", kind: "secondary" },
       ],
     },
   ],

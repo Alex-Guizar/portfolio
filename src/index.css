@@ -5,35 +5,10 @@
   --font-jetbrains: "JetBrains Mono", ui-monospace, Menlo, monospace;
   --font-pixel: "Press Start 2P", monospace;
   --font-cinzel: "Cinzel", "Cormorant Garamond", Georgia, serif;
-  --font-body: "Cormorant Garamond", Georgia, serif;
 
   /* Colors */
   --color-ft-bg: #06080e;
   --color-ft-bg-panel: #0a0e18;
-  --color-ft-grass: #5a8a3a;
-  --color-ft-grass-top-hi: #7ab050;
-  --color-ft-grass-top-dk: #3a5a20;
-  --color-ft-grass-top-accent: #9ad068;
-  --color-ft-grass-side-l: #2a4a18;
-  --color-ft-grass-side-r: #142a0a;
-  --color-ft-stone: #8c94a0;
-  --color-ft-stone-top-hi: #b0b8c0;
-  --color-ft-stone-top-dk: #5a626c;
-  --color-ft-stone-top-accent: #d0d8e0;
-  --color-ft-stone-side-l: #4a525c;
-  --color-ft-stone-side-r: #2a3038;
-  --color-ft-path: #a08868;
-  --color-ft-path-top-hi: #c0a888;
-  --color-ft-path-top-dk: #705840;
-  --color-ft-path-top-accent: #d8b890;
-  --color-ft-path-side-l: #604830;
-  --color-ft-path-side-r: #382818;
-  --color-ft-water: #3a78a8;
-  --color-ft-water-top-hi: #5a98c8;
-  --color-ft-water-top-dk: #1a4878;
-  --color-ft-water-top-accent: #8ab8e0;
-  --color-ft-water-side-l: #1a3858;
-  --color-ft-water-side-r: #0a2040;
   --color-ft-panel-outer: #3a2010;
   --color-ft-panel-border-dk: #5a3018;
   --color-ft-panel-border-md: #8a5c2a;
@@ -48,7 +23,6 @@
   --color-ft-panel-fg-soft: #5a3a1c;
   --color-ft-panel-dim: #8a6e4a;
   --color-ft-panel-accent: #8a3018;
-  --color-ft-panel-accent-dp: #5a1808;
   --color-ft-gold: #c89030;
   --color-ft-gold-dk: #8a5e1c;
   --color-ft-gold-hi: #e8b860;
@@ -68,6 +42,10 @@
 
   /* Layout */
   --width-container: 1200px;
+}
+
+body {
+  font-family: var(--font-jetbrains);
 }
 
 /* Keyframe animations */

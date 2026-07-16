@@ -79,19 +79,15 @@ function detailColor(pal: TerrainPalette, kind?: DetailKind): string {
   return pal.topDk;
 }
 
-function terrainPal(terrain: TerrainType): TerrainPalette {
-  return {
-    top:       `var(--color-ft-${terrain})`,
-    topHi:     `var(--color-ft-${terrain}-top-hi)`,
-    topDk:     `var(--color-ft-${terrain}-top-dk)`,
-    topAccent: `var(--color-ft-${terrain}-top-accent)`,
-    sideL:     `var(--color-ft-${terrain}-side-l)`,
-    sideR:     `var(--color-ft-${terrain}-side-r)`,
-  };
-}
+const TERRAIN_PALETTES: Record<TerrainType, TerrainPalette> = {
+  grass: { top: "#5a8a3a", topHi: "#7ab050", topDk: "#3a5a20", topAccent: "#9ad068", sideL: "#2a4a18", sideR: "#142a0a" },
+  stone: { top: "#8c94a0", topHi: "#b0b8c0", topDk: "#5a626c", topAccent: "#d0d8e0", sideL: "#4a525c", sideR: "#2a3038" },
+  path:  { top: "#a08868", topHi: "#c0a888", topDk: "#705840", topAccent: "#d8b890", sideL: "#604830", sideR: "#382818" },
+  water: { top: "#3a78a8", topHi: "#5a98c8", topDk: "#1a4878", topAccent: "#8ab8e0", sideL: "#1a3858", sideR: "#0a2040" },
+};
 
 function IsoTile({ x, y, terrain, height = 0, children, variant = 0 }: IsoTileProps) {
-  const pal = terrainPal(terrain);
+  const pal = TERRAIN_PALETTES[terrain];
   const screenX = (x - y) * (TW / 2);
   const screenY = (x + y) * (TH / 2) - height * TD;
   const sideD = ND + height * ND;
@@ -99,13 +95,15 @@ function IsoTile({ x, y, terrain, height = 0, children, variant = 0 }: IsoTilePr
   const details = detailsFor(terrain, variant);
 
   return (
-    <div style={{
-      position: "absolute",
-      left: `calc(50% + ${screenX - TW / 2}px)`,
-      top: screenY,
-      width: TW,
-      height: TH + (sideD * (TH / NH)),
-    }}>
+    <div
+      className="absolute"
+      style={{
+        left: `calc(50% + ${screenX - TW / 2}px)`,
+        top: screenY,
+        width: TW,
+        height: TH + (sideD * (TH / NH)),
+      }}
+    >
       <svg
         viewBox={`0 0 ${NW} ${NH + sideD}`}
         width={TW}
@@ -155,7 +153,15 @@ function PixelTree({ scale = 3 }: { scale?: number }) {
     "   wWw   ",
   ];
   return (
-    <div style={{ display: "grid", gridTemplateColumns: `repeat(9, ${scale}px)`, gridTemplateRows: `repeat(9, ${scale}px)`, imageRendering: "pixelated", filter: `drop-shadow(0 ${scale}px 0 rgba(0,0,0,0.5))` }}>
+    <div
+      className="grid"
+      style={{
+        gridTemplateColumns: `repeat(9, ${scale}px)`,
+        gridTemplateRows: `repeat(9, ${scale}px)`,
+        imageRendering: "pixelated",
+        filter: `drop-shadow(0 ${scale}px 0 rgba(0,0,0,0.5))`
+      }}
+    >
       {rows.flatMap((row, y) => row.split("").map((ch, x) => (
         <div key={`${x}-${y}`} style={{ background: ch === " " ? "transparent" : c[ch] }} />
       )))}
@@ -175,14 +181,16 @@ function PixelCrystal({ scale = 3 }: { scale?: number }) {
     "  oo  ",
   ];
   return (
-    <div style={{
-      display: "grid",
-      gridTemplateColumns: `repeat(6, ${scale}px)`,
-      gridTemplateRows: `repeat(7, ${scale}px)`,
-      imageRendering: "pixelated",
-      filter: `drop-shadow(0 0 6px var(--color-ft-mp-blue))`,
-      animation: "ft-crystal 3s ease-in-out infinite",
-    }}>
+    <div
+      className="grid"
+      style={{
+        gridTemplateColumns: `repeat(6, ${scale}px)`,
+        gridTemplateRows: `repeat(7, ${scale}px)`,
+        imageRendering: "pixelated",
+        filter: `drop-shadow(0 0 6px var(--color-ft-mp-blue))`,
+        animation: "ft-crystal 3s ease-in-out infinite",
+      }}
+    >
       {rows.flatMap((row, y) => row.split("").map((ch, x) => {
         const fill = ch === " " ? "transparent" : c[ch] ?? "transparent";
         return <div key={`${x}-${y}`} style={{ background: fill }} />;
@@ -205,14 +213,23 @@ function PixelLamp({ scale = 3 }: { scale?: number }) {
     " ooooo ",
   ];
   return (
-    <div style={{ position: "relative", display: "inline-block" }}>
-      <div style={{
-        position: "absolute",
-        inset: -scale * 3,
-        background: `radial-gradient(circle, rgba(255,208,96,0.5) 0%, rgba(255,208,96,0.15) 35%, transparent 65%)`,
-        pointerEvents: "none",
-      }} />
-      <div style={{ display: "grid", gridTemplateColumns: `repeat(7, ${scale}px)`, gridTemplateRows: `repeat(9, ${scale}px)`, imageRendering: "pixelated", position: "relative", filter: `drop-shadow(0 ${scale}px 0 rgba(0,0,0,0.5))` }}>
+    <div className="relative inline-block">
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          inset: -scale * 3,
+          background: `radial-gradient(circle, rgba(255,208,96,0.5) 0%, rgba(255,208,96,0.15) 35%, transparent 65%)`,
+        }} 
+      />
+      <div
+        className="grid relative"
+        style={{
+          gridTemplateColumns: `repeat(7, ${scale}px)`,
+          gridTemplateRows: `repeat(9, ${scale}px)`,
+          imageRendering: "pixelated",
+          filter: `drop-shadow(0 ${scale}px 0 rgba(0,0,0,0.5))`
+        }}
+      >
         {rows.flatMap((row, y) => row.split("").map((ch, x) => {
           const fill = ch === " " ? "transparent" : c[ch] ?? "transparent";
           return <div key={`${x}-${y}`} style={{ background: fill }} />;
@@ -236,7 +253,15 @@ function PixelChest({ scale = 3 }: { scale?: number }) {
     " ooooooo ",
   ];
   return (
-    <div style={{ display: "grid", gridTemplateColumns: `repeat(9, ${scale}px)`, gridTemplateRows: `repeat(9, ${scale}px)`, imageRendering: "pixelated", filter: `drop-shadow(0 ${scale}px 0 rgba(0,0,0,0.5))` }}>
+    <div
+      className="grid"
+      style={{
+        gridTemplateColumns: `repeat(9, ${scale}px)`,
+        gridTemplateRows: `repeat(9, ${scale}px)`,
+        imageRendering: "pixelated",
+        filter: `drop-shadow(0 ${scale}px 0 rgba(0,0,0,0.5))`
+      }}
+    >
       {rows.flatMap((row, y) => row.split("").map((ch, x) => (
         <div key={`${x}-${y}`} style={{ background: ch === " " ? "transparent" : c[ch] }} />
       )))}
@@ -297,10 +322,9 @@ export function BattleMap() {
   return (
     <div className="bm-frame relative w-full rounded border border-ft-panel-border-dk">
       <div
-        className="bm-stage relative overflow-hidden rounded-sm"
+        className="bm-stage relative overflow-hidden rounded-sm shadow-[inset_0_0_60px_rgba(0,0,0,0.5)]"
         style={{
           height: "var(--bm-h, 360px)",
-          boxShadow: "inset 0 0 60px rgba(0,0,0,0.5)",
         }}
       >
         <div
@@ -311,21 +335,33 @@ export function BattleMap() {
           const x = (i * 379) % 100;
           const y = ((i * 217) % 30);
           const sz = i % 6 === 0 ? 2 : 1;
-          return <div key={i} style={{ position: "absolute", left: `${x}%`, top: `${y}%`, width: sz, height: sz, background: "#e8f0ff", opacity: 0.45 + (i % 3) * 0.18 }} />;
+          return <div
+            key={i}
+            className="absolute"
+            style={{ 
+              left: `${x}%`, 
+              top: `${y}%`, 
+              width: sz, 
+              height: sz, 
+              background: "#e8f0ff", opacity: 0.45 + (i % 3) * 0.18
+            }}
+          />;
         })}
         <svg viewBox="0 0 100 18" preserveAspectRatio="none" className="absolute inset-x-0 top-[30%] h-[56px] w-full" shapeRendering="crispEdges">
           <polygon points="0,18 0,10 6,6 12,11 20,4 28,9 36,3 44,8 52,2 60,7 68,5 76,9 84,4 92,8 100,5 100,18" fill="#1a2244" />
           <polygon points="0,18 0,14 8,11 16,13 24,9 32,12 40,8 48,11 56,7 64,11 72,9 80,12 88,8 96,11 100,9 100,18" fill="#0e1530" />
         </svg>
 
-        <div className="bm-iso-layer absolute inset-x-0 bottom-0" style={{ top: 80, transformOrigin: "50% 0" }}>
+        <div
+          className="bm-iso-layer absolute inset-x-0 bottom-0 top-20 origin-[50%_0]"
+        >
           {MAP_TILES.map((t, i) => (
             <IsoTile key={i} x={t.x} y={t.y} terrain={t.terrain} height={t.height} variant={t.variant}>
               {t.hasHero && (
                 <div className="relative">
                   <div
-                    className="absolute left-1/2 -translate-x-1/2 font-pixel text-[13px] text-ft-accent"
-                    style={{ top: -16, textShadow: `0 0 8px var(--color-ft-accent), 1px 1px 0 #000`, animation: "ft-bob 0.8s ease-in-out infinite" }}
+                    className="absolute left-1/2 -translate-x-1/2 font-pixel text-[13px] text-ft-accent -top-4"
+                    style={{ textShadow: `0 0 8px var(--color-ft-accent), 1px 1px 0 #000`, animation: "ft-bob 0.8s ease-in-out infinite" }}
                   >▼</div>
                   <FFTCharacter />
                 </div>
@@ -364,7 +400,7 @@ export function BattleMap() {
             <span className="text-ft-gold text-[10px]">◆</span>
             <span>CT</span>
           </div>
-          <div className="grid gap-[5px] font-jetbrains text-[12px]">
+          <div className="grid gap-[5px] text-[12px]">
             {[["Brave", 70], ["Faith", 52], ["Speed", 14], ["Move", 4]].map(([k, v]) => (
               <div key={k} className="flex justify-between items-baseline">
                 <span className="text-ft-panel-accent font-cinzel text-[12px] font-semibold tracking-[1px] uppercase">{k}</span>

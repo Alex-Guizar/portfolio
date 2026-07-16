@@ -135,20 +135,19 @@ const SPRITES = {
   },
 };
 
-export function PixelSprite({ name, scale = 4, style }: { name: keyof typeof SPRITES; scale?: number; style?: CSSProperties }) {
+export function PixelSprite({ name, scale = 4 }: { name: keyof typeof SPRITES; scale?: number; style?: CSSProperties }) {
   const s = SPRITES[name];
   if (!s) return null;
   return (
     <div
+      className="grid"
       style={{
-        display: "grid",
         gridTemplateColumns: `repeat(${s.w}, ${scale}px)`,
         gridTemplateRows: `repeat(${s.h}, ${scale}px)`,
         width: s.w * scale,
         height: s.h * scale,
         imageRendering: "pixelated",
         flex: "0 0 auto",
-        ...style,
       }}
       aria-hidden="true"
     >
