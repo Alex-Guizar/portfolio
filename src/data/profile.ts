@@ -1,80 +1,4 @@
-// All site content lives here. Edit copy here and every section updates.
-// Each project has a minimal entry (always shown in the INVENTORY list) and an
-// optional richer detail block (shown on the project's own page). Fill in as
-// little or as much as you like — every detail field is optional.
-
-export type ProjectStatus = 'LIVE' | 'IN-PROGRESS' | 'ARCHIVED';
-
-export interface ProjectLink {
-  label: string;
-  href: string;
-  kind?: 'primary' | 'secondary' | string;
-}
-
-export interface ProjectMetric {
-  label: string;
-  value: string;
-}
-
-export interface ProjectStackDetail {
-  tech: string;
-  reason: string;
-}
-
-export interface ProjectGalleryItem {
-  caption: string;
-  src?: string;
-}
-
-export interface Project {
-  id: string;
-  title: string;
-  year: string;
-  stack: string;
-  blurb: string;
-  status?: ProjectStatus;
-  tagline?: string;
-  role?: string;
-  duration?: string;
-  team?: string;
-  href?: string | null;
-  screenshot?: string;
-  problem?: string[];
-  approach?: string[];
-  outcome?: string[];
-  metrics?: ProjectMetric[];
-  features?: string[];
-  stackDetail?: ProjectStackDetail[];
-  gallery?: ProjectGalleryItem[];
-  projectLinks?: ProjectLink[];
-}
-
-export interface ExperienceItem {
-  id: string;
-  co: string;
-  role: string;
-  range: string;
-}
-
-export interface ProfileLink {
-  label: string;
-  href: string;
-}
-
-export interface Profile {
-  name: string;
-  handle: string;
-  role: string;
-  location: string;
-  blurb: string;
-  longBlurb: string[];
-  now: string[];
-  work: Project[];
-  experience: ExperienceItem[];
-  links: ProfileLink[];
-  email: string;
-  resume: string;
-}
+import type { Profile } from '@/types/profile';
 
 export const PROFILE: Profile = {
   name: "Alex Guizar",
@@ -93,8 +17,6 @@ export const PROFILE: Profile = {
     "Reading + writing about UI infrastructure at scale.",
   ],
 
-  // PROJECTS — featured first (FFXIV tracker is genuinely impressive personal
-  // work + matches the FF-inspired site vibe).
   work: [
     {
       id: "ffxiv-tracker",
@@ -124,10 +46,10 @@ export const PROFILE: Profile = {
         "Side benefit: pretty graphs of our clear progression that we screenshot for the raid Discord every reset.",
       ],
       metrics: [
-        { label: "RAIDERS",     value: "12" },
+        { label: "RAIDERS", value: "12" },
         { label: "DROPS LOGGED", value: "400+" },
-        { label: "DISPUTES",    value: "0" },
-        { label: "WEEKS LIVE",  value: "52+" },
+        { label: "DISPUTES", value: "0" },
+        { label: "WEEKS LIVE", value: "52+" },
       ],
       features: [
         "Pulls live character + gear data from the FFXIV/XIVAPI endpoints",
@@ -137,9 +59,18 @@ export const PROFILE: Profile = {
         "Discord-friendly screenshot mode for sharing clears",
       ],
       stackDetail: [
-        { tech: "Vue",     reason: "Reactivity model is perfect for a dashboard where everything depends on everything else." },
-        { tech: "Node.js", reason: "Lightweight server to aggregate from multiple game-data endpoints and cache responses." },
-        { tech: "Axios",   reason: "Simple HTTP client with interceptors for rate-limit handling against XIVAPI." },
+        {
+          tech: "Vue",
+          reason: "Reactivity model is perfect for a dashboard where everything depends on everything else."
+        },
+        {
+          tech: "Node.js",
+          reason: "Lightweight server to aggregate from multiple game-data endpoints and cache responses."
+        },
+        {
+          tech: "Axios",
+          reason: "Simple HTTP client with interceptors for rate-limit handling against XIVAPI."
+        },
       ],
       gallery: [
         { caption: "The week-summary view — attendance, drops, and priority at a glance" },
@@ -151,7 +82,7 @@ export const PROFILE: Profile = {
     {
       id: "cisco-component-library",
       title: "Cisco Component Library",
-      year: "2022–present",
+      year: "2022-present",
       stack: "Vue · Lit · TypeScript · Monorepo",
       blurb: "Re-engineered Cisco's framework-agnostic component library and the workflows around it, cutting team time-to-delivery by 50%.",
 
@@ -176,7 +107,7 @@ export const PROFILE: Profile = {
         "Library adoption stopped being a question — teams now reach for it first because it's faster than rolling their own.",
       ],
       metrics: [
-        { label: "TIME-TO-SHIP", value: "−50%" },
+        { label: "TIME-TO-SHIP", value: "-50%" },
         { label: "TEAMS",        value: "Multiple" },
         { label: "WCAG",         value: "2.2" },
         { label: "FRAMEWORKS",   value: "Vue · React · Lit" },
@@ -189,11 +120,26 @@ export const PROFILE: Profile = {
         "Cross-team API design partnership to keep data shapes aligned",
       ],
       stackDetail: [
-        { tech: "Vue",        reason: "Primary framework for product surfaces; expert-level reach." },
-        { tech: "Lit",        reason: "Where components need to be consumable from any framework or none." },
-        { tech: "TypeScript", reason: "Public component APIs need to be self-documenting and refactor-safe." },
-        { tech: "Monorepo",   reason: "Multiple consumers, multiple frameworks, one source of truth for tokens and primitives." },
-        { tech: "CircleCI",   reason: "Versioning + publishing automation across the workspace." },
+        {
+          tech: "Vue",
+          reason: "Primary framework for product surfaces; expert-level reach."
+        },
+        {
+          tech: "Lit",
+          reason: "Where components need to be consumable from any framework or none."
+        },
+        {
+          tech: "TypeScript",
+          reason: "Public component APIs need to be self-documenting and refactor-safe."
+        },
+        {
+          tech: "Monorepo",
+          reason: "Multiple consumers, multiple frameworks, one source of truth for tokens and primitives."
+        },
+        {
+          tech: "CircleCI",
+          reason: "Versioning + publishing automation across the workspace."
+        },
       ],
     },
 
@@ -271,43 +217,99 @@ export const PROFILE: Profile = {
         "The accessibility work had a side effect: Core Web Vitals and SEO scores improved by 25% across all sites.",
       ],
       metrics: [
-        { label: "SITES",       value: "12" },
-        { label: "VELOCITY",    value: "+20%" },
-        { label: "PERF / SEO",  value: "+25%" },
-        { label: "TENURE",      value: "9y" },
+        { label: "SITES", value: "12" },
+        { label: "VELOCITY", value: "+20%" },
+        { label: "PERF / SEO", value: "+25%" },
+        { label: "TENURE", value: "9y" },
       ],
       screenshot: "/assets/tennis-warehouse.png",
       gallery: [
-        { src: "/assets/tennis-warehouse-eu.png",     caption: "Tennis Warehouse Europe — Europe focused tennis platform" },
-        { src: "/assets/running-warehouse.png",        caption: "Running Warehouse — US based running platform" },
-        { src: "/assets/tackle-warehouse.png",         caption: "Tackle Warehouse — Fishing focused platform" },
-        { src: "/assets/tackle-bait-page.png",         caption: "Bait & tackle PDP — Bait product page with color selection panel" },
-        { src: "/assets/tackle-mobile.png",            caption: "Mobile-first responsive layout across the network" },
-        { src: "/assets/raquet-page.png",              caption: "Racquet PDP — Racquet product page with detailed specifications" },
-        { src: "/assets/skate-warehouse-builder.png",  caption: "Skate Warehouse board builder — custom deck configuration tool" },
+        {
+          src: "/assets/tennis-warehouse-eu.png",
+          caption: "Tennis Warehouse Europe — Europe focused tennis platform"
+        },
+        {
+          src: "/assets/running-warehouse.png",
+          caption: "Running Warehouse — US based running platform"
+        },
+        {
+          src: "/assets/tackle-warehouse.png",
+          caption: "Tackle Warehouse — Fishing focused platform"
+        },
+        {
+          src: "/assets/tackle-bait-page.png",
+          caption: "Bait & tackle PDP — Bait product page with color selection panel"
+        },
+        {
+          src: "/assets/tackle-mobile.png",
+          caption: "Mobile-first responsive layout across the network"
+        },
+        {
+          src: "/assets/raquet-page.png",
+          caption: "Racquet PDP — Racquet product page with detailed specifications"
+        },
+        {
+          src: "/assets/skate-warehouse-builder.png",
+          caption: "Skate Warehouse board builder — custom deck configuration tool"
+        },
       ],
       projectLinks: [
-        { label: "Tennis Warehouse", href: "https://www.tennis-warehouse.com/", kind: "primary" },
-        { label: "Tennis Warehouse Europe", href: "https://www.tenniswarehouse-europe.com/", kind: "secondary" },
-        { label: "Running Warehouse", href: "https://www.running-warehouse.com/", kind: "secondary" },
-        { label: "Tackle Warehouse", href: "https://www.tacklewarehouse.com/", kind: "secondary" },
-        { label: "Skate Warehouse", href: "https://www.skatewarehouse.com/", kind: "secondary" },
+        {
+          label: "Tennis Warehouse",
+          href: "https://www.tennis-warehouse.com/",
+          kind: "primary"
+        },
+        {
+          label: "Tennis Warehouse Europe",
+          href: "https://www.tenniswarehouse-europe.com/",
+          kind: "secondary"
+        },
+        {
+          label: "Running Warehouse",
+          href: "https://www.running-warehouse.com/",
+          kind: "secondary"
+        },
+        {
+          label: "Tackle Warehouse",
+          href: "https://www.tacklewarehouse.com/",
+          kind: "secondary"
+        },
+        {
+          label: "Skate Warehouse",
+          href: "https://www.skatewarehouse.com/",
+          kind: "secondary"
+        },
       ],
     },
   ],
 
   experience: [
-    { id: "e1", co: "Experis at Cisco",   role: "Senior Frontend Engineer · UI Platform",    range: "2022 — present" },
-    { id: "e2", co: "Sports Warehouse",   role: "Frontend Web Developer",                    range: "2013 — 2022"    },
-    { id: "e3", co: "Independent",        role: "Lead Barista · soft-skill foundation",      range: "2006 — 2013"    },
+    {
+      id: "e1",
+      co: "Experis at Cisco",
+      role: "Senior Frontend Engineer · UI Platform",
+      range: "2022 — present"
+    },
+    {
+      id: "e2",
+      co: "Sports Warehouse",
+      role: "Frontend Web Developer",
+      range: "2013 — 2022"
+    },
+    {
+      id: "e3",
+      co: "Independent",
+      role: "Lead Barista · soft-skill foundation",
+      range: "2006 — 2013"
+    },
   ],
 
   email: "mailto:alexguizar90@gmail.com",
   resume: "Alex-Guizar-Resume.pdf",
   links: [
-    { label: "github",   href: "https://github.com/" },                       // ← drop your username
-    { label: "linkedin", href: "https://www.linkedin.com/in/alexguizar/" },   // ← confirm slug
-    { label: "email",    href: "mailto:alexguizar90@gmail.com" },
-    { label: "resume",   href: "Alex-Guizar-Resume.pdf" },
+    { label: "github", href: "https://github.com/Alex-Guizar" },
+    { label: "linkedin", href: "https://www.linkedin.com/in/alexander-guizar-32649263/" },
+    { label: "email", href: "mailto:alexguizar90@gmail.com" },
+    { label: "resume", href: "Alex-Guizar-Resume.pdf" },
   ],
 };

@@ -51,14 +51,14 @@ body {
 /* Keyframe animations */
 @keyframes ft-bob {
   0%, 100% { transform: translateX(-50%) translateY(0); }
-  50%       { transform: translateX(-50%) translateY(4px); }
+  50% { transform: translateX(-50%) translateY(4px); }
 }
 @keyframes ft-pulse {
   0%, 100% { opacity: 1; }
-  50%       { opacity: 0.4; }
+  50% { opacity: 0.4; }
 }
 @keyframes ft-crystal {
   0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-3px); }
+  50% { transform: translateY(-3px); }
 }
 

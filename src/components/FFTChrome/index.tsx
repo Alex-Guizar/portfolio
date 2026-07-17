@@ -1,12 +1,15 @@
-import { useState, CSSProperties, MouseEventHandler, ReactNode } from 'react';
+import { useState, type CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
-import { PROFILE } from '../../data/profile';
-import { externalLinkProps } from '../../utils/links';
-
-interface FFTCharacterProps {
-  scale?: number;
-  style?: CSSProperties;
-}
+import { PROFILE } from '@/data/profile';
+import { externalLinkProps } from '@/utils/links';
+import type {
+  FFTCharacterProps,
+  FFTPanelProps,
+  StatLineProps,
+  FFTMenuItemProps,
+  SectionPlainProps,
+  UtilityBarProps,
+} from '@/types/fftChrome';
 
 export function FFTCharacter({ scale = 1, style }: FFTCharacterProps) {
   return (
@@ -14,7 +17,7 @@ export function FFTCharacter({ scale = 1, style }: FFTCharacterProps) {
       src="/assets/character.png"
       width={44 * scale}
       height={78 * scale}
-      alt="character"
+      alt="Chrono Cross's Serge in Final Fantasy Tactics style"
       className="block"
       style={{
         imageRendering: 'pixelated',
@@ -23,14 +26,6 @@ export function FFTCharacter({ scale = 1, style }: FFTCharacterProps) {
       }}
     />
   );
-}
-
-interface FFTPanelProps {
-  children?: ReactNode;
-  style?: CSSProperties;
-  className?: string;
-  title?: string;
-  cornerStat?: string | number;
 }
 
 export function FFTPanel({ children, style, className, title, cornerStat }: FFTPanelProps) {
@@ -52,12 +47,12 @@ export function FFTPanel({ children, style, className, title, cornerStat }: FFTP
         {title && (
           <div className="mb-4 flex items-center justify-between gap-3 border-b border-ft-panel-inner-hi2 pb-3">
             <div className="flex items-center gap-3 font-cinzel text-[18px] font-semibold tracking-[0.12em]">
-              <span className="text-ft-gold text-[12px]">◆</span>
+              <span className="text-ft-gold text-[0.75rem]">◆</span>
               <span>{title}</span>
-              <span className="text-ft-gold text-[12px]">◆</span>
+              <span className="text-ft-gold text-[0.75rem]">◆</span>
             </div>
             {cornerStat && (
-              <span className="text-[11px] text-ft-panel-dim tracking-[0.08em]">
+              <span className="text-[0.6875rem] text-ft-panel-dim tracking-[0.08em]">
                 {cornerStat}
               </span>
             )}
@@ -67,13 +62,6 @@ export function FFTPanel({ children, style, className, title, cornerStat }: FFTP
       </div>
     </div>
   );
-}
-
-interface StatLineProps {
-  label: string;
-  value: number;
-  max: number;
-  color: string;
 }
 
 export function StatLine({ label, value, max, color }: StatLineProps) {
@@ -102,15 +90,6 @@ export function StatLine({ label, value, max, color }: StatLineProps) {
   );
 }
 
-interface FFTMenuItemProps {
-  children?: ReactNode;
-  badge?: string | number;
-  selected?: boolean;
-  href?: string;
-  to?: string;
-  onClick?: MouseEventHandler<HTMLAnchorElement>;
-}
-
 export function FFTMenuItem({ children, badge, selected, href, to, onClick }: FFTMenuItemProps) {
   const [hover, setHover] = useState(false);
   const active = hover || selected;
@@ -118,7 +97,7 @@ export function FFTMenuItem({ children, badge, selected, href, to, onClick }: FF
   const layout = (
     <>
       <span
-        className="font-cinzel text-[14px] font-semibold transition-all duration-150"
+        className="font-cinzel text-[0.875rem] font-semibold transition-all duration-150"
         style={{ color: active ? 'var(--color-ft-gold)' : 'transparent' }}
       >
         ▸
@@ -170,15 +149,10 @@ export function FFTMenuItem({ children, badge, selected, href, to, onClick }: FF
   );
 }
 
-interface UtilityBarProps {
-  onTogglePlain: () => void;
-  plain: boolean;
-}
-
 export function UtilityBar({ onTogglePlain, plain }: UtilityBarProps) {
   const { email, resume } = PROFILE;
   return (
-    <div className="fft-utility-bar flex flex-wrap justify-end gap-2.5 mb-5">
+    <div className="fft-utility-bar flex flex-wrap justify-end gap-3 mb-6">
       <a
         href={resume}
         className="inline-flex items-center gap-2 rounded-sm border border-ft-accent bg-ft-accent px-3 py-2 text-[0.75rem] font-semibold text-ft-bg transition"
@@ -200,12 +174,6 @@ export function UtilityBar({ onTogglePlain, plain }: UtilityBarProps) {
       </button>
     </div>
   );
-}
-
-interface SectionPlainProps {
-  title: string;
-  cornerNote?: string;
-  children?: ReactNode;
 }
 
 export function SectionPlain({ title, cornerNote, children }: SectionPlainProps) {

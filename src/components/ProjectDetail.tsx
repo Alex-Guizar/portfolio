@@ -1,42 +1,16 @@
-import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { FFTPanel, FFTMenuItem, UtilityBar } from './FFTChrome';
-import { PROFILE, type Project, type ProjectStatus } from '../data/profile';
-import { externalLinkProps } from '../utils/links';
-
-
-interface ScreenshotPlaceholderProps {
-  project: Project;
-}
-
-interface StatTileProps {
-  label: string;
-  value?: string;
-}
-
-interface MetricCalloutProps {
-  label: string;
-  value?: string | number;
-}
-
-interface ProjectSectionProps {
-  title: string;
-  num?: number;
-  children?: ReactNode;
-  empty?: boolean;
-  className?: string;
-}
-
-interface ParagraphsProps {
-  items?: string | string[];
-}
-
-interface ProjectDetailProps {
-  project: Project;
-  onTogglePlain: () => void;
-  plain: boolean;
-  onBack: () => void;
-}
+import { FFTPanel, FFTMenuItem, UtilityBar } from '@/components/FFTChrome';
+import { PROFILE } from '@/data/profile';
+import type { ProjectStatus } from '@/types/profile';
+import type {
+  ScreenshotPlaceholderProps,
+  StatTileProps,
+  MetricCalloutProps,
+  ProjectSectionProps,
+  ParagraphsProps,
+  ProjectDetailProps,
+} from '@/types/projectDetail';
+import { externalLinkProps } from '@/utils/links';
 
 function ScreenshotPlaceholder({ project }: ScreenshotPlaceholderProps) {
   if (project.screenshot) {
@@ -95,8 +69,8 @@ function StatTile({ label, value }: StatTileProps) {
         boxShadow: `inset 0 1px 0 var(--color-ft-panel-inner-hi), 0 2px 0 rgba(90,48,24,0.18)`,
       }}
     >
-      <div className="font-cinzel text-[11px] font-semibold uppercase tracking-[0.15em] mb-1 text-ft-panel-accent">{label}</div>
-      <div className="text-[14px] font-semibold text-ft-panel-fg">{value || "—"}</div>
+      <div className="font-cinzel text-[0.6875rem] font-semibold uppercase tracking-[0.15em] mb-1 text-ft-panel-accent">{label}</div>
+      <div className="text-[0.875rem] font-semibold text-ft-panel-fg">{value || "—"}</div>
     </div>
   );
 }
@@ -110,8 +84,8 @@ function MetricCallout({ label, value }: MetricCalloutProps) {
         boxShadow: `inset 0 1px 0 var(--color-ft-panel-inner-hi)`,
       }}
     >
-      <div className="font-cinzel text-[26px] font-bold text-ft-panel-accent">{value}</div>
-      <div className="font-cinzel text-[10px] font-semibold uppercase tracking-[0.2em] mt-1 text-ft-panel-dim">{label}</div>
+      <div className="font-cinzel text-[1.625rem] font-bold text-ft-panel-accent">{value}</div>
+      <div className="font-cinzel text-[0.625rem] font-semibold uppercase tracking-[0.2em] mt-1 text-ft-panel-dim">{label}</div>
     </div>
   );
 }
@@ -120,7 +94,7 @@ function ProjectSection({ title, num, children, empty, className }: ProjectSecti
   return (
     <FFTPanel title={title} cornerStat={num ? `${num}` : undefined} className={className}>
       {empty ? (
-        <div className="text-[12px] italic text-ft-panel-dim py-2">
+        <div className="text-[0.75rem] italic text-ft-panel-dim py-2">
           — placeholder — fill in <code className="bg-ft-panel-header px-1 py-[1px] border border-ft-panel-inner-hi2 text-ft-panel-accent">data.ts</code> for this project.
         </div>
       ) : children}
@@ -131,8 +105,7 @@ function ProjectSection({ title, num, children, empty, className }: ProjectSecti
 function Paragraphs({ items }: ParagraphsProps) {
   const arr = Array.isArray(items) ? items : items ? [items] : [];
   return arr.map((t, i) => (
-    <p key={i} className="mb-3 text-[14px] leading-[1.75] text-ft-panel-fg-soft">
-      <span className="font-cinzel text-[14px] font-semibold text-ft-panel-accent mr-2 tracking-[0.05em]">{String(i + 1).padStart(2, "0")}</span>
+    <p key={i} className="mb-3 text-[0.9375rem] leading-[1.75] text-ft-panel-fg-soft">
       {t}
     </p>
   ));
@@ -170,19 +143,19 @@ export function ProjectDetail({ project, onTogglePlain, plain, onBack }: Project
 
   return (
     <div className="min-h-full bg-ft-bg text-ft-fg">
-      <div className="fft-page px-[40px] pt-[32px] pb-[56px] max-w-container mx-auto box-border">
+      <div className="fft-page px-10 pt-8 pb-14 max-w-container mx-auto box-border">
 
         {/* Top bar: back + breadcrumb + utility */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-5 text-xs text-ft-fg-soft">
           <div className="flex flex-wrap items-center gap-4">
             <button
               onClick={onBack}
-              className="inline-flex items-center gap-2 rounded-sm border border-ft-line bg-transparent px-3 py-2 text-[12px] font-semibold text-ft-fg transition cursor-pointer"
+              className="inline-flex items-center gap-2 rounded-sm border border-ft-line bg-transparent px-3 py-2 text-[0.75rem] font-semibold text-ft-fg transition cursor-pointer"
             >
-              <span className="font-cinzel text-[12px] font-semibold">◀</span>
+              <span className="font-cinzel text-[0.75rem] font-semibold">◀</span>
               Back to map
             </button>
-            <span className="font-cinzel text-[11px] font-medium uppercase tracking-[0.18em] text-ft-fg-soft">
+            <span className="font-cinzel text-[0.6875rem] font-medium uppercase tracking-[0.18em] text-ft-fg-soft">
               Inventory <span className="mx-2">▸</span> <span className="text-ft-accent">{project.title}</span>
             </span>
           </div>
@@ -192,7 +165,7 @@ export function ProjectDetail({ project, onTogglePlain, plain, onBack }: Project
         {/* HERO: screenshot + summary side-by-side */}
         <div className="fft-grid-project-hero grid grid-cols-[1.6fr_1fr] gap-4 mb-4">
           <FFTPanel>
-            <div className="p-[2px]">
+            <div>
               <ScreenshotPlaceholder project={project} />
             </div>
           </FFTPanel>
@@ -201,15 +174,15 @@ export function ProjectDetail({ project, onTogglePlain, plain, onBack }: Project
             <div className="flex h-full flex-col gap-3">
               <div className="flex items-center justify-between">
                 <StatusPill status={project.status} />
-                <span className="font-cinzel text-[14px] font-semibold tracking-[0.08em] text-ft-panel-accent">{project.year}</span>
+                <span className="font-cinzel text-[0.875rem] font-semibold tracking-[0.08em] text-ft-panel-accent">{project.year}</span>
               </div>
 
-              <h1 className="fft-project-title font-cinzel text-[30px] font-bold leading-[1.15] tracking-[0.01em] text-ft-panel-fg m-0">
+              <h1 className="fft-project-title font-cinzel text-[1.875rem] font-bold leading-[1.15] tracking-[0.01em] text-ft-panel-fg m-0">
                 {project.title}
               </h1>
 
               {project.tagline && (
-                <p className="text-[14px] leading-[1.6] text-ft-panel-fg-soft m-0">
+                <p className="text-[0.875rem] leading-[1.6] text-ft-panel-fg-soft m-0">
                   {project.tagline}
                 </p>
               )}
@@ -219,20 +192,20 @@ export function ProjectDetail({ project, onTogglePlain, plain, onBack }: Project
                   <a
                     href={primary.href}
                     {...externalLinkProps(primary.href)}
-                    className="inline-flex items-center justify-center gap-2 rounded-sm border border-ft-panel-border-md bg-transparent px-4 py-2 text-[12px] font-semibold text-ft-panel-fg transition"
+                    className="inline-flex items-center justify-center gap-2 rounded-sm border border-ft-panel-border-md bg-transparent px-4 py-2 text-[0.75rem] font-semibold text-ft-panel-fg transition"
                   >
-                    <span className="font-cinzel text-[12px] font-semibold text-ft-gold">▸</span>
+                    <span className="font-cinzel text-[0.75rem] font-semibold text-ft-gold">▸</span>
                     {primary.label} <span className="text-ft-gold">↗</span>
                   </a>
                 )}
                 {secondary.length > 0 && (
-                  <div className="flex flex-wrap gap-1">
+                  <div className="flex flex-wrap gap-2">
                     {secondary.map((l) => (
                       <a
                         key={l.label}
                         href={l.href}
                         {...externalLinkProps(l.href)}
-                        className="inline-flex shrink-0 items-center justify-center gap-1 rounded-sm border border-ft-panel-border-md bg-transparent px-2.5 py-1.5 text-[11px] font-semibold text-ft-panel-fg transition"
+                        className="inline-flex shrink-0 items-center justify-center gap-1 rounded-sm border border-ft-panel-border-md bg-transparent px-2 py-2 text-[0.6875rem] font-semibold text-ft-panel-fg transition"
                       >
                         {l.label} ↗
                       </a>
@@ -255,22 +228,22 @@ export function ProjectDetail({ project, onTogglePlain, plain, onBack }: Project
         {/* TWO-COLUMN: narrative + side info */}
         <div className="fft-grid-2col-aside grid grid-cols-[2fr_1fr] gap-4">
           <div>
-            <ProjectSection title="Description" empty={!project.blurb}>
-              <p className="text-[15px] leading-[1.7] text-ft-panel-fg m-0">{project.blurb}</p>
+            <ProjectSection title="Description" empty={!project.blurb} className="mb-2">
+              <p className="text-[0.9375rem] leading-[1.7] text-ft-panel-fg m-0">{project.blurb}</p>
             </ProjectSection>
 
-            <ProjectSection title="I · The Problem" empty={!project.problem}>
+            <ProjectSection title="I · The Problem" empty={!project.problem} className="mb-2">
               <Paragraphs items={project.problem} />
             </ProjectSection>
 
-            <ProjectSection title="II · The Approach" empty={!project.approach}>
+            <ProjectSection title="II · The Approach" empty={!project.approach} className="mb-2">
               <Paragraphs items={project.approach} />
             </ProjectSection>
 
-            <ProjectSection title="III · The Outcome" empty={!project.outcome && metrics.length === 0}>
+            <ProjectSection title="III · The Outcome" empty={!project.outcome && metrics.length === 0} className="mb-2">
               <Paragraphs items={project.outcome} />
               {metrics.length > 0 && (
-                <div className="mt-3 flex flex-wrap gap-2.5 pt-3 border-t border-ft-panel-inner-hi2">
+                <div className="mt-3 flex flex-wrap gap-2 pt-3 border-t border-ft-panel-inner-hi2">
                   {metrics.map((m, i) => <MetricCallout key={i} label={m.label} value={m.value} />)}
                 </div>
               )}
@@ -278,37 +251,37 @@ export function ProjectDetail({ project, onTogglePlain, plain, onBack }: Project
           </div>
 
           <div>
-            <ProjectSection title="Abilities · Features" empty={!project.features}>
+            <ProjectSection title="Abilities · Features" empty={!project.features} className="mb-2">
               <div>
                 {project.features?.map((f, i) => (
-                  <div key={i} className="grid grid-cols-[22px_1fr] gap-2.5 px-1 py-2 border-b border-dashed border-ft-panel-inner-hi2 text-[12px] leading-[1.5] text-ft-panel-fg">
-                    <span className="font-cinzel text-[12px] font-semibold tracking-[0.06em] text-ft-panel-accent">{String(i + 1).padStart(2, "0")}</span>
+                  <div key={i} className="grid grid-cols-[22px_1fr] gap-2 px-1 py-2 border-b border-dashed border-ft-panel-inner-hi2 text-[0.75rem] leading-[1.5] text-ft-panel-fg">
+                    <span className="font-cinzel text-[0.75rem] font-semibold tracking-[0.06em] text-ft-panel-accent">{String(i + 1).padStart(2, "0")}</span>
                     <span>{f}</span>
                   </div>
                 ))}
               </div>
             </ProjectSection>
 
-            <ProjectSection title="Enchantments · Stack" empty={stackDetail.length === 0 && !project.stack}>
+            <ProjectSection title="Enchantments · Stack" empty={stackDetail.length === 0 && !project.stack} className="mb-2">
               {stackDetail.length > 0 ? (
                 <div className="grid gap-3">
                   {stackDetail.map((s, i) => (
                     <div key={i}>
-                      <div className="font-cinzel text-[13px] font-semibold uppercase tracking-[0.12em] text-ft-panel-accent mb-1">{s.tech}</div>
-                      <div className="text-[11px] leading-6 text-ft-panel-fg-soft">{s.reason}</div>
+                      <div className="font-cinzel text-[0.875rem] font-semibold uppercase tracking-[0.12em] text-ft-panel-accent mb-1">{s.tech}</div>
+                      <div className="text-[0.6875rem] leading-6 text-ft-panel-fg-soft">{s.reason}</div>
                     </div>
                   ))}
                 </div>
               ) : (
                 <div className="flex flex-wrap gap-2">
                   {(project.stack || "").split(" · ").map((s) => (
-                    <span key={s} className="rounded-full px-2.5 py-1 text-[11px] text-ft-panel-fg bg-ft-panel-header border border-ft-panel-border-md">{s}</span>
+                    <span key={s} className="rounded-full px-2.5 py-1 text-[0.6875rem] text-ft-panel-fg bg-ft-panel-header border border-ft-panel-border-md">{s}</span>
                   ))}
                 </div>
               )}
             </ProjectSection>
 
-            <ProjectSection title="Waypoints · Links" empty={!project.projectLinks && !project.href}>
+            <ProjectSection title="Waypoints · Links" empty={!project.projectLinks && !project.href} className="mb-2">
               <div className="grid gap-1">
                 {project.projectLinks?.map((l) => (
                   <FFTMenuItem key={l.label} href={l.href} badge={l.kind === "primary" ? "primary" : undefined}>
@@ -339,13 +312,13 @@ export function ProjectDetail({ project, onTogglePlain, plain, onBack }: Project
                     </div>
                   ) : (
                     <div
-                      className="aspect-[16/10] rounded-[3px] flex items-center justify-center text-[11px] font-cinzel font-semibold tracking-[0.16em] text-ft-dim bg-ft-panel-header border border-ft-panel-border-md"
+                      className="aspect-[16/10] rounded-[3px] flex items-center justify-center text-[0.6875rem] font-cinzel font-semibold tracking-[0.16em] text-ft-dim bg-ft-panel-header border border-ft-panel-border-md"
                       style={{ backgroundImage: `repeating-linear-gradient(135deg, transparent 0, transparent 10px, rgba(90,48,24,0.06) 10px, rgba(90,48,24,0.06) 20px)` }}
                     >
                       [ {String(i + 1).padStart(2, "0")} ]
                     </div>
                   )}
-                  <div className="text-[11px] leading-[1.4] text-ft-panel-fg-soft">{g.caption}</div>
+                  <div className="text-[0.6875rem] leading-[1.4] text-ft-panel-fg-soft">{g.caption}</div>
                 </div>
               ))}
             </div>
@@ -356,30 +329,30 @@ export function ProjectDetail({ project, onTogglePlain, plain, onBack }: Project
         <div className="fft-prev-back-next grid grid-cols-[1fr_auto_1fr] gap-4 items-center mt-6">
           <Link
             to={`/project/${prev.id}`}
-            className="inline-flex items-start gap-2 rounded-sm border border-ft-line bg-transparent px-4 py-3 text-[12px] font-semibold text-ft-fg transition"
+            className="inline-flex items-start gap-2 rounded-sm border border-ft-line bg-transparent px-4 py-3 text-[0.75rem] font-semibold text-ft-fg transition"
           >
-            <span className="font-cinzel text-[13px] font-semibold text-ft-accent">◀</span>
+            <span className="font-cinzel text-[0.8125rem] font-semibold text-ft-accent">◀</span>
             <div className="flex flex-col items-start text-left">
-              <span className="font-cinzel text-[10px] font-semibold uppercase tracking-[0.16em] text-ft-dim">Prev Item</span>
+              <span className="font-cinzel text-[0.625rem] font-semibold uppercase tracking-[0.16em] text-ft-dim">Prev Item</span>
               <span className="text-ft-fg mt-1">{prev.title}</span>
             </div>
           </Link>
           <button
             onClick={onBack}
-            className="inline-flex items-center gap-2 rounded-sm border border-ft-accent bg-transparent px-5 py-3 text-[12px] font-semibold transition cursor-pointer"
+            className="inline-flex items-center gap-2 rounded-sm border border-ft-accent bg-transparent px-5 py-3 text-[0.75rem] font-semibold transition cursor-pointer"
           >
-            <span className="font-cinzel text-[13px] font-semibold">◆</span>
+            <span className="font-cinzel text-[0.8125rem] font-semibold">◆</span>
             Back to map
           </button>
           <Link
             to={`/project/${next.id}`}
-            className="inline-flex items-start justify-end gap-2 rounded-sm border border-ft-line bg-transparent px-4 py-3 text-[12px] font-semibold text-ft-fg transition"
+            className="inline-flex items-start justify-end gap-2 rounded-sm border border-ft-line bg-transparent px-4 py-3 text-[0.75rem] font-semibold text-ft-fg transition"
           >
             <div className="flex flex-col items-end text-right">
-              <span className="font-cinzel text-[10px] font-semibold uppercase tracking-[0.16em] text-ft-dim">Next Item</span>
+              <span className="font-cinzel text-[0.625rem] font-semibold uppercase tracking-[0.16em] text-ft-dim">Next Item</span>
               <span className="text-ft-fg mt-1">{next.title}</span>
             </div>
-            <span className="font-cinzel text-[13px] font-semibold text-ft-accent">▶</span>
+            <span className="font-cinzel text-[0.8125rem] font-semibold text-ft-accent">▶</span>
           </Link>
         </div>
       </div>

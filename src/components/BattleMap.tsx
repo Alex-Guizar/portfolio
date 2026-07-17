@@ -1,5 +1,11 @@
-import { ReactNode } from 'react';
-import { FFTCharacter, FFTPanel, FFTMenuItem } from './FFTChrome';
+import { FFTCharacter, FFTPanel, FFTMenuItem } from '@/components/FFTChrome';
+import type {
+  TerrainType,
+  DetailKind,
+  TileDetail,
+  TerrainPalette,
+  IsoTileProps,
+} from '@/types/battleMap';
 
 // ─── Iso tile primitives ────────────────────────────────────────────────────
 const TW = 64;
@@ -8,28 +14,6 @@ const TD = 12;
 const NW = 32;
 const NH = 16;
 const ND = 6;
-
-type TerrainType = 'grass' | 'stone' | 'path' | 'water';
-type DetailKind = 'hi' | 'dk' | 'crack' | 'flower';
-type TileDetail = [number, number, number, number, DetailKind?];
-
-type TerrainPalette = {
-  top: string;
-  topHi: string;
-  topDk: string;
-  topAccent?: string;
-  sideL: string;
-  sideR: string;
-};
-
-type IsoTileProps = {
-  x: number;
-  y: number;
-  terrain: TerrainType;
-  height?: number;
-  variant?: number;
-  children?: ReactNode;
-};
 
 function detailsFor(terrain: TerrainType, variant: number): TileDetail[] {
   const v = variant % 4;
@@ -360,7 +344,7 @@ export function BattleMap() {
               {t.hasHero && (
                 <div className="relative">
                   <div
-                    className="absolute left-1/2 -translate-x-1/2 font-pixel text-[13px] text-ft-accent -top-4"
+                    className="absolute left-1/2 font-pixel text-[13px] text-ft-accent -top-5"
                     style={{ textShadow: `0 0 8px var(--color-ft-accent), 1px 1px 0 #000`, animation: "ft-bob 0.8s ease-in-out infinite" }}
                   >▼</div>
                   <FFTCharacter />
@@ -376,10 +360,10 @@ export function BattleMap() {
       </div>
 
       {/* Floating ACT menu */}
-      <div className="bm-act absolute left-5 bottom-[14px] z-20 w-[200px]">
+      <div className="bm-act absolute left-6 bottom-4 z-20 w-[12.5rem]">
         <FFTPanel>
-          <div className="font-cinzel text-[14px] font-semibold text-ft-panel-fg tracking-[2px] mb-[10px] flex items-center gap-2">
-            <span className="text-ft-gold text-[10px]">◆</span>
+          <div className="font-cinzel text-[0.875rem] font-semibold text-ft-panel-fg tracking-[2px] mb-3 flex items-center gap-2">
+            <span className="text-ft-gold text-[0.625rem]">◆</span>
             <span>Act</span>
           </div>
           {[
@@ -394,16 +378,16 @@ export function BattleMap() {
       </div>
 
       {/* Floating CT panel */}
-      <div className="bm-ct absolute right-5 top-[14px] z-20 w-[184px]">
+      <div className="bm-ct absolute right-6 top-4 z-20 w-[11.5rem]">
         <FFTPanel>
-          <div className="font-cinzel text-[14px] font-semibold text-ft-panel-fg tracking-[2px] mb-[10px] flex items-center gap-2">
-            <span className="text-ft-gold text-[10px]">◆</span>
+          <div className="font-cinzel text-[0.875rem] font-semibold text-ft-panel-fg tracking-[2px] mb-3 flex items-center gap-2">
+            <span className="text-ft-gold text-[0.625rem]">◆</span>
             <span>CT</span>
           </div>
-          <div className="grid gap-[5px] text-[12px]">
+          <div className="grid gap-2 text-[0.75rem]">
             {[["Brave", 70], ["Faith", 52], ["Speed", 14], ["Move", 4]].map(([k, v]) => (
               <div key={k} className="flex justify-between items-baseline">
-                <span className="text-ft-panel-accent font-cinzel text-[12px] font-semibold tracking-[1px] uppercase">{k}</span>
+                <span className="text-ft-panel-accent font-cinzel text-[0.75rem] font-semibold tracking-[1px] uppercase">{k}</span>
                 <span className="tabular-nums text-ft-panel-fg font-semibold">{v}</span>
               </div>
             ))}

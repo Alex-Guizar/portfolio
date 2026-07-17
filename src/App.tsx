@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
-import { HomePage } from './pages/HomePage';
-import { ProjectDetailPage } from './pages/ProjectDetailPage';
+import { HomePage } from '@/pages/HomePage';
+import { ProjectDetailPage } from '@/pages/ProjectDetailPage';
 
 export default function App() {
   return (
