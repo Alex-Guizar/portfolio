@@ -71,7 +71,7 @@ function TacticsGame({ onTogglePlain }: TogglePlainProps) {
                 <FFTCharacter />
               </div>
               <div className="flex-1 text-[0.6875rem]">
-                <div className="font-cinzel text-[1rem] font-semibold text-ft-panel-accent mb-2 tracking-[1px] uppercase">{PROFILE.name}</div>
+                <h3 className="font-cinzel text-[1rem] font-semibold text-ft-panel-accent mb-2 tracking-[1px] uppercase">{PROFILE.name}</h3>
                 <div className="mb-1">
                   <span className="text-ft-panel-dim">Class</span> <span className="text-ft-panel-fg font-semibold">Full-Stack</span>
                 </div>
@@ -116,7 +116,7 @@ function TacticsGame({ onTogglePlain }: TogglePlainProps) {
                 <div className="fft-grid-inv-row grid grid-cols-[auto_1fr_auto] gap-3 items-center">
                   <PixelSprite name="floppy" scale={3} />
                   <div>
-                    <div className="font-semibold text-ft-panel-fg mb-1">{w.title}</div>
+                    <h3 className="font-semibold text-ft-panel-fg mb-1">{w.title}</h3>
                     <div className="text-[0.6875rem] text-ft-panel-fg-soft mb-1">{w.blurb}</div>
                     <div className="text-[0.625rem] text-ft-panel-accent tracking-[0.5px]">{w.stack}</div>
                   </div>
@@ -219,7 +219,7 @@ function TacticsPlain({ onTogglePlain }: TogglePlainProps) {
                 <span className="text-[0.75rem] text-ft-dim-plain w-6">{String(i + 1).padStart(2, "0")}</span>
                 <div>
                   <div className="flex items-baseline gap-3 mb-1">
-                    <span className="text-[1.125rem] font-semibold">{w.title}</span>
+                    <h3 className="text-[1.125rem] font-semibold m-0">{w.title}</h3>
                     <span className="text-[0.75rem] text-ft-dim-plain">{w.year}</span>
                     {w.status && (
                       <span

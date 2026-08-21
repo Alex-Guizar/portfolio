@@ -91,13 +91,11 @@ function MetricCallout({ label, value }: MetricCalloutProps) {
 }
 
 function ProjectSection({ title, num, children, empty, className }: ProjectSectionProps) {
+  if (empty) return null;
+
   return (
     <FFTPanel title={title} cornerStat={num ? `${num}` : undefined} className={className}>
-      {empty ? (
-        <div className="text-[0.75rem] italic text-ft-panel-dim py-2">
-          — placeholder — fill in <code className="bg-ft-panel-header px-1 py-[1px] border border-ft-panel-inner-hi2 text-ft-panel-accent">data.ts</code> for this project.
-        </div>
-      ) : children}
+      {children}
     </FFTPanel>
   );
 }
@@ -267,7 +265,7 @@ export function ProjectDetail({ project, onTogglePlain, plain, onBack }: Project
                 <div className="grid gap-3">
                   {stackDetail.map((s, i) => (
                     <div key={i}>
-                      <div className="font-cinzel text-[0.875rem] font-semibold uppercase tracking-[0.12em] text-ft-panel-accent mb-1">{s.tech}</div>
+                      <h3 className="font-cinzel text-[0.875rem] font-semibold uppercase tracking-[0.12em] text-ft-panel-accent mb-1">{s.tech}</h3>
                       <div className="text-[0.6875rem] leading-6 text-ft-panel-fg-soft">{s.reason}</div>
                     </div>
                   ))}

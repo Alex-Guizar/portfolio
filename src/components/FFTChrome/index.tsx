@@ -46,11 +46,11 @@ export function FFTPanel({ children, style, className, title, cornerStat }: FFTP
       >
         {title && (
           <div className="mb-4 flex items-center justify-between gap-3 border-b border-ft-panel-inner-hi2 pb-3">
-            <div className="flex items-center gap-3 font-cinzel text-[18px] font-semibold tracking-[0.12em]">
+            <h2 className="flex items-center gap-3 font-cinzel text-[18px] font-semibold tracking-[0.12em] m-0">
               <span className="text-ft-gold text-[0.75rem]">◆</span>
               <span>{title}</span>
               <span className="text-ft-gold text-[0.75rem]">◆</span>
-            </div>
+            </h2>
             {cornerStat && (
               <span className="text-[0.6875rem] text-ft-panel-dim tracking-[0.08em]">
                 {cornerStat}
