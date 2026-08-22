@@ -3,7 +3,7 @@ export type ProjectStatus = 'LIVE' | 'IN-PROGRESS' | 'ARCHIVED';
 export interface ProjectLink {
   label: string;
   href: string;
-  kind?: 'primary' | 'secondary' | string;
+  kind?: 'primary' | 'secondary';
 }
 
 export interface ProjectMetric {

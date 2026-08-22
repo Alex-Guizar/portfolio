@@ -25,11 +25,18 @@ export interface ProjectSectionProps {
 
 export interface ParagraphsProps {
   items?: string | string[];
+  variant?: 'game' | 'plain';
 }
 
 export interface ProjectDetailProps {
   project: Project;
   onTogglePlain: () => void;
   plain: boolean;
+  onBack: () => void;
+}
+
+export interface ProjectDetailVariantProps {
+  project: Project;
+  onTogglePlain: () => void;
   onBack: () => void;
 }

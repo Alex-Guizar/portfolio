@@ -330,11 +330,11 @@ export const PROFILE: Profile = {
   ],
 
   email: "mailto:alexguizar90@gmail.com",
-  resume: "Alex-Guizar-Resume.pdf",
+  resume: "/Alex-Guizar-Resume.pdf",
   links: [
     { label: "github", href: "https://github.com/Alex-Guizar" },
     { label: "linkedin", href: "https://www.linkedin.com/in/alexander-guizar-32649263/" },
     { label: "email", href: "mailto:alexguizar90@gmail.com" },
-    { label: "resume", href: "Alex-Guizar-Resume.pdf" },
+    { label: "resume", href: "/Alex-Guizar-Resume.pdf" },
   ],
 };

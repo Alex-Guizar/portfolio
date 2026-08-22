@@ -40,6 +40,11 @@
   --color-ft-mp-blue: #3a78c8;
   --color-ft-ct-yellow: #c89030;
 
+  /* Status colors — see src/utils/status.ts for the one place these are consumed */
+  --color-ft-status-archived: #7080a0;
+  --color-ft-status-live-panel: #3a7a18;
+  --color-ft-status-progress-panel: #8a5e0a;
+
   /* Layout */
   --width-container: 1200px;
 }
