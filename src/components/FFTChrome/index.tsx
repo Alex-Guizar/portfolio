@@ -1,7 +1,7 @@
 import { useState, type CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import { PROFILE } from '@/data/profile';
-import { externalLinkProps } from '@/utils/links';
+import { externalLinkProps, isExternal } from '@/utils/links';
 import type {
   FFTCharacterProps,
   FFTPanelProps,
@@ -14,7 +14,7 @@ import type {
 export function FFTCharacter({ scale = 1, style }: FFTCharacterProps) {
   return (
     <img
-      src="/assets/character.png"
+      src="/assets/fft-serge-2x.png"
       width={44 * scale}
       height={78 * scale}
       alt="Chrono Cross's Serge in Final Fantasy Tactics style"
@@ -28,9 +28,10 @@ export function FFTCharacter({ scale = 1, style }: FFTCharacterProps) {
   );
 }
 
-export function FFTPanel({ children, style, className, title, cornerStat }: FFTPanelProps) {
+export function FFTPanel({ children, style, className, title, cornerStat, id }: FFTPanelProps) {
   return (
     <div
+      id={id}
       className={`bg-ft-panel-border-dk p-px rounded${className ? ` ${className}` : ''}`}
       style={{
         boxShadow: `0 8px 0 rgba(0,0,0,0.55), 0 0 0 1px var(--color-ft-panel-outer), 0 0 28px rgba(0,0,0,0.4)`,
@@ -47,9 +48,9 @@ export function FFTPanel({ children, style, className, title, cornerStat }: FFTP
         {title && (
           <div className="mb-4 flex items-center justify-between gap-3 border-b border-ft-panel-inner-hi2 pb-3">
             <h2 className="flex items-center gap-3 font-cinzel text-[18px] font-semibold tracking-[0.12em] m-0">
-              <span className="text-ft-gold text-[0.75rem]">◆</span>
+              <span className="text-ft-gold text-[0.75rem]" aria-hidden="true">◆</span>
               <span>{title}</span>
-              <span className="text-ft-gold text-[0.75rem]">◆</span>
+              <span className="text-ft-gold text-[0.75rem]" aria-hidden="true">◆</span>
             </h2>
             {cornerStat && (
               <span className="text-[0.6875rem] text-ft-panel-dim tracking-[0.08em]">
@@ -92,13 +93,15 @@ export function StatLine({ label, value, max, color }: StatLineProps) {
 
 export function FFTMenuItem({ children, badge, selected, href, to, onClick }: FFTMenuItemProps) {
   const [hover, setHover] = useState(false);
-  const active = hover || selected;
+  const [focused, setFocused] = useState(false);
+  const active = hover || focused || selected;
 
   const layout = (
     <>
       <span
         className="font-cinzel text-[0.875rem] font-semibold transition-all duration-150"
         style={{ color: active ? 'var(--color-ft-gold)' : 'transparent' }}
+        aria-hidden="true"
       >
         ▸
       </span>
@@ -126,6 +129,8 @@ export function FFTMenuItem({ children, badge, selected, href, to, onClick }: FF
         onClick={onClick}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
         className={baseClassName}
         style={style}
       >
@@ -141,10 +146,13 @@ export function FFTMenuItem({ children, badge, selected, href, to, onClick }: FF
       onClick={onClick}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
       className={baseClassName}
       style={style}
     >
       {layout}
+      {isExternal(href || '') && <span className="sr-only"> (opens in new tab)</span>}
     </a>
   );
 }
@@ -157,7 +165,7 @@ export function UtilityBar({ onTogglePlain, plain }: UtilityBarProps) {
         href={resume}
         className="inline-flex items-center gap-2 rounded-sm border border-ft-accent bg-ft-accent px-3 py-2 text-[0.75rem] font-semibold text-ft-bg transition"
       >
-        <span className="font-pixel text-[0.5rem] text-ft-bg">↓</span>
+        <span className="font-pixel text-[0.5rem] text-ft-bg" aria-hidden="true">↓</span>
         Resume
       </a>
       <a
@@ -168,15 +176,18 @@ export function UtilityBar({ onTogglePlain, plain }: UtilityBarProps) {
       </a>
       <button
         onClick={onTogglePlain}
+        aria-pressed={plain}
         className="inline-flex items-center gap-2 rounded-sm border border-ft-line bg-transparent px-3 py-2 text-[0.75rem] font-semibold text-ft-fg transition cursor-pointer"
       >
-        {plain ? '▶ Full version' : '▶ Plain mode'}
+        <span aria-hidden="true">▶</span> {plain ? 'Full version' : 'Plain mode'}
       </button>
     </div>
   );
 }
 
-export function SectionPlain({ title, cornerNote, children }: SectionPlainProps) {
+export function SectionPlain({ title, cornerNote, children, empty }: SectionPlainProps) {
+  if (empty) return null;
+
   return (
     <section className="mb-12">
       <div className="flex items-baseline justify-between mb-4 pb-2 border-b border-ft-line">

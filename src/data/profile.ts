@@ -13,7 +13,7 @@ export const PROFILE: Profile = {
   now: [
     "Scaling Cisco's framework-agnostic component library — cut team time-to-delivery in half.",
     "Building AI personas and prompt pipelines for technical research and code review.",
-    "Tracking rare drops in FFXIV with a dashboard I wrote so we'd stop using spreadsheets.",
+    "Learning backend skills in Ruby on Rails and Go to round out my frontend expertise.",
     "Reading + writing about UI infrastructure at scale.",
   ],
 
@@ -25,7 +25,7 @@ export const PROFILE: Profile = {
       stack: "Vue · Node.js · Axios",
       blurb: "A dashboard that tracks mount drops for my 8-person FFXIV raid group, so we know who still needs which mount. It also shows each player which minions they're missing and what they cost on the market.",
 
-      status: "LIVE",
+      status: "ARCHIVED",
       tagline: "Tracks mount drops for my 8-person raid group and shows who still needs which mount. Also includes a page where a player can check which minions they're missing and their market price.",
       role: "Solo developer · designer · raid leader",
       duration: "Ongoing personal project",
@@ -221,8 +221,8 @@ export const PROFILE: Profile = {
       id: "sports-warehouse",
       title: "Tennis Warehouse & Sibling Sites",
       year: "2013–2022",
-      stack: "Custom tooling · 12 global sites",
-      blurb: "Built responsive, high-traffic e-commerce frontends across 12 global sites, plus the internal tooling that let Product Managers ship mailers themselves without engineering intervention. Led the company's first WCAG audit across the Warehouse network.",
+      stack: "Custom tooling · HTML, JS, CSS · WCAG 2.2",
+      blurb: "Built responsive, high-traffic e-commerce frontends across 12 sites, plus the internal tooling that let Product Managers ship mailers themselves without engineering intervention. Led the company's first WCAG audit across the Warehouse network.",
       role: "Frontend Engineer · UI Platform",
       duration: "9 years",
       team: "Cross-functional · multiple product teams",

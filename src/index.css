@@ -21,7 +21,7 @@
   --color-ft-panel-hover: #f7eccd;
   --color-ft-panel-fg: #2a1a08;
   --color-ft-panel-fg-soft: #5a3a1c;
-  --color-ft-panel-dim: #8a6e4a;
+  --color-ft-panel-dim: #6a5539;
   --color-ft-panel-accent: #8a3018;
   --color-ft-gold: #c89030;
   --color-ft-gold-dk: #8a5e1c;
@@ -33,8 +33,8 @@
   --color-ft-fg-soft: #c8c4b8;
   --color-ft-fg-plain: #e8e6df;
   --color-ft-fg-plain-soft: #a8b0bd;
-  --color-ft-dim: #6a7088;
-  --color-ft-dim-plain: #6b7280;
+  --color-ft-dim: #727991;
+  --color-ft-dim-plain: #727988;
   --color-ft-line: #1d232e;
   --color-ft-hp-green: #5fa83a;
   --color-ft-mp-blue: #3a78c8;
@@ -46,6 +46,17 @@
 
 body {
   font-family: var(--font-jetbrains);
+}
+
+/* Respect reduced-motion preference: stop the decorative bob/pulse/crystal
+   animations from playing for anyone who has asked their OS/browser for it. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Keyframe animations */

@@ -7,7 +7,7 @@ import { PROFILE } from '@/data/profile';
 import type { ProfileLink } from '@/types/profile';
 import type { TogglePlainProps } from '@/types/pages';
 import { usePlainMode } from '@/hooks/usePlainMode';
-import { externalLinkProps } from '@/utils/links';
+import { externalLinkProps, isExternal } from '@/utils/links';
 
 function PanelLinkChip({ label, href }: ProfileLink) {
   const [hover, setHover] = useState(false);
@@ -26,7 +26,8 @@ function PanelLinkChip({ label, href }: ProfileLink) {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      {label} <span className="text-ft-gold">↗</span>
+      {label} <span className="text-ft-gold" aria-hidden="true">↗</span>
+      {isExternal(href) && <span className="sr-only"> (opens in new tab)</span>}
     </a>
   );
 }
@@ -34,41 +35,53 @@ function PanelLinkChip({ label, href }: ProfileLink) {
 function TacticsGame({ onTogglePlain }: TogglePlainProps) {
   return (
     <div className="bg-ft-bg text-ft-fg min-h-full">
-      {/* HERO */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-sm focus:border focus:border-ft-accent focus:bg-ft-bg focus:px-4 focus:py-2 focus:text-[0.875rem] focus:font-semibold focus:text-ft-fg"
+      >
+        Skip to main content
+      </a>
+
+      {/* UTILITY BAR */}
       <div className="fft-page pt-8 px-10 max-w-container mx-auto">
         <UtilityBar onTogglePlain={onTogglePlain} plain={false} />
-        <div className="fft-grid-hero grid grid-cols-[1fr_auto] gap-[2rem] items-end">
-          <div>
-            <h1 className="fft-hero-name text-[3.5rem] font-extrabold m-0 tracking-[-1.5px] text-ft-fg leading-none">{PROFILE.name}</h1>
-            <div className="fft-hero-role text-[1.125rem] text-ft-fg-soft mt-2">{PROFILE.role} · {PROFILE.location}</div>
-            <p className="fft-hero-blurb text-[0.875rem] text-ft-fg-soft leading-[1.7] max-w-[38.75rem] mt-4 mb-0">{PROFILE.blurb}</p>
-          </div>
-          <div
-            className="fft-unit-deployed font-cinzel text-[0.8125rem] font-semibold text-ft-accent tracking-[4px] whitespace-nowrap uppercase"
-            style={{ textShadow: `0 0 8px color-mix(in srgb, var(--color-ft-accent) 25%, transparent), 1px 1px 0 #000` }}
-          >
-            ━ Unit Deployed ━
+      </div>
+
+      <main id="main-content">
+        {/* HERO */}
+        <div className="fft-page px-10 max-w-container mx-auto">
+          <div className="fft-grid-hero grid grid-cols-[1fr_auto] gap-[2rem] items-end">
+            <div>
+              <h1 className="fft-hero-name text-[3.5rem] font-extrabold m-0 tracking-[-1.5px] text-ft-fg leading-none">{PROFILE.name}</h1>
+              <div className="fft-hero-role text-[1.125rem] text-ft-fg-soft mt-2">{PROFILE.role} · {PROFILE.location}</div>
+              <p className="fft-hero-blurb text-[0.875rem] text-ft-fg-soft leading-[1.7] max-w-[38.75rem] mt-4 mb-0">{PROFILE.blurb}</p>
+            </div>
+            <div
+              className="fft-unit-deployed font-cinzel text-[0.8125rem] font-semibold text-ft-accent tracking-[4px] whitespace-nowrap uppercase"
+              style={{ textShadow: `0 0 8px color-mix(in srgb, var(--color-ft-accent) 25%, transparent), 1px 1px 0 #000` }}
+            >
+              <span aria-hidden="true">━</span> Unit Deployed <span aria-hidden="true">━</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* MAP */}
-      <div className="fft-page pt-8 px-10 max-w-container mx-auto">
-        <BattleMap />
-      </div>
+        {/* MAP */}
+        <div className="fft-page pt-8 px-10 max-w-container mx-auto">
+          <BattleMap />
+        </div>
 
-      {/* CONTENT */}
-      <div className="fft-page pt-8 px-10 pb-14 max-w-container mx-auto">
+        {/* CONTENT */}
+        <div className="fft-page pt-8 px-10 pb-14 max-w-container mx-auto">
 
         {/* UNIT + DESCRIPTION row */}
-        <div className="fft-grid-2col grid grid-cols-[320px_1fr] gap-4 mb-4">
+        <div id="profile" className="fft-grid-2col grid grid-cols-[320px_1fr] gap-4 mb-4">
           <FFTPanel title="Unit" cornerStat={`LV. ${new Date().getFullYear() - 2015}`}>
             <div className="flex gap-3 mb-3">
               <div
                 className="bg-ft-bg border border-ft-panel-border-dk p-1"
                 style={{ boxShadow: `inset 0 0 0 1px var(--color-ft-gold)` }}
               >
-                <FFTCharacter />
+                <FFTCharacter scale={1.25} />
               </div>
               <div className="flex-1 text-[0.6875rem]">
                 <h3 className="font-cinzel text-[1rem] font-semibold text-ft-panel-accent mb-2 tracking-[1px] uppercase">{PROFILE.name}</h3>
@@ -109,7 +122,7 @@ function TacticsGame({ onTogglePlain }: TogglePlainProps) {
         </div>
 
         {/* INVENTORY */}
-        <FFTPanel title={`Inventory · ${PROFILE.work.length} Items Deployed`} cornerStat="◆ ◆ ◆" className="mb-4">
+        <FFTPanel id="inventory" title={`Inventory · ${PROFILE.work.length} Items Deployed`} cornerStat={<span aria-hidden="true">◆ ◆ ◆</span>} className="mb-4">
           <div>
             {PROFILE.work.map((w) => (
               <FFTMenuItem key={w.id} badge={w.year} to={`/project/${w.id}`}>
@@ -125,7 +138,7 @@ function TacticsGame({ onTogglePlain }: TogglePlainProps) {
                       className="fft-status-pill font-cinzel text-[0.625rem] font-semibold tracking-[1.5px] px-2 py-1 border border-current rounded-full uppercase"
                       style={{ color: w.status === "LIVE" ? "#3a7a18" : w.status === "ARCHIVED" ? 'var(--color-ft-panel-dim)' : "#8a5e0a" }}
                     >
-                      ● {w.status}
+                      <span aria-hidden="true">●</span> {w.status}
                     </span>
                   )}
                 </div>
@@ -158,7 +171,7 @@ function TacticsGame({ onTogglePlain }: TogglePlainProps) {
         </FFTPanel>
 
         {/* STATUS */}
-        <FFTPanel title="Status · Currently" className="mb-4">
+        <FFTPanel id="status" title="Status · Currently" className="mb-4">
           <div className="fft-grid-status grid grid-cols-2 gap-2">
             {PROFILE.now.map((n, i) => (
               <div
@@ -173,18 +186,21 @@ function TacticsGame({ onTogglePlain }: TogglePlainProps) {
           </div>
         </FFTPanel>
 
-        <div className="text-center font-cinzel text-[0.6875rem] font-medium text-ft-dim tracking-[3px] mt-6 uppercase">
+        <footer className="text-center font-cinzel text-[0.6875rem] font-medium text-ft-dim tracking-[3px] mt-6 uppercase">
           <span
             className="text-ft-accent"
             style={{ animation: "ft-pulse 1.6s ease-in-out infinite", textShadow: `0 0 6px var(--color-ft-accent)` }}
+            aria-hidden="true"
           >●</span>
           &nbsp;&nbsp;Save Game &nbsp;·&nbsp; {PROFILE.name} &nbsp;·&nbsp; {new Date().getFullYear()}&nbsp;&nbsp;
           <span
             className="text-ft-accent"
             style={{ animation: "ft-pulse 1.6s ease-in-out infinite", textShadow: `0 0 6px var(--color-ft-accent)` }}
+            aria-hidden="true"
           >●</span>
+        </footer>
         </div>
-      </div>
+      </main>
     </div>
   );
 }
@@ -192,16 +208,30 @@ function TacticsGame({ onTogglePlain }: TogglePlainProps) {
 function TacticsPlain({ onTogglePlain }: TogglePlainProps) {
   return (
     <div className="bg-ft-bg text-ft-fg-plain min-h-full">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-sm focus:border focus:border-ft-accent focus:bg-ft-bg focus:px-4 focus:py-2 focus:text-[0.875rem] focus:font-semibold focus:text-ft-fg-plain"
+      >
+        Skip to main content
+      </a>
+
       <div className="plain-page pt-8 px-10 pb-16 max-w-[55rem] mx-auto box-border">
         <UtilityBar onTogglePlain={onTogglePlain} plain />
 
+        <main id="main-content">
         <div className="plain-hero grid grid-cols-[1fr_auto] gap-6 items-end pb-8 border-b border-ft-line mb-10">
           <div>
             <h1 className="fft-hero-name text-[3.5rem] font-bold m-0 tracking-[-1.5px] text-ft-fg-plain leading-none">{PROFILE.name}</h1>
             <div className="text-[1.125rem] text-ft-fg-plain-soft mt-2">{PROFILE.role} · {PROFILE.location}</div>
             <p className="text-[0.9375rem] text-ft-fg-plain-soft leading-[1.7] max-w-[38.75rem] mt-4 mb-0">{PROFILE.blurb}</p>
           </div>
-          <img src="/assets/character.png" width={66} height={117} style={{ imageRendering: "pixelated", opacity: 0.85 }} alt="" />
+          <img
+            src="/assets/alex-portrait.jpg"
+            width={108}
+            height={140}
+            className="rounded-sm border border-ft-line object-cover"
+            alt="Alex Guizar"
+          />
         </div>
 
         <SectionPlain title="About">
@@ -255,7 +285,7 @@ function TacticsPlain({ onTogglePlain }: TogglePlainProps) {
           <ul className="m-0 p-0 list-none grid gap-2">
             {PROFILE.now.map((n, i) => (
               <li key={i} className="flex gap-3 text-[0.9375rem] text-ft-fg-plain-soft leading-[1.6]">
-                <span className="text-ft-accent">◆</span>
+                <span className="text-ft-accent" aria-hidden="true">◆</span>
                 <span>{n}</span>
               </li>
             ))}
@@ -266,18 +296,19 @@ function TacticsPlain({ onTogglePlain }: TogglePlainProps) {
           <div className="flex flex-wrap gap-3">
             {PROFILE.links.map((l) => (
               <a key={l.label} href={l.href} className="text-[0.875rem] font-medium text-ft-fg-plain no-underline px-4 py-2 border border-ft-line bg-ft-bg-panel">
-                {l.label} ↗
+                {l.label} <span aria-hidden="true">↗</span>
               </a>
             ))}
           </div>
         </SectionPlain>
+        </main>
 
-        <div className="mt-16 pt-6 border-t border-ft-line text-[0.75rem] text-ft-dim-plain flex justify-between">
+        <footer className="mt-16 pt-6 border-t border-ft-line text-[0.75rem] text-ft-dim-plain flex justify-between">
           <span>© {new Date().getFullYear()} {PROFILE.name}</span>
           <button onClick={onTogglePlain} className="bg-transparent border-none text-ft-dim-plain text-[0.75rem] cursor-pointer underline">
-            ▶ Switch to full version
+            <span aria-hidden="true">▶</span> Switch to full version
           </button>
-        </div>
+        </footer>
       </div>
     </div>
   );

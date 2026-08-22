@@ -1,4 +1,5 @@
 import { FFTCharacter, FFTPanel, FFTMenuItem } from '@/components/FFTChrome';
+import { PROFILE } from '@/data/profile';
 import type {
   TerrainType,
   DetailKind,
@@ -115,7 +116,7 @@ function IsoTile({ x, y, terrain, height = 0, children, variant = 0 }: IsoTilePr
       </svg>
 
       {children && (
-        <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-full z-10">
+        <div className="absolute left-1/2 top-1/2 w-max -translate-x-1/2 -translate-y-full z-10">
           {children}
         </div>
       )}
@@ -310,6 +311,7 @@ export function BattleMap() {
         style={{
           height: "var(--bm-h, 360px)",
         }}
+        aria-hidden="true"
       >
         <div
           className="absolute inset-0"
@@ -344,8 +346,9 @@ export function BattleMap() {
               {t.hasHero && (
                 <div className="relative">
                   <div
-                    className="absolute left-1/2 font-pixel text-[13px] text-ft-accent -top-5"
+                    className="absolute left-1/2 font-pixel text-[13px] text-ft-accent -top-6"
                     style={{ textShadow: `0 0 8px var(--color-ft-accent), 1px 1px 0 #000`, animation: "ft-bob 0.8s ease-in-out infinite" }}
+                    aria-hidden="true"
                   >▼</div>
                   <FFTCharacter />
                 </div>
@@ -362,17 +365,17 @@ export function BattleMap() {
       {/* Floating ACT menu */}
       <div className="bm-act absolute left-6 bottom-4 z-20 w-[12.5rem]">
         <FFTPanel>
-          <div className="font-cinzel text-[0.875rem] font-semibold text-ft-panel-fg tracking-[2px] mb-3 flex items-center gap-2">
-            <span className="text-ft-gold text-[0.625rem]">◆</span>
+          <h2 className="font-cinzel text-[0.875rem] font-semibold text-ft-panel-fg tracking-[2px] mb-3 flex items-center gap-2 m-0">
+            <span className="text-ft-gold text-[0.625rem]" aria-hidden="true">◆</span>
             <span>Act</span>
-          </div>
+          </h2>
           {[
-            ["About", "→ profile"],
-            ["Work", "→ inventory"],
-            ["Now", "→ status"],
-            ["Contact", "→ talk"],
-          ].map(([k, v]) => (
-            <FFTMenuItem key={k} badge={v}>{k}</FFTMenuItem>
+            ["About", "#profile", "→ profile"],
+            ["Work", "#inventory", "→ inventory"],
+            ["Now", "#status", "→ status"],
+            ["Contact", PROFILE.email, "→ talk"],
+          ].map(([k, href, v]) => (
+            <FFTMenuItem key={k} href={href} badge={v}>{k}</FFTMenuItem>
           ))}
         </FFTPanel>
       </div>
@@ -380,10 +383,10 @@ export function BattleMap() {
       {/* Floating CT panel */}
       <div className="bm-ct absolute right-6 top-4 z-20 w-[11.5rem]">
         <FFTPanel>
-          <div className="font-cinzel text-[0.875rem] font-semibold text-ft-panel-fg tracking-[2px] mb-3 flex items-center gap-2">
-            <span className="text-ft-gold text-[0.625rem]">◆</span>
+          <h2 className="font-cinzel text-[0.875rem] font-semibold text-ft-panel-fg tracking-[2px] mb-3 flex items-center gap-2 m-0">
+            <span className="text-ft-gold text-[0.625rem]" aria-hidden="true">◆</span>
             <span>CT</span>
-          </div>
+          </h2>
           <div className="grid gap-2 text-[0.75rem]">
             {[["Brave", 70], ["Faith", 52], ["Speed", 14], ["Move", 4]].map(([k, v]) => (
               <div key={k} className="flex justify-between items-baseline">

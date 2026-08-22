@@ -10,7 +10,8 @@ export interface FFTPanelProps {
   style?: CSSProperties;
   className?: string;
   title?: string;
-  cornerStat?: string | number;
+  cornerStat?: ReactNode;
+  id?: string;
 }
 
 export interface StatLineProps {
@@ -33,6 +34,7 @@ export interface SectionPlainProps {
   title: string;
   cornerNote?: string;
   children?: ReactNode;
+  empty?: boolean;
 }
 
 export interface UtilityBarProps {
