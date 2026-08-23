@@ -1,3 +1,10 @@
 RewriteEngine On
 RewriteCond %{SERVER_PORT} 80
 RewriteRule ^(.*)$ https://alexguizar.com/$1 [R=301,L]
+
+# SPA fallback: serve index.html for any path that isn't a real file or
+# directory, so React Router can handle client-side routes like /project/:id
+# on a direct load or refresh.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L]

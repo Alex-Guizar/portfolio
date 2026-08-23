@@ -1,7 +1,7 @@
-import { ProjectDetail } from '../components/ProjectDetail';
-import { PROFILE } from '../data/profile';
+import { ProjectDetail } from '@/components/ProjectDetail';
+import { PROFILE } from '@/data/profile';
 import { useParams, useNavigate } from 'react-router-dom';
-import { usePlainMode } from '../hooks/usePlainMode';
+import { usePlainMode } from '@/hooks/usePlainMode';
 
 export function ProjectDetailPage() {
   const { projectId } = useParams();

@@ -133,6 +133,69 @@ const SPRITES = {
       [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
     ],
   },
+
+  // 9x9 battle-map tree
+  tree: {
+    w: 9, h: 9,
+    palette: [null, "#1a4a18", "#3a7a30", "#5a9a40", "#5a3818", "#3a2410"],
+    pixels: [
+      [0,0,0,1,1,1,0,0,0],
+      [0,0,1,2,2,2,1,0,0],
+      [0,1,2,1,2,1,2,1,0],
+      [0,2,2,3,2,2,2,2,0],
+      [1,2,2,1,2,2,2,1,2],
+      [0,1,2,2,2,2,2,1,0],
+      [0,0,1,2,3,2,1,0,0],
+      [0,0,0,4,4,4,0,0,0],
+      [0,0,0,4,5,4,0,0,0],
+    ],
+  },
+  // 6x7 battle-map crystal (pair with the ft-crystal keyframe animation)
+  crystal: {
+    w: 6, h: 7,
+    palette: [null, "#102050", "#ffffff", "#5a98e8", "#b8d8f8", "#3068c0"],
+    pixels: [
+      [0,0,1,1,0,0],
+      [0,1,2,3,1,0],
+      [1,2,4,3,5,1],
+      [1,3,4,3,5,1],
+      [1,3,4,5,5,1],
+      [0,1,3,5,1,0],
+      [0,0,1,1,0,0],
+    ],
+  },
+  // 7x9 battle-map lamp (see PixelLamp for the ambient glow it's usually paired with)
+  lamp: {
+    w: 7, h: 9,
+    palette: [null, "#0a0e08", "#ffd060", "#fff0a0", "#6a5a40"],
+    pixels: [
+      [0,0,1,1,1,0,0],
+      [0,1,2,3,3,1,0],
+      [0,1,3,3,2,1,0],
+      [0,0,1,2,1,0,0],
+      [0,0,1,4,1,0,0],
+      [0,0,1,4,1,0,0],
+      [0,0,1,4,1,0,0],
+      [0,0,1,4,1,0,0],
+      [0,1,1,1,1,1,0],
+    ],
+  },
+  // 9x9 battle-map treasure chest
+  chest: {
+    w: 9, h: 9,
+    palette: [null, "#0a0e08", "#c08c48", "#6a3818", "#8a5828", "#d4a838", "#ffe070"],
+    pixels: [
+      [0,1,1,1,1,1,1,1,0],
+      [1,2,2,3,2,2,3,2,1],
+      [1,3,4,4,4,4,4,3,1],
+      [1,2,3,2,2,3,2,2,1],
+      [0,1,1,1,1,1,1,0,0],
+      [1,3,4,4,5,4,4,3,1],
+      [1,3,4,4,6,4,4,3,1],
+      [1,3,4,4,5,4,4,3,1],
+      [0,1,1,1,1,1,1,1,0],
+    ],
+  },
 };
 
 export function PixelSprite({ name, scale = 4, style }: { name: keyof typeof SPRITES; scale?: number; style?: CSSProperties }) {
@@ -140,8 +203,8 @@ export function PixelSprite({ name, scale = 4, style }: { name: keyof typeof SPR
   if (!s) return null;
   return (
     <div
+      className="grid"
       style={{
-        display: "grid",
         gridTemplateColumns: `repeat(${s.w}, ${scale}px)`,
         gridTemplateRows: `repeat(${s.h}, ${scale}px)`,
         width: s.w * scale,

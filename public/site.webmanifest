@@ -1,0 +1,21 @@
+{
+  "name": "Alex Guizar — Full-Stack Developer",
+  "short_name": "Alex Guizar",
+  "icons": [
+    {
+      "src": "/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "theme_color": "#c89030",
+  "background_color": "#06080e",
+  "display": "standalone"
+}
