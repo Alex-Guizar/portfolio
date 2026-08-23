@@ -19,7 +19,7 @@ export function PanelLinkChip({ label, href }: ProfileLink) {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      {label} <span className="text-ft-gold" aria-hidden="true">↗</span>
+      {label} <span aria-hidden="true">↗</span>
       {isExternal(href) && <span className="sr-only"> (opens in new tab)</span>}
     </a>
   );

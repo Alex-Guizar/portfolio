@@ -194,6 +194,9 @@ export const PROFILE: Profile = {
           caption: "Icon toggle — segmented pill control for currency and grid/list view switches"
         },
       ],
+      projectLinks: [
+        { label: "Cisco U.", href: "https://u.cisco.com/", kind: "secondary" },
+      ],
     },
 
     {
@@ -206,8 +209,8 @@ export const PROFILE: Profile = {
       status: "ARCHIVED",
       tagline: "An internal hackathon prototype, built as a VS Code extension, that scans a repository and suggests performance + style improvements at the file and function level.",
       role: "Contributor · UI & LLM API integration",
-      duration: "24 hours",
       team: "Team hackathon · co-built and co-owned by the full internal team",
+      screenshotNote: "no screenshots available — internal Cisco project",
 
       problem: [
         "Code review fatigue is real — the same stylistic and perf comments come up again and again across reviews. The interesting parts of a review (architecture, intent) get crowded out.",

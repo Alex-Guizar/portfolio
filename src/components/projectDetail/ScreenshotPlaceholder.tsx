@@ -41,7 +41,7 @@ export function ScreenshotPlaceholder({ project }: ScreenshotPlaceholderProps) {
         {project.tagline || project.blurb}
       </div>
       <div className="text-[10px] italic tracking-[0.1em] text-ft-dim mt-2">
-        [ drop screenshot or demo gif here ]
+        {project.screenshotNote ? `[ ${project.screenshotNote} ]` : "[ drop screenshot or demo gif here ]"}
       </div>
     </div>
   );

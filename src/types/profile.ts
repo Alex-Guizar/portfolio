@@ -34,6 +34,8 @@ export interface Project {
   team?: string;
   href?: string | null;
   screenshot?: string;
+  /** Overrides the default "drop screenshot here" placeholder copy for projects that will never have one. */
+  screenshotNote?: string;
   problem?: string[];
   approach?: string[];
   outcome?: string[];
