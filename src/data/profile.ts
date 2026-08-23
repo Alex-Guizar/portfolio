@@ -19,70 +19,6 @@ export const PROFILE: Profile = {
 
   work: [
     {
-      id: "ffxiv-tracker",
-      title: "FFXIV Raid Tracker",
-      year: "2024",
-      stack: "Vue · Node.js · Axios",
-      blurb: "A dashboard that tracks mount drops for my 8-person FFXIV raid group, so we know who still needs which mount. It also shows each player which minions they're missing and what they cost on the market.",
-
-      status: "ARCHIVED",
-      tagline: "Tracks mount drops for my 8-person raid group and shows who still needs which mount. Also includes a page where a player can check which minions they're missing and their market price.",
-      role: "Solo developer · designer · raid leader",
-      duration: "Ongoing personal project",
-      team: "Solo · serving an 8-person static",
-      href: null,
-      screenshot: "/assets/mount-farm-home.png",
-
-      problem: [
-        "Our raid group tracked mount drops in a shared spreadsheet. It was easy to forget to update, and hard to tell at a glance who still needed which mount.",
-        "There was also no easy way for a player to check which minions they were missing or what those minions cost on the market instead of farming them.",
-      ],
-      approach: [
-        "Built the tracker in Vue, with a small Node.js and Axios backend that pulls character and mount data from FFXIV's APIs.",
-        "The main page lists mount drops and shows which raid members still need each one, so we can check at a glance instead of searching a spreadsheet.",
-        "Added a separate utility page where a player can look up their own missing minions and see the current market price for each one.",
-      ],
-      outcome: [
-        "We stopped using the spreadsheet. The mount list stays accurate because it pulls from game data instead of manual entry.",
-        "The minion page gets used outside of raid time too — people check it when deciding whether to farm a minion or just buy it.",
-      ],
-      metrics: [
-        { label: "RAIDERS", value: "8" },
-        { label: "DROPS LOGGED", value: "100+" },
-        { label: "WEEKS LIVE", value: "52+" },
-      ],
-      features: [
-        "Pulls character and mount data from FFXIV's APIs",
-        "Shows which raid members still need each mount",
-        "Personal page showing a player's missing minions and their market price",
-      ],
-      stackDetail: [
-        {
-          tech: "Vue",
-          reason: "Used for the dashboard UI — a good fit for data that updates as new mount and minion data comes in."
-        },
-        {
-          tech: "Node.js",
-          reason: "Small server that pulls and caches data from FFXIV's APIs."
-        },
-        {
-          tech: "Axios",
-          reason: "HTTP client used to call FFXIV's API and handle rate limits."
-        },
-      ],
-      gallery: [
-        {
-          src: "/assets/mount-farm-table-focus.png",
-          caption: "Table view of the static's mount drops, showing current and past members and which mounts each one still needs."
-        },
-        {
-          src: "/assets/mount-farm-minion-collecting.png",
-          caption: "Utility page showing a player's missing minions and their price on the market."
-        },
-      ],
-    },
-
-    {
       id: "cisco-component-library",
       title: "Cisco Component Library",
       year: "2022-present",
@@ -196,6 +132,70 @@ export const PROFILE: Profile = {
       ],
       projectLinks: [
         { label: "Cisco U.", href: "https://u.cisco.com/", kind: "secondary" },
+      ],
+    },
+    
+    {
+      id: "ffxiv-tracker",
+      title: "FFXIV Raid Tracker",
+      year: "2024",
+      stack: "Vue · Node.js · Axios",
+      blurb: "A dashboard that tracks mount drops for my 8-person FFXIV raid group, so we know who still needs which mount. It also shows each player which minions they're missing and what they cost on the market.",
+
+      status: "ARCHIVED",
+      tagline: "Tracks mount drops for my 8-person raid group and shows who still needs which mount. Also includes a page where a player can check which minions they're missing and their market price.",
+      role: "Solo developer · designer · raid leader",
+      duration: "Ongoing personal project",
+      team: "Solo · serving an 8-person static",
+      href: null,
+      screenshot: "/assets/mount-farm-home.png",
+
+      problem: [
+        "Our raid group tracked mount drops in a shared spreadsheet. It was easy to forget to update, and hard to tell at a glance who still needed which mount.",
+        "There was also no easy way for a player to check which minions they were missing or what those minions cost on the market instead of farming them.",
+      ],
+      approach: [
+        "Built the tracker in Vue, with a small Node.js and Axios backend that pulls character and mount data from FFXIV's APIs.",
+        "The main page lists mount drops and shows which raid members still need each one, so we can check at a glance instead of searching a spreadsheet.",
+        "Added a separate utility page where a player can look up their own missing minions and see the current market price for each one.",
+      ],
+      outcome: [
+        "We stopped using the spreadsheet. The mount list stays accurate because it pulls from game data instead of manual entry.",
+        "The minion page gets used outside of raid time too — people check it when deciding whether to farm a minion or just buy it.",
+      ],
+      metrics: [
+        { label: "RAIDERS", value: "8" },
+        { label: "DROPS LOGGED", value: "100+" },
+        { label: "WEEKS LIVE", value: "52+" },
+      ],
+      features: [
+        "Pulls character and mount data from FFXIV's APIs",
+        "Shows which raid members still need each mount",
+        "Personal page showing a player's missing minions and their market price",
+      ],
+      stackDetail: [
+        {
+          tech: "Vue",
+          reason: "Used for the dashboard UI — a good fit for data that updates as new mount and minion data comes in."
+        },
+        {
+          tech: "Node.js",
+          reason: "Small server that pulls and caches data from FFXIV's APIs."
+        },
+        {
+          tech: "Axios",
+          reason: "HTTP client used to call FFXIV's API and handle rate limits."
+        },
+      ],
+      gallery: [
+        {
+          src: "/assets/mount-farm-table-focus.png",
+          caption: "Table view of the static's mount drops, showing current and past members and which mounts each one still needs."
+        },
+        {
+          src: "/assets/mount-farm-minion-collecting.png",
+          caption: "Utility page showing a player's missing minions and their price on the market."
+        },
       ],
     },
 
