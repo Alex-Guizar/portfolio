@@ -4,7 +4,7 @@ export const PROFILE: Profile = {
   name: "Alex Guizar",
   handle: "alexguizar",
   role: "Software Engineer | UI Systems & Full Stack",
-  location: "California, USA",
+  location: "Denver, Colorado, USA",
   blurb: "Senior Frontend Engineer with 11+ years of experience building scalable UI infrastructure, design systems, and AI-augmented development workflows.",
   longBlurb: [
     "I build the layer between design and engineering — component libraries, design systems, and the tooling that lets product teams move fast without breaking things. Expert in Vue and React with a focus on framework-agnostic UI infrastructure that survives reorgs and rewrites.",
