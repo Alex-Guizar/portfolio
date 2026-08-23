@@ -200,20 +200,24 @@ export const PROFILE: Profile = {
       id: "cisco-hackathon",
       title: "Code Quality AI (Hackathon)",
       year: "2024",
-      stack: "Node.js · LLM APIs",
-      blurb: "Internal Cisco hackathon project: a tool that scans code repos and surfaces performance + style suggestions inline.",
+      stack: "Node.js · VS Code Extension API · LLM APIs",
+      blurb: "Internal Cisco hackathon project: a VS Code extension that scans code repos and surfaces performance + style suggestions inline.",
 
       status: "ARCHIVED",
-      tagline: "An internal hackathon prototype that scans a repository and suggests performance + style improvements at the file and function level.",
+      tagline: "An internal hackathon prototype, built as a VS Code extension, that scans a repository and suggests performance + style improvements at the file and function level.",
+      role: "Contributor · UI & LLM API integration",
+      duration: "24 hours",
+      team: "Team hackathon · co-built and co-owned by the full internal team",
 
       problem: [
         "Code review fatigue is real — the same stylistic and perf comments come up again and again across reviews. The interesting parts of a review (architecture, intent) get crowded out.",
       ],
       approach: [
-        "Built a CLI + light web UI that walks a repo, classifies files, and runs targeted prompts per file type. Output is structured so a reviewer can act on it without re-reading the diff.",
+        "Built as a VS Code extension that walks the open repo, classifies files, and runs targeted prompts per file type, surfacing suggestions inline in the editor. Output is structured so a reviewer can act on it without re-reading the diff. I built out the extension's display and organized its LLM API call layer.",
       ],
       outcome: [
         "Prototype won a slot in the next phase of the hackathon. The interesting finding: most of the value was in *consistency* — same standards applied across the whole repo at once — not in any single suggestion.",
+        "Demoed the project live to the full engineering org.",
       ],
     },
 
